@@ -63,6 +63,23 @@
     .recipe-group { margin: 12px 0 20px; }
     .recipe-group h4 { font-size: 0.95rem; margin-bottom: 8px; color: var(--cyan); }
     .complexity-table td:nth-child(2) { color: var(--mint); }
+    /* R&D Card styles */
+    .rd-card { padding: 16px; border-radius: 10px; background: rgba(10,24,30,0.5); border: 1px solid var(--border); margin-bottom: 8px; transition: all var(--transition); }
+    .rd-card:hover { border-color: var(--border-hover); background: rgba(10,24,30,0.7); }
+    .rd-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .rd-icon { font-size: 1.4rem; }
+    .rd-title h5 { font-size: 0.95rem; color: var(--text-bright); margin: 0; }
+    .rd-id { font-size: 0.72rem; color: var(--cyan); font-family: 'Space Grotesk', monospace; }
+    .rd-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px; }
+    .rd-meta { display: flex; gap: 16px; font-size: 0.8rem; margin-bottom: 6px; }
+    .rd-cost { color: var(--amber); }
+    .rd-duration { color: var(--text-muted); }
+    .rd-year { color: var(--cyan); }
+    .rd-requires { font-size: 0.8rem; color: var(--text-muted); }
+    .rd-requires a { color: var(--mint); }
+    .rd-effect { font-size: 0.82rem; color: var(--mint); font-weight: 600; margin-top: 4px; }
+    .rd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 10px; }
+    .cat-objective { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; padding: 12px 16px; background: rgba(105,214,181,0.04); border-left: 3px solid var(--mint); border-radius: 0 8px 8px 0; margin-bottom: 16px; }
   </style>
 </head>
 <body>
@@ -504,7 +521,7 @@ graph TD
       <div class="section-header fade-in">
         <span class="section-label">Research &amp; Development</span>
         <h2>전체 R&D 목록</h2>
-        <p>88개 연구 항목 &mdash; 카테고리별 분류</p>
+        <p>88개 연구 항목 &mdash; 카테고리별 카드 상세</p>
       </div>
 
       <!-- Category Summary -->
@@ -515,318 +532,285 @@ graph TD
               <th>카테고리</th>
               <th>개수</th>
               <th>첫 등장</th>
-              <th>평균 비용</th>
               <th>대표 예시</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td><strong class="text-mint">dx (디지털전환)</strong></td><td>14</td><td>2010</td><td class="text-amber">$232M</td><td>MES / ERP / APC / 스마트팩토리</td></tr>
-            <tr><td><strong class="text-cyan">ai (인공지능)</strong></td><td>16</td><td>2016</td><td class="text-amber">$379M</td><td>AI 결함 검출 / AI 예지보전 / AI 수율 최적화</td></tr>
-            <tr><td><strong class="text-mint">infra (인프라)</strong></td><td>10</td><td>2014</td><td class="text-amber">$106M</td><td>클라우드 분석 / 사이버보안 / 엣지컴퓨팅</td></tr>
-            <tr><td><strong class="text-cyan">quality (품질)</strong></td><td>5</td><td>2010</td><td class="text-amber">$217M</td><td>수율 엔지니어링 / 인라인 계측</td></tr>
-            <tr><td><strong class="text-amber">energy (에너지)</strong></td><td>6</td><td>2010</td><td class="text-amber">$405M</td><td>친환경팹 / 태양광 / 폐열회수</td></tr>
-            <tr><td><strong class="text-mint">marketing (마케팅)</strong></td><td>2</td><td>2010</td><td class="text-amber">$25M</td><td>마케팅팀 구축 / 글로벌 마케팅</td></tr>
-            <tr><td><strong class="text-cyan">sim (시뮬레이션)</strong></td><td>8</td><td>2010</td><td class="text-amber">$378M</td><td>디지털트윈 / 양자시뮬레이션 / TCAD</td></tr>
-            <tr><td><strong class="text-amber">devops (데브옵스)</strong></td><td>7</td><td>2015</td><td class="text-amber">$95M</td><td>CI/CD / 통합모니터링 / 분산트레이싱</td></tr>
-            <tr><td><strong class="text-mint">material (소재)</strong></td><td>5</td><td>2010</td><td class="text-amber">$604M</td><td>450mm 웨이퍼 / 고순도 화학약품</td></tr>
-            <tr><td><strong class="text-cyan">equip (설비)</strong></td><td>4</td><td>2010</td><td class="text-amber">$139M</td><td>원격진단 / 예비부품 / 설비레시피 최적화</td></tr>
-            <tr><td><strong class="text-amber">logistics (물류)</strong></td><td>5</td><td>2012</td><td class="text-amber">$267M</td><td>OHT 최적화 / AGV 확대 / 창고자동화</td></tr>
-            <tr><td><strong class="text-mint">manufacturing (제조)</strong></td><td>6</td><td>2020</td><td class="text-amber">$417M</td><td>다중패터닝 / 칩릿설계 / 백사이드전력</td></tr>
+            <tr><td><strong class="text-mint">dx (디지털전환)</strong></td><td>14</td><td>2010</td><td>MES/ERP / APC / 스마트팩토리 / 자율 팹</td></tr>
+            <tr><td><strong class="text-cyan">ai (인공지능)</strong></td><td>16</td><td>2016</td><td>AI 결함 검출 / AI 예지보전 / 생성형 AI 설계</td></tr>
+            <tr><td><strong class="text-amber">devops (데브옵스)</strong></td><td>7</td><td>2015</td><td>CI/CD / 통합 모니터링 / 카오스 엔지니어링</td></tr>
+            <tr><td><strong class="text-mint">infra (인프라)</strong></td><td>10</td><td>2014</td><td>클라우드 분석 / 사이버보안 / MLOps</td></tr>
+            <tr><td><strong class="text-cyan">sim (시뮬레이션)</strong></td><td>8</td><td>2010</td><td>TCAD / 디지털 트윈 / 양자 시뮬레이션</td></tr>
+            <tr><td><strong class="text-amber">material (소재)</strong></td><td>5</td><td>2010</td><td>초순수 / 450mm 웨이퍼 / 2D 소재</td></tr>
+            <tr><td><strong class="text-mint">equip (설비)</strong></td><td>4</td><td>2010</td><td>예비부품 / 원격진단 / 자가보정 설비</td></tr>
+            <tr><td><strong class="text-cyan">logistics (물류)</strong></td><td>5</td><td>2012</td><td>OHT 최적화 / AGV / AMR 스웜</td></tr>
+            <tr><td><strong class="text-amber">quality (품질)</strong></td><td>5</td><td>2010</td><td>수율 엔지니어링 / SPC / 인라인 계측</td></tr>
+            <tr><td><strong class="text-mint">energy (에너지)</strong></td><td>6</td><td>2010</td><td>친환경팹 / 태양광 / 핵융합 PPA</td></tr>
+            <tr><td><strong class="text-cyan">manufacturing (제조)</strong></td><td>6</td><td>2020</td><td>다중 패터닝 / 칩릿 / 하이브리드 본딩</td></tr>
+            <tr><td><strong class="text-amber">marketing (마케팅)</strong></td><td>2</td><td>2010</td><td>마케팅팀 구축 / 글로벌 마케팅</td></tr>
           </tbody>
         </table>
       </div>
 
-      <!-- DX (14) -->
-      <details class="fade-in">
-        <summary>
-          dx &mdash; 디지털전환
-          <span class="category-badge badge-mint">14개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>dx_mes</code></td><td>MES (제조실행시스템)</td><td>2010</td><td class="text-amber">$35M</td><td>8개월</td><td>&mdash;</td><td class="text-mint">생산 추적, 실시간 모니터링</td></tr>
-                <tr><td><code>dx_apc</code></td><td>APC (공정제어)</td><td>2010</td><td class="text-amber">$45M</td><td>10개월</td><td>dx_mes</td><td class="text-mint">자동 공정 제어, 수율 향상</td></tr>
-                <tr><td><code>dx_scada</code></td><td>SCADA 시스템</td><td>2010</td><td class="text-amber">$8M</td><td>4개월</td><td>&mdash;</td><td class="text-mint">설비 감시 자동화</td></tr>
-                <tr><td><code>dx_wms</code></td><td>WMS (창고관리)</td><td>2010</td><td class="text-amber">$8M</td><td>4개월</td><td>&mdash;</td><td class="text-mint">재고 관리 효율화</td></tr>
-                <tr><td><code>dx_rms</code></td><td>RMS (레시피관리)</td><td>2010</td><td class="text-amber">$12M</td><td>5개월</td><td>&mdash;</td><td class="text-mint">레시피 버전 관리</td></tr>
-                <tr><td><code>dx_fdc</code></td><td>FDC (결함분류)</td><td>2010</td><td class="text-amber">$30M</td><td>8개월</td><td>dx_mes</td><td class="text-mint">자동 결함 분류</td></tr>
-                <tr><td><code>dx_plm</code></td><td>PLM (제품수명관리)</td><td>2010</td><td class="text-amber">$30M</td><td>8개월</td><td>&mdash;</td><td class="text-mint">제품 라이프사이클 관리</td></tr>
-                <tr><td><code>dx_yms</code></td><td>YMS (수율관리)</td><td>2010</td><td class="text-amber">$25M</td><td>7개월</td><td>dx_mes</td><td class="text-mint">수율 데이터 분석</td></tr>
-                <tr><td><code>dx_r2r</code></td><td>R2R (Run-to-Run 제어)</td><td>2010</td><td class="text-amber">$50M</td><td>10개월</td><td>dx_apc</td><td class="text-mint">웨이퍼별 실시간 보정</td></tr>
-                <tr><td><code>smart_factory</code></td><td>스마트팩토리</td><td>2015</td><td class="text-amber">$200M</td><td>20개월</td><td>dx_mes, dx_apc</td><td class="text-mint">전체 자동화 + 팹/직원 해금 연결</td></tr>
-                <tr><td><code>autonomous_fab</code></td><td>자율제조팹</td><td>2025</td><td class="text-amber">$500M</td><td>30개월</td><td>smart_factory</td><td class="text-mint">완전 자율 생산</td></tr>
-                <tr><td><code>fab_os</code></td><td>Fab OS</td><td>2025</td><td class="text-amber">$450M</td><td>24개월</td><td>smart_factory</td><td class="text-mint">팹 운영체제 통합</td></tr>
-                <tr><td><code>digital_thread</code></td><td>디지털스레드</td><td>2028</td><td class="text-amber">$650M</td><td>28개월</td><td>fab_os</td><td class="text-mint">설계~생산 전 과정 연결</td></tr>
-                <tr><td><code>lights_out_ops</code></td><td>무인운전(Lights-Out)</td><td>2030</td><td class="text-amber">$1.2B</td><td>32개월</td><td>autonomous_fab</td><td class="text-mint">완전 무인 팹 운영</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+      <!-- ===== dx (14) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">dx &mdash; 디지털전환 <span class="category-badge badge-mint">14개</span></h3>
+      <div class="cat-objective">현장 데이터와 운영 절차를 한 흐름으로 묶어 병목, 수작업, 정보 지연을 줄이는 연구입니다.</div>
+      <div class="rd-grid fade-in">
 
-      <!-- AI (16) -->
-      <details class="fade-in">
-        <summary>
-          ai &mdash; 인공지능
-          <span class="category-badge badge-cyan">16개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>ax_defect</code></td><td>AI 결함 검출</td><td>2016</td><td class="text-amber">$75M</td><td>12개월</td><td>dx_fdc</td><td class="text-mint">자동 결함 검출 + 팹/로봇 해금 연결</td></tr>
-                <tr><td><code>ax_predict</code></td><td>AI 예지보전</td><td>2016</td><td class="text-amber">$60M</td><td>10개월</td><td>dx_mes</td><td class="text-mint">설비 고장 사전 예측</td></tr>
-                <tr><td><code>ai_scheduling</code></td><td>AI 스케줄링</td><td>2018</td><td class="text-amber">$70M</td><td>12개월</td><td>dx_mes</td><td class="text-mint">최적 생산 스케줄 자동화</td></tr>
-                <tr><td><code>ai_yield</code></td><td>AI 수율 최적화</td><td>2018</td><td class="text-amber">$80M</td><td>12개월</td><td>dx_yms</td><td class="text-mint">수율 예측 및 최적화</td></tr>
-                <tr><td><code>ai_energy_opt</code></td><td>AI 에너지 최적화</td><td>2018</td><td class="text-amber">$35M</td><td>8개월</td><td>&mdash;</td><td class="text-mint">에너지 소비 최적화</td></tr>
-                <tr><td><code>ai_supply_opt</code></td><td>AI 공급망 최적화</td><td>2018</td><td class="text-amber">$45M</td><td>8개월</td><td>&mdash;</td><td class="text-mint">공급망 효율화</td></tr>
-                <tr><td><code>ai_quality_pred</code></td><td>AI 품질 예측</td><td>2020</td><td class="text-amber">$65M</td><td>10개월</td><td>ax_defect</td><td class="text-mint">품질 사전 예측</td></tr>
-                <tr><td><code>ai_recipe_gen</code></td><td>AI 레시피 생성</td><td>2020</td><td class="text-amber">$90M</td><td>14개월</td><td>dx_rms</td><td class="text-mint">최적 레시피 자동 생성</td></tr>
-                <tr><td><code>ai_anomaly</code></td><td>AI 이상 탐지</td><td>2020</td><td class="text-amber">$55M</td><td>10개월</td><td>dx_scada</td><td class="text-mint">이상 패턴 자동 탐지</td></tr>
-                <tr><td><code>ai_mask_opt</code></td><td>AI 마스크 최적화</td><td>2022</td><td class="text-amber">$150M</td><td>18개월</td><td>ax_defect</td><td class="text-mint">포토마스크 설계 최적화</td></tr>
-                <tr><td><code>federated_learning</code></td><td>연합학습</td><td>2022</td><td class="text-amber">$70M</td><td>12개월</td><td>ax_defect</td><td class="text-mint">분산 AI 학습</td></tr>
-                <tr><td><code>gen_ai_design</code></td><td>생성형 AI 설계</td><td>2025</td><td class="text-amber">$120M</td><td>18개월</td><td>ai_recipe_gen</td><td class="text-mint">칩 설계 자동 생성</td></tr>
-                <tr><td><code>fab_foundation_model</code></td><td>팹 파운데이션 모델</td><td>2028</td><td class="text-amber">$650M</td><td>24개월</td><td>gen_ai_design</td><td class="text-mint">팹 전용 대규모 AI 모델</td></tr>
-                <tr><td><code>multi_agent_apc</code></td><td>멀티에이전트 APC</td><td>2030</td><td class="text-amber">$900M</td><td>28개월</td><td>fab_foundation_model</td><td class="text-mint">다중 AI 에이전트 공정 제어</td></tr>
-                <tr><td><code>self_healing_process</code></td><td>자가복구 공정</td><td>2033</td><td class="text-amber">$1.4B</td><td>30개월</td><td>multi_agent_apc</td><td class="text-mint">공정 이상 자동 복구</td></tr>
-                <tr><td><code>autonomous_ramp</code></td><td>자율 램프업</td><td>2036</td><td class="text-amber">$2.2B</td><td>36개월</td><td>self_healing_process</td><td class="text-mint">신규 공정 자동 양산 전환</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-dx_mes"><div class="rd-header"><span class="rd-icon">📊</span><div class="rd-title"><h5>MES/ERP 도입</h5><span class="rd-id">dx_mes</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">웨이퍼 이동·설비 상태·공정 이력을 실시간 추적하는 제조실행시스템. 생산 효율 +10%</p><div class="rd-meta"><span class="rd-cost">💰 $35M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">생산속도 +10%</div></div>
 
-      <!-- Infra (10) -->
-      <details class="fade-in">
-        <summary>
-          infra &mdash; 인프라
-          <span class="category-badge badge-mint">10개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>cloud_analytics</code></td><td>클라우드 분석</td><td>2014</td><td class="text-amber">$20M</td><td>6개월</td><td>&mdash;</td><td class="text-mint">클라우드 기반 데이터 분석</td></tr>
-                <tr><td><code>cybersecurity</code></td><td>사이버보안</td><td>2014</td><td class="text-amber">$15M</td><td>6개월</td><td>&mdash;</td><td class="text-mint">보안 강화, 사고 방지</td></tr>
-                <tr><td><code>edge_computing</code></td><td>엣지컴퓨팅</td><td>2018</td><td class="text-amber">$40M</td><td>8개월</td><td>cloud_analytics</td><td class="text-mint">실시간 처리 속도 향상</td></tr>
-                <tr><td><code>5g_network</code></td><td>5G 네트워크</td><td>2020</td><td class="text-amber">$60M</td><td>10개월</td><td>edge_computing</td><td class="text-mint">초저지연 통신</td></tr>
-                <tr><td><code>data_lake</code></td><td>데이터 레이크</td><td>2018</td><td class="text-amber">$35M</td><td>8개월</td><td>cloud_analytics</td><td class="text-mint">대규모 데이터 저장/분석</td></tr>
-                <tr><td><code>blockchain_trace</code></td><td>블록체인 추적</td><td>2020</td><td class="text-amber">$50M</td><td>10개월</td><td>&mdash;</td><td class="text-mint">공급망 투명성</td></tr>
-                <tr><td><code>digital_twin_infra</code></td><td>디지털트윈 인프라</td><td>2022</td><td class="text-amber">$120M</td><td>14개월</td><td>data_lake</td><td class="text-mint">가상 팹 시뮬레이션 기반</td></tr>
-                <tr><td><code>quantum_network</code></td><td>양자 네트워크</td><td>2030</td><td class="text-amber">$250M</td><td>20개월</td><td>5g_network</td><td class="text-mint">양자 암호 통신</td></tr>
-                <tr><td><code>neuromorphic_infra</code></td><td>뉴로모픽 인프라</td><td>2032</td><td class="text-amber">$300M</td><td>22개월</td><td>edge_computing</td><td class="text-mint">뉴로모픽 컴퓨팅 기반</td></tr>
-                <tr><td><code>space_data_center</code></td><td>우주 데이터센터</td><td>2040</td><td class="text-amber">$170M</td><td>18개월</td><td>quantum_network</td><td class="text-mint">궤도 데이터 처리</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-dx_apc"><div class="rd-header"><span class="rd-icon">🎯</span><div class="rd-title"><h5>APC 시스템</h5><span class="rd-id">dx_apc</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">실시간 센서 피드백으로 공정 변수를 나노미터 단위로 자동 보정. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $45M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">수율 +2%</div></div>
 
-      <!-- Quality (5) -->
-      <details class="fade-in">
-        <summary>
-          quality &mdash; 품질
-          <span class="category-badge badge-cyan">5개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>yield_eng</code></td><td>수율 엔지니어링</td><td>2010</td><td class="text-amber">$20M</td><td>6개월</td><td>&mdash;</td><td class="text-mint">수율 개선 기반</td></tr>
-                <tr><td><code>inline_metrology</code></td><td>인라인 계측</td><td>2010</td><td class="text-amber">$30M</td><td>8개월</td><td>&mdash;</td><td class="text-mint">실시간 계측/피드백</td></tr>
-                <tr><td><code>spc_system</code></td><td>SPC 시스템</td><td>2012</td><td class="text-amber">$25M</td><td>7개월</td><td>yield_eng</td><td class="text-mint">통계적 공정 관리</td></tr>
-                <tr><td><code>reliability_test</code></td><td>신뢰성 시험</td><td>2014</td><td class="text-amber">$80M</td><td>12개월</td><td>spc_system</td><td class="text-mint">제품 수명/안정성 검증</td></tr>
-                <tr><td><code>atomic_metrology</code></td><td>원자 레벨 계측</td><td>2028</td><td class="text-amber">$930M</td><td>24개월</td><td>inline_metrology</td><td class="text-mint">원자 단위 결함 검출</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-dx_scada"><div class="rd-header"><span class="rd-icon">🖥️</span><div class="rd-title"><h5>SCADA 시스템</h5><span class="rd-id">dx_scada</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">설비 센서 데이터를 실시간 수집·시각화하는 감시제어 시스템. 고장률 -10%</p><div class="rd-meta"><span class="rd-cost">💰 $8M</span><span class="rd-duration">⏱ 4개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">고장률 -10%</div></div>
 
-      <!-- Energy (6) -->
-      <details class="fade-in">
-        <summary>
-          energy &mdash; 에너지/ESG
-          <span class="category-badge badge-amber">6개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>green_fab</code></td><td>친환경팹</td><td>2010</td><td class="text-amber">$100M</td><td>12개월</td><td>&mdash;</td><td class="text-mint">ESG 점수 향상 + 팹 해금 연결</td></tr>
-                <tr><td><code>solar_power</code></td><td>태양광 발전</td><td>2012</td><td class="text-amber">$80M</td><td>10개월</td><td>green_fab</td><td class="text-mint">에너지 비용 절감</td></tr>
-                <tr><td><code>waste_heat</code></td><td>폐열 회수</td><td>2014</td><td class="text-amber">$60M</td><td>8개월</td><td>green_fab</td><td class="text-mint">에너지 재활용</td></tr>
-                <tr><td><code>water_reclaim</code></td><td>초순수 재활용</td><td>2016</td><td class="text-amber">$120M</td><td>14개월</td><td>green_fab</td><td class="text-mint">용수 비용 절감</td></tr>
-                <tr><td><code>carbon_capture</code></td><td>탄소 포집</td><td>2022</td><td class="text-amber">$350M</td><td>20개월</td><td>water_reclaim</td><td class="text-mint">탄소 중립 달성</td></tr>
-                <tr><td><code>fusion_power</code></td><td>핵융합 발전</td><td>2038</td><td class="text-amber">$1.72B</td><td>30개월</td><td>carbon_capture</td><td class="text-mint">무한 에너지</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-dx_wms"><div class="rd-header"><span class="rd-icon">📦</span><div class="rd-title"><h5>WMS 창고관리시스템</h5><span class="rd-id">dx_wms</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">원자재·부품·완제품의 입출고와 재고를 자동 추적하는 창고관리 시스템. 생산속도 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $8M</span><span class="rd-duration">⏱ 4개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">생산속도 +3%</div></div>
 
-      <!-- Marketing (2) -->
-      <details class="fade-in">
-        <summary>
-          marketing &mdash; 마케팅
-          <span class="category-badge badge-mint">2개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>marketing_team</code></td><td>마케팅팀 구축</td><td>2010</td><td class="text-amber">$15M</td><td>4개월</td><td>&mdash;</td><td class="text-mint">주문 수주 확률 증가</td></tr>
-                <tr><td><code>global_marketing</code></td><td>글로벌 마케팅</td><td>2014</td><td class="text-amber">$35M</td><td>8개월</td><td>marketing_team</td><td class="text-mint">해외 주문 + 브랜드 가치</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-dx_rms"><div class="rd-header"><span class="rd-icon">📁</span><div class="rd-title"><h5>레시피 관리 시스템</h5><span class="rd-id">dx_rms</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">수천 개 공정 레시피를 중앙에서 버전 관리·배포. 생산속도 +5%</p><div class="rd-meta"><span class="rd-cost">💰 $12M</span><span class="rd-duration">⏱ 5개월</span><span class="rd-year">📅 2011</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">생산속도 +5%</div></div>
 
-      <!-- Sim (8) -->
-      <details class="fade-in">
-        <summary>
-          sim &mdash; 시뮬레이션
-          <span class="category-badge badge-cyan">8개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>tcad</code></td><td>TCAD 시뮬레이션</td><td>2010</td><td class="text-amber">$25M</td><td>6개월</td><td>&mdash;</td><td class="text-mint">공정 시뮬레이션</td></tr>
-                <tr><td><code>digital_twin</code></td><td>디지털트윈</td><td>2018</td><td class="text-amber">$150M</td><td>16개월</td><td>tcad</td><td class="text-mint">가상 팹 운영 시뮬레이션</td></tr>
-                <tr><td><code>quantum_sim</code></td><td>양자 시뮬레이션</td><td>2028</td><td class="text-amber">$500M</td><td>24개월</td><td>digital_twin</td><td class="text-mint">양자 공정 시뮬레이션 + 해금 연결</td></tr>
-                <tr><td><code>monte_carlo</code></td><td>몬테카를로 시뮬레이션</td><td>2010</td><td class="text-amber">$20M</td><td>6개월</td><td>&mdash;</td><td class="text-mint">확률 기반 수율 예측</td></tr>
-                <tr><td><code>molecular_dynamics</code></td><td>분자동역학</td><td>2020</td><td class="text-amber">$200M</td><td>16개월</td><td>tcad</td><td class="text-mint">원자 레벨 공정 이해</td></tr>
-                <tr><td><code>ai_co_sim</code></td><td>AI 연계 시뮬레이션</td><td>2025</td><td class="text-amber">$300M</td><td>20개월</td><td>digital_twin, ai_yield</td><td class="text-mint">AI+시뮬레이션 통합</td></tr>
-                <tr><td><code>virtual_fab</code></td><td>가상팹 플랫폼</td><td>2030</td><td class="text-amber">$650M</td><td>26개월</td><td>ai_co_sim</td><td class="text-mint">완전 가상 시제품 검증</td></tr>
-                <tr><td><code>universe_sim</code></td><td>유니버스 시뮬레이션</td><td>2040</td><td class="text-amber">$1.18B</td><td>30개월</td><td>quantum_sim, virtual_fab</td><td class="text-mint">전체 반도체 생태계 시뮬레이션</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-dx_fdc"><div class="rd-header"><span class="rd-icon">🚨</span><div class="rd-title"><h5>FDC 결함감지분류</h5><span class="rd-id">dx_fdc</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">센서 데이터 패턴으로 공정 이상을 자동 감지하고 원인을 분류. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $30M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2012</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">수율 +2%</div></div>
 
-      <!-- DevOps (7) -->
-      <details class="fade-in">
-        <summary>
-          devops &mdash; 데브옵스
-          <span class="category-badge badge-amber">7개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>ci_cd</code></td><td>CI/CD 파이프라인</td><td>2015</td><td class="text-amber">$10M</td><td>4개월</td><td>&mdash;</td><td class="text-mint">SW 배포 자동화</td></tr>
-                <tr><td><code>monitoring</code></td><td>통합 모니터링</td><td>2015</td><td class="text-amber">$15M</td><td>5개월</td><td>&mdash;</td><td class="text-mint">전체 시스템 모니터링</td></tr>
-                <tr><td><code>distributed_tracing</code></td><td>분산 트레이싱</td><td>2018</td><td class="text-amber">$25M</td><td>6개월</td><td>monitoring</td><td class="text-mint">시스템 간 추적</td></tr>
-                <tr><td><code>iac</code></td><td>IaC (인프라코드화)</td><td>2018</td><td class="text-amber">$20M</td><td>6개월</td><td>ci_cd</td><td class="text-mint">인프라 자동 프로비저닝</td></tr>
-                <tr><td><code>chaos_eng</code></td><td>카오스 엔지니어링</td><td>2020</td><td class="text-amber">$40M</td><td>8개월</td><td>monitoring</td><td class="text-mint">장애 복원력 강화</td></tr>
-                <tr><td><code>gitops</code></td><td>GitOps</td><td>2020</td><td class="text-amber">$30M</td><td>6개월</td><td>iac</td><td class="text-mint">선언적 인프라 관리</td></tr>
-                <tr><td><code>platform_eng</code></td><td>플랫폼 엔지니어링</td><td>2025</td><td class="text-amber">$525M</td><td>18개월</td><td>gitops, chaos_eng</td><td class="text-mint">내부 개발자 플랫폼</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-dx_plm"><div class="rd-header"><span class="rd-icon">📋</span><div class="rd-title"><h5>PLM 제품수명주기</h5><span class="rd-id">dx_plm</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">제품 설계부터 양산·단종까지 전 수명주기를 관리하는 통합 플랫폼. 연구속도 +10%</p><div class="rd-meta"><span class="rd-cost">💰 $30M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2012</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">연구속도 +10%</div></div>
 
-      <!-- Material (5) -->
-      <details class="fade-in">
-        <summary>
-          material &mdash; 소재
-          <span class="category-badge badge-mint">5개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>high_purity_chem</code></td><td>고순도 화학약품</td><td>2010</td><td class="text-amber">$40M</td><td>8개월</td><td>&mdash;</td><td class="text-mint">수율 향상 기반</td></tr>
-                <tr><td><code>wafer_450mm</code></td><td>450mm 웨이퍼</td><td>2018</td><td class="text-amber">$800M</td><td>30개월</td><td>&mdash;</td><td class="text-mint">생산량 대폭 증가</td></tr>
-                <tr><td><code>new_resist</code></td><td>신규 레지스트</td><td>2020</td><td class="text-amber">$200M</td><td>16개월</td><td>high_purity_chem</td><td class="text-mint">EUV 공정 수율 향상</td></tr>
-                <tr><td><code>2d_material</code></td><td>2D 소재</td><td>2028</td><td class="text-amber">$600M</td><td>24개월</td><td>new_resist</td><td class="text-mint">차세대 채널 소재</td></tr>
-                <tr><td><code>cnt_material</code></td><td>CNT 소재</td><td>2032</td><td class="text-amber">$1.38B</td><td>28개월</td><td>2d_material</td><td class="text-mint">탄소나노튜브 트랜지스터</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-dx_yms"><div class="rd-header"><span class="rd-icon">📈</span><div class="rd-title"><h5>YMS 수율관리시스템</h5><span class="rd-id">dx_yms</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">웨이퍼별 수율 데이터를 수집·분석하여 손실 원인을 파악하는 시스템. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $25M</span><span class="rd-duration">⏱ 7개월</span><span class="rd-year">📅 2013</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">수율 +2%</div></div>
 
-      <!-- Equip (4) -->
-      <details class="fade-in">
-        <summary>
-          equip &mdash; 설비
-          <span class="category-badge badge-cyan">4개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>remote_diag</code></td><td>원격 진단</td><td>2010</td><td class="text-amber">$15M</td><td>5개월</td><td>&mdash;</td><td class="text-mint">설비 원격 모니터링/진단</td></tr>
-                <tr><td><code>spare_parts</code></td><td>예비부품 관리</td><td>2010</td><td class="text-amber">$10M</td><td>4개월</td><td>&mdash;</td><td class="text-mint">유지보수 시간 단축</td></tr>
-                <tr><td><code>recipe_opt</code></td><td>설비레시피 최적화</td><td>2014</td><td class="text-amber">$50M</td><td>10개월</td><td>dx_rms</td><td class="text-mint">설비별 최적 파라미터</td></tr>
-                <tr><td><code>predictive_maint</code></td><td>예측 유지보수</td><td>2018</td><td class="text-amber">$480M</td><td>16개월</td><td>ax_predict</td><td class="text-mint">고장 전 자동 교체</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-dx_r2r"><div class="rd-header"><span class="rd-icon">🔄</span><div class="rd-title"><h5>R2R 공정제어</h5><span class="rd-id">dx_r2r</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">이전 웨이퍼 결과를 피드백하여 다음 웨이퍼 공정 파라미터를 자동 보정. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $50M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2014</span></div><div class="rd-requires">선행: <a href="#rd-dx_apc">dx_apc</a>, <a href="#rd-dx_fdc">dx_fdc</a></div><div class="rd-effect">수율 +3%</div></div>
 
-      <!-- Logistics (5) -->
-      <details class="fade-in">
-        <summary>
-          logistics &mdash; 물류
-          <span class="category-badge badge-amber">5개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>oht_optimize</code></td><td>OHT 최적화</td><td>2012</td><td class="text-amber">$30M</td><td>6개월</td><td>&mdash;</td><td class="text-mint">웨이퍼 이송 효율화</td></tr>
-                <tr><td><code>agv_expand</code></td><td>AGV 확대</td><td>2014</td><td class="text-amber">$50M</td><td>8개월</td><td>oht_optimize</td><td class="text-mint">자동 이송 차량 확장</td></tr>
-                <tr><td><code>warehouse_auto</code></td><td>창고 자동화</td><td>2016</td><td class="text-amber">$80M</td><td>10개월</td><td>dx_wms</td><td class="text-mint">자재 자동 입출고</td></tr>
-                <tr><td><code>amhs_v2</code></td><td>AMHS v2</td><td>2022</td><td class="text-amber">$250M</td><td>18개월</td><td>agv_expand</td><td class="text-mint">차세대 자동 물류 시스템</td></tr>
-                <tr><td><code>drone_logistics</code></td><td>드론 물류</td><td>2028</td><td class="text-amber">$925M</td><td>22개월</td><td>amhs_v2</td><td class="text-mint">드론 기반 팹 내 이송</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-smart_factory"><div class="rd-header"><span class="rd-icon">🏭</span><div class="rd-title"><h5>스마트팩토리</h5><span class="rd-id">smart_factory</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">로봇·OHT·설비를 MES와 연동하여 무인 자동 운영 체계 구축. 로봇 효율 +20%</p><div class="rd-meta"><span class="rd-cost">💰 $200M</span><span class="rd-duration">⏱ 20개월</span><span class="rd-year">📅 2016</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a>, <a href="#rd-ax_defect">ax_defect</a></div><div class="rd-effect">로봇 효율 +20%</div></div>
 
-      <!-- Manufacturing (6) -->
-      <details class="fade-in">
-        <summary>
-          manufacturing &mdash; 제조 기술
-          <span class="category-badge badge-mint">6개</span>
-        </summary>
-        <div class="details-body">
-          <div class="table-wrap">
-            <table class="data-table">
-              <thead><tr><th>ID</th><th>이름</th><th>등장</th><th>비용</th><th>기간</th><th>선행조건</th><th>효과</th></tr></thead>
-              <tbody>
-                <tr><td><code>multi_patterning</code></td><td>다중 패터닝</td><td>2020</td><td class="text-amber">$100M</td><td>14개월</td><td>&mdash;</td><td class="text-mint">미세 패턴 형성</td></tr>
-                <tr><td><code>chiplet_design</code></td><td>칩릿 설계</td><td>2022</td><td class="text-amber">$200M</td><td>18개월</td><td>multi_patterning</td><td class="text-mint">칩릿 기반 설계</td></tr>
-                <tr><td><code>backside_power</code></td><td>백사이드 전력 (BSPDN)</td><td>2025</td><td class="text-amber">$350M</td><td>22개월</td><td>chiplet_design</td><td class="text-mint">후면 전력 배선</td></tr>
-                <tr><td><code>3d_integration</code></td><td>3D 집적</td><td>2028</td><td class="text-amber">$500M</td><td>24개월</td><td>backside_power</td><td class="text-mint">수직 적층 통합</td></tr>
-                <tr><td><code>self_assembly</code></td><td>자기조립 리소그래피</td><td>2032</td><td class="text-amber">$600M</td><td>26개월</td><td>3d_integration</td><td class="text-mint">분자 자기조립 패터닝</td></tr>
-                <tr><td><code>atomic_fabrication</code></td><td>원자 제조</td><td>2038</td><td class="text-amber">$750M</td><td>30개월</td><td>self_assembly</td><td class="text-mint">원자 단위 정밀 제조</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </details>
+        <div class="rd-card" id="rd-autonomous_fab"><div class="rd-header"><span class="rd-icon">🏭</span><div class="rd-title"><h5>자율 팹 운영</h5><span class="rd-id">autonomous_fab</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">사람 개입 없이 AI가 공정 판단·설비 제어·품질 관리를 수행. 로봇 효율 +40%</p><div class="rd-meta"><span class="rd-cost">💰 $500M</span><span class="rd-duration">⏱ 30개월</span><span class="rd-year">📅 2027</span></div><div class="rd-requires">선행: <a href="#rd-smart_factory">smart_factory</a></div><div class="rd-effect">로봇 효율 +40%</div></div>
+
+        <div class="rd-card" id="rd-fab_os"><div class="rd-header"><span class="rd-icon">🧩</span><div class="rd-title"><h5>Fab OS 통합 플랫폼</h5><span class="rd-id">fab_os</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">MES·APC·설비 제어를 단일 운영 레이어로 통합. 생산속도 +7%</p><div class="rd-meta"><span class="rd-cost">💰 $450M</span><span class="rd-duration">⏱ 24개월</span><span class="rd-year">📅 2032</span></div><div class="rd-requires">선행: <a href="#rd-autonomous_fab">autonomous_fab</a>, <a href="#rd-api_platform">api_platform</a></div><div class="rd-effect">생산속도 +7%</div></div>
+
+        <div class="rd-card" id="rd-digital_thread"><div class="rd-header"><span class="rd-icon">🧵</span><div class="rd-title"><h5>엔드투엔드 디지털 스레드</h5><span class="rd-id">digital_thread</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">설계 변경, 레시피, 품질 이력을 단일 데이터 흐름으로 연결. 연구속도 +12%</p><div class="rd-meta"><span class="rd-cost">💰 $650M</span><span class="rd-duration">⏱ 28개월</span><span class="rd-year">📅 2036</span></div><div class="rd-requires">선행: <a href="#rd-fab_os">fab_os</a>, <a href="#rd-dx_plm">dx_plm</a></div><div class="rd-effect">연구속도 +12%</div></div>
+
+        <div class="rd-card" id="rd-lights_out_ops"><div class="rd-header"><span class="rd-icon">🌙</span><div class="rd-title"><h5>Lights-Out 운영센터</h5><span class="rd-id">lights_out_ops</span></div><span class="category-badge badge-mint">dx</span></div><p class="rd-desc">야간 무인 운영과 원격 승인 체계로 24시간 자율 운영. 로봇 효율 +18%</p><div class="rd-meta"><span class="rd-cost">💰 $1.2B</span><span class="rd-duration">⏱ 32개월</span><span class="rd-year">📅 2041</span></div><div class="rd-requires">선행: <a href="#rd-digital_thread">digital_thread</a>, <a href="#rd-self_healing_process">self_healing_process</a></div><div class="rd-effect">로봇 효율 +18%</div></div>
+
+      </div>
+
+      <!-- ===== ai (16) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">ai &mdash; 인공지능 <span class="category-badge badge-cyan">16개</span></h3>
+      <div class="cat-objective">예측과 최적화를 자동화해 사람이 뒤늦게 대응하던 문제를 먼저 잡아내는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-ax_defect"><div class="rd-header"><span class="rd-icon">🤖</span><div class="rd-title"><h5>AI 결함 검출</h5><span class="rd-id">ax_defect</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">웨이퍼 표면 이미지를 딥러닝으로 분석하여 나노 결함을 자동 검출. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $75M</span><span class="rd-duration">⏱ 12개월</span><span class="rd-year">📅 2016</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">수율 +3%</div></div>
+
+        <div class="rd-card" id="rd-ax_predict"><div class="rd-header"><span class="rd-icon">🔮</span><div class="rd-title"><h5>AI 예지보전</h5><span class="rd-id">ax_predict</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">설비 진동·온도 데이터로 고장을 사전 예측하여 계획 정비 전환. 고장률 -50%</p><div class="rd-meta"><span class="rd-cost">💰 $60M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2017</span></div><div class="rd-requires">선행: <a href="#rd-ax_defect">ax_defect</a></div><div class="rd-effect">고장률 -50%</div></div>
+
+        <div class="rd-card" id="rd-ai_scheduling"><div class="rd-header"><span class="rd-icon">📅</span><div class="rd-title"><h5>AI 스케줄러</h5><span class="rd-id">ai_scheduling</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">AI가 설비 상태와 WIP 정보를 종합 판단하여 최적 디스패칭 결정. 생산속도 +12%</p><div class="rd-meta"><span class="rd-cost">💰 $70M</span><span class="rd-duration">⏱ 12개월</span><span class="rd-year">📅 2019</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a>, <a href="#rd-ax_defect">ax_defect</a></div><div class="rd-effect">생산속도 +12%</div></div>
+
+        <div class="rd-card" id="rd-ai_yield"><div class="rd-header"><span class="rd-icon">🤖</span><div class="rd-title"><h5>AI 수율 최적화</h5><span class="rd-id">ai_yield</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">공정 빅데이터를 ML로 분석하여 수율 저하 원인을 자동 추천. 수율 +4%</p><div class="rd-meta"><span class="rd-cost">💰 $80M</span><span class="rd-duration">⏱ 12개월</span><span class="rd-year">📅 2020</span></div><div class="rd-requires">선행: <a href="#rd-dx_apc">dx_apc</a></div><div class="rd-effect">수율 +4%</div></div>
+
+        <div class="rd-card" id="rd-ai_energy_opt"><div class="rd-header"><span class="rd-icon">🔋</span><div class="rd-title"><h5>AI 에너지 최적화</h5><span class="rd-id">ai_energy_opt</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">설비별 전력 소비 패턴을 학습하여 비가동 시 자동 절전 전환. 전기료 -12%</p><div class="rd-meta"><span class="rd-cost">💰 $35M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2020</span></div><div class="rd-requires">선행: <a href="#rd-cloud_analytics">cloud_analytics</a></div><div class="rd-effect">전기료 -12%</div></div>
+
+        <div class="rd-card" id="rd-ai_supply_opt"><div class="rd-header"><span class="rd-icon">📦</span><div class="rd-title"><h5>AI 공급망 최적화</h5><span class="rd-id">ai_supply_opt</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">수요 예측 AI로 원자재 발주·재고 수준을 자동 최적화. 생산속도 +8%</p><div class="rd-meta"><span class="rd-cost">💰 $45M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2021</span></div><div class="rd-requires">선행: <a href="#rd-cloud_analytics">cloud_analytics</a></div><div class="rd-effect">생산속도 +8%</div></div>
+
+        <div class="rd-card" id="rd-ai_quality_pred"><div class="rd-header"><span class="rd-icon">🔮</span><div class="rd-title"><h5>AI 품질 예측</h5><span class="rd-id">ai_quality_pred</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">공정 데이터로 완성 전 품질을 예측하여 불량 웨이퍼를 조기 차단. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $65M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2021</span></div><div class="rd-requires">선행: <a href="#rd-ax_defect">ax_defect</a>, <a href="#rd-dx_fdc">dx_fdc</a></div><div class="rd-effect">수율 +3%</div></div>
+
+        <div class="rd-card" id="rd-ai_recipe_gen"><div class="rd-header"><span class="rd-icon">🧪</span><div class="rd-title"><h5>AI 레시피 생성</h5><span class="rd-id">ai_recipe_gen</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">강화학습으로 수천 가지 파라미터 조합을 탐색하여 최적 레시피 도출. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $90M</span><span class="rd-duration">⏱ 14개월</span><span class="rd-year">📅 2022</span></div><div class="rd-requires">선행: <a href="#rd-ai_yield">ai_yield</a></div><div class="rd-effect">수율 +3%</div></div>
+
+        <div class="rd-card" id="rd-ai_anomaly"><div class="rd-header"><span class="rd-icon">🔎</span><div class="rd-title"><h5>AI 이상 탐지</h5><span class="rd-id">ai_anomaly</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">비지도학습으로 정상 공정 패턴을 학습하고, 미세한 이상을 자동 탐지. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $55M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2022</span></div><div class="rd-requires">선행: <a href="#rd-ai_yield">ai_yield</a>, <a href="#rd-o11y_monitoring">o11y_monitoring</a></div><div class="rd-effect">수율 +2%</div></div>
+
+        <div class="rd-card" id="rd-ai_mask_opt"><div class="rd-header"><span class="rd-icon">🎭</span><div class="rd-title"><h5>AI 마스크 최적화</h5><span class="rd-id">ai_mask_opt</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">GPU 가속 AI로 포토마스크 OPC/ILT를 최적화하여 패턴 정확도 향상. 수율 +4%</p><div class="rd-meta"><span class="rd-cost">💰 $150M</span><span class="rd-duration">⏱ 18개월</span><span class="rd-year">📅 2024</span></div><div class="rd-requires">선행: <a href="#rd-ai_yield">ai_yield</a>, <a href="#rd-gen_ai_design">gen_ai_design</a></div><div class="rd-effect">수율 +4%</div></div>
+
+        <div class="rd-card" id="rd-federated_learning"><div class="rd-header"><span class="rd-icon">🤝</span><div class="rd-title"><h5>연합학습</h5><span class="rd-id">federated_learning</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">복수 팹의 데이터를 공유하지 않고 AI 모델만 교환하여 학습. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $70M</span><span class="rd-duration">⏱ 12개월</span><span class="rd-year">📅 2024</span></div><div class="rd-requires">선행: <a href="#rd-ai_yield">ai_yield</a>, <a href="#rd-cybersecurity">cybersecurity</a></div><div class="rd-effect">수율 +2%</div></div>
+
+        <div class="rd-card" id="rd-gen_ai_design"><div class="rd-header"><span class="rd-icon">💡</span><div class="rd-title"><h5>생성형 AI 설계</h5><span class="rd-id">gen_ai_design</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">생성형 AI가 설계 규칙 내에서 최적 칩 레이아웃을 자동 생성. 연구속도 +30%</p><div class="rd-meta"><span class="rd-cost">💰 $120M</span><span class="rd-duration">⏱ 18개월</span><span class="rd-year">📅 2025</span></div><div class="rd-requires">선행: <a href="#rd-ai_yield">ai_yield</a></div><div class="rd-effect">연구속도 +30%</div></div>
+
+        <div class="rd-card" id="rd-fab_foundation_model"><div class="rd-header"><span class="rd-icon">🧠</span><div class="rd-title"><h5>Fab 파운데이션 모델</h5><span class="rd-id">fab_foundation_model</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">공정·설비·품질 로그를 통합 학습한 도메인 특화 AI 모델. 연구속도 +18%</p><div class="rd-meta"><span class="rd-cost">💰 $650M</span><span class="rd-duration">⏱ 24개월</span><span class="rd-year">📅 2031</span></div><div class="rd-requires">선행: <a href="#rd-gen_ai_design">gen_ai_design</a>, <a href="#rd-mlops">mlops</a></div><div class="rd-effect">연구속도 +18%</div></div>
+
+        <div class="rd-card" id="rd-multi_agent_apc"><div class="rd-header"><span class="rd-icon">🤖</span><div class="rd-title"><h5>멀티에이전트 APC</h5><span class="rd-id">multi_agent_apc</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">복수 AI 에이전트가 공정창과 병목을 동시 최적화. 생산속도 +10%</p><div class="rd-meta"><span class="rd-cost">💰 $900M</span><span class="rd-duration">⏱ 28개월</span><span class="rd-year">📅 2034</span></div><div class="rd-requires">선행: <a href="#rd-fab_foundation_model">fab_foundation_model</a>, <a href="#rd-ai_mask_opt">ai_mask_opt</a></div><div class="rd-effect">생산속도 +10%</div></div>
+
+        <div class="rd-card" id="rd-self_healing_process"><div class="rd-header"><span class="rd-icon">♻️</span><div class="rd-title"><h5>자가복구 공정제어</h5><span class="rd-id">self_healing_process</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">이상 징후를 감지하면 레시피를 즉시 보정하고 정비를 선제 전환. 고장률 -12%</p><div class="rd-meta"><span class="rd-cost">💰 $1.4B</span><span class="rd-duration">⏱ 30개월</span><span class="rd-year">📅 2038</span></div><div class="rd-requires">선행: <a href="#rd-multi_agent_apc">multi_agent_apc</a>, <a href="#rd-federated_learning">federated_learning</a></div><div class="rd-effect">고장률 -12%</div></div>
+
+        <div class="rd-card" id="rd-autonomous_ramp"><div class="rd-header"><span class="rd-icon">🚀</span><div class="rd-title"><h5>자율 램프업 오케스트레이터</h5><span class="rd-id">autonomous_ramp</span></div><span class="category-badge badge-cyan">ai</span></div><p class="rd-desc">신규 라인의 수율 램프업과 고객 인증 일정을 AI가 동시 조정. 생산속도 +8%</p><div class="rd-meta"><span class="rd-cost">💰 $2.2B</span><span class="rd-duration">⏱ 36개월</span><span class="rd-year">📅 2046</span></div><div class="rd-requires">선행: <a href="#rd-self_healing_process">self_healing_process</a>, <a href="#rd-fab_shadow_model">fab_shadow_model</a></div><div class="rd-effect">생산속도 +8%</div></div>
+
+      </div>
+
+      <!-- ===== devops (7) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">devops &mdash; 데브옵스 <span class="category-badge badge-amber">7개</span></h3>
+      <div class="cat-objective">운영 소프트웨어와 모델 배포를 더 빠르고 안전하게 바꿔 변경 실패를 줄이는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-devops_cicd"><div class="rd-header"><span class="rd-icon">🔄</span><div class="rd-title"><h5>CI/CD 파이프라인</h5><span class="rd-id">devops_cicd</span></div><span class="category-badge badge-amber">devops</span></div><p class="rd-desc">레시피·설비 SW를 자동 빌드·테스트·배포하는 CI/CD 파이프라인 구축. 생산속도 +4%</p><div class="rd-meta"><span class="rd-cost">💰 $10M</span><span class="rd-duration">⏱ 5개월</span><span class="rd-year">📅 2015</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">생산속도 +4%</div></div>
+
+        <div class="rd-card" id="rd-o11y_monitoring"><div class="rd-header"><span class="rd-icon">📉</span><div class="rd-title"><h5>통합 모니터링 (o11y)</h5><span class="rd-id">o11y_monitoring</span></div><span class="category-badge badge-amber">devops</span></div><p class="rd-desc">설비·네트워크·SW를 통합 대시보드로 실시간 관측하는 o11y 플랫폼. 고장률 -12%</p><div class="rd-meta"><span class="rd-cost">💰 $15M</span><span class="rd-duration">⏱ 6개월</span><span class="rd-year">📅 2016</span></div><div class="rd-requires">선행: <a href="#rd-dx_scada">dx_scada</a></div><div class="rd-effect">고장률 -12%</div></div>
+
+        <div class="rd-card" id="rd-o11y_tracing"><div class="rd-header"><span class="rd-icon">🔍</span><div class="rd-title"><h5>분산 트레이싱</h5><span class="rd-id">o11y_tracing</span></div><span class="category-badge badge-amber">devops</span></div><p class="rd-desc">웨이퍼가 거치는 모든 공정 단계를 추적하여 병목과 지연 원인을 파악. 생산속도 +5%</p><div class="rd-meta"><span class="rd-cost">💰 $8M</span><span class="rd-duration">⏱ 4개월</span><span class="rd-year">📅 2018</span></div><div class="rd-requires">선행: <a href="#rd-o11y_monitoring">o11y_monitoring</a></div><div class="rd-effect">생산속도 +5%</div></div>
+
+        <div class="rd-card" id="rd-o11y_alerting"><div class="rd-header"><span class="rd-icon">🔔</span><div class="rd-title"><h5>지능형 알림 시스템</h5><span class="rd-id">o11y_alerting</span></div><span class="category-badge badge-amber">devops</span></div><p class="rd-desc">ML이 정상 패턴을 학습하고, 이상 발생 시 관련 엔지니어에게 즉시 알림. 고장률 -8%</p><div class="rd-meta"><span class="rd-cost">💰 $12M</span><span class="rd-duration">⏱ 5개월</span><span class="rd-year">📅 2019</span></div><div class="rd-requires">선행: <a href="#rd-o11y_monitoring">o11y_monitoring</a>, <a href="#rd-ax_defect">ax_defect</a></div><div class="rd-effect">고장률 -8%</div></div>
+
+        <div class="rd-card" id="rd-infra_as_code"><div class="rd-header"><span class="rd-icon">📜</span><div class="rd-title"><h5>IaC 인프라 코드화</h5><span class="rd-id">infra_as_code</span></div><span class="category-badge badge-amber">devops</span></div><p class="rd-desc">설비 구성과 네트워크 세팅을 코드로 관리하여 재현성과 배포 속도 향상. 생산속도 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $6M</span><span class="rd-duration">⏱ 4개월</span><span class="rd-year">📅 2017</span></div><div class="rd-requires">선행: <a href="#rd-devops_cicd">devops_cicd</a></div><div class="rd-effect">생산속도 +3%</div></div>
+
+        <div class="rd-card" id="rd-chaos_eng"><div class="rd-header"><span class="rd-icon">🔥</span><div class="rd-title"><h5>카오스 엔지니어링</h5><span class="rd-id">chaos_eng</span></div><span class="category-badge badge-amber">devops</span></div><p class="rd-desc">의도적으로 장애를 시뮬레이션하여 시스템 취약점을 사전에 발견·보강. 고장률 -10%</p><div class="rd-meta"><span class="rd-cost">💰 $12M</span><span class="rd-duration">⏱ 5개월</span><span class="rd-year">📅 2020</span></div><div class="rd-requires">선행: <a href="#rd-o11y_monitoring">o11y_monitoring</a>, <a href="#rd-devops_cicd">devops_cicd</a></div><div class="rd-effect">고장률 -10%</div></div>
+
+        <div class="rd-card" id="rd-autonomous_incident"><div class="rd-header"><span class="rd-icon">🛟</span><div class="rd-title"><h5>자율 장애 대응</h5><span class="rd-id">autonomous_incident</span></div><span class="category-badge badge-amber">devops</span></div><p class="rd-desc">실시간 원인 분석과 자동 우회로 장애 복구 시간을 단축. 고장률 -10%</p><div class="rd-meta"><span class="rd-cost">💰 $600M</span><span class="rd-duration">⏱ 22개월</span><span class="rd-year">📅 2039</span></div><div class="rd-requires">선행: <a href="#rd-chaos_eng">chaos_eng</a>, <a href="#rd-digital_thread">digital_thread</a></div><div class="rd-effect">고장률 -10%</div></div>
+
+      </div>
+
+      <!-- ===== infra (10) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">infra &mdash; 인프라 <span class="category-badge badge-mint">10개</span></h3>
+      <div class="cat-objective">데이터 저장소, 네트워크, 컴퓨팅 기반을 다져 후속 자동화와 분석이 돌아가게 만드는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-cloud_analytics"><div class="rd-header"><span class="rd-icon">☁️</span><div class="rd-title"><h5>클라우드 분석</h5><span class="rd-id">cloud_analytics</span></div><span class="category-badge badge-mint">infra</span></div><p class="rd-desc">공정 데이터를 클라우드에서 대규모 분석하여 최적화 인사이트 도출. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $50M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2014</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">수율 +2%</div></div>
+
+        <div class="rd-card" id="rd-cybersecurity"><div class="rd-header"><span class="rd-icon">🔒</span><div class="rd-title"><h5>사이버 보안 강화</h5><span class="rd-id">cybersecurity</span></div><span class="category-badge badge-mint">infra</span></div><p class="rd-desc">팹 OT 네트워크에 방화벽·IDS·접근제어를 적용하여 사이버 공격 방어. 고장률 -15%</p><div class="rd-meta"><span class="rd-cost">💰 $35M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2015</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">고장률 -15%</div></div>
+
+        <div class="rd-card" id="rd-data_lake"><div class="rd-header"><span class="rd-icon">💾</span><div class="rd-title"><h5>팹 데이터 레이크</h5><span class="rd-id">data_lake</span></div><span class="category-badge badge-mint">infra</span></div><p class="rd-desc">센서·설비·품질 데이터를 하나의 저장소에 통합하여 교차 분석 가능. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $55M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2018</span></div><div class="rd-requires">선행: <a href="#rd-cloud_analytics">cloud_analytics</a></div><div class="rd-effect">수율 +2%</div></div>
+
+        <div class="rd-card" id="rd-edge_computing"><div class="rd-header"><span class="rd-icon">💻</span><div class="rd-title"><h5>엣지 컴퓨팅</h5><span class="rd-id">edge_computing</span></div><span class="category-badge badge-mint">infra</span></div><p class="rd-desc">설비 옆 엣지 서버에서 AI 추론을 수행하여 밀리초 단위 실시간 제어. 생산속도 +6%</p><div class="rd-meta"><span class="rd-cost">💰 $40M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2020</span></div><div class="rd-requires">선행: <a href="#rd-cloud_analytics">cloud_analytics</a></div><div class="rd-effect">생산속도 +6%</div></div>
+
+        <div class="rd-card" id="rd-zero_trust"><div class="rd-header"><span class="rd-icon">🛡️</span><div class="rd-title"><h5>제로트러스트 아키텍처</h5><span class="rd-id">zero_trust</span></div><span class="category-badge badge-mint">infra</span></div><p class="rd-desc">모든 사용자·기기의 접근을 매번 검증하는 제로트러스트 보안 모델. 고장률 -8%</p><div class="rd-meta"><span class="rd-cost">💰 $40M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2020</span></div><div class="rd-requires">선행: <a href="#rd-cybersecurity">cybersecurity</a></div><div class="rd-effect">고장률 -8%</div></div>
+
+        <div class="rd-card" id="rd-private_5g"><div class="rd-header"><span class="rd-icon">📶</span><div class="rd-title"><h5>사내 5G 네트워크</h5><span class="rd-id">private_5g</span></div><span class="category-badge badge-mint">infra</span></div><p class="rd-desc">팹 내 사설 5G 네트워크로 로봇·OHT·센서 간 초저지연 무선 통신. 로봇 효율 +10%</p><div class="rd-meta"><span class="rd-cost">💰 $70M</span><span class="rd-duration">⏱ 12개월</span><span class="rd-year">📅 2022</span></div><div class="rd-requires">선행: <a href="#rd-smart_factory">smart_factory</a></div><div class="rd-effect">로봇 효율 +10%</div></div>
+
+        <div class="rd-card" id="rd-data_mesh"><div class="rd-header"><span class="rd-icon">🕸️</span><div class="rd-title"><h5>데이터 메시</h5><span class="rd-id">data_mesh</span></div><span class="category-badge badge-mint">infra</span></div><p class="rd-desc">각 부서가 자체 데이터를 책임지고 표준 인터페이스로 공유하는 아키텍처. 연구속도 +10%</p><div class="rd-meta"><span class="rd-cost">💰 $25M</span><span class="rd-duration">⏱ 6개월</span><span class="rd-year">📅 2022</span></div><div class="rd-requires">선행: <a href="#rd-data_lake">data_lake</a></div><div class="rd-effect">연구속도 +10%</div></div>
+
+        <div class="rd-card" id="rd-mlops"><div class="rd-header"><span class="rd-icon">🛠️</span><div class="rd-title"><h5>MLOps 파이프라인</h5><span class="rd-id">mlops</span></div><span class="category-badge badge-mint">infra</span></div><p class="rd-desc">AI 모델의 학습·배포·모니터링·재학습을 자동화하는 파이프라인. 연구속도 +20%</p><div class="rd-meta"><span class="rd-cost">💰 $30M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2023</span></div><div class="rd-requires">선행: <a href="#rd-ai_yield">ai_yield</a></div><div class="rd-effect">연구속도 +20%</div></div>
+
+        <div class="rd-card" id="rd-api_platform"><div class="rd-header"><span class="rd-icon">🔗</span><div class="rd-title"><h5>API 플랫폼</h5><span class="rd-id">api_platform</span></div><span class="category-badge badge-mint">infra</span></div><p class="rd-desc">팹 내 시스템들을 REST/gRPC API로 연동하여 데이터 흐름 표준화. 생산속도 +4%</p><div class="rd-meta"><span class="rd-cost">💰 $12M</span><span class="rd-duration">⏱ 5개월</span><span class="rd-year">📅 2016</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">생산속도 +4%</div></div>
+
+        <div class="rd-card" id="rd-post_quantum_security"><div class="rd-header"><span class="rd-icon">🛡️</span><div class="rd-title"><h5>포스트양자 보안</h5><span class="rd-id">post_quantum_security</span></div><span class="category-badge badge-mint">infra</span></div><p class="rd-desc">양자 내성 암호와 하드웨어 루트오브트러스트로 설비망을 보호. 고장률 -10%</p><div class="rd-meta"><span class="rd-cost">💰 $700M</span><span class="rd-duration">⏱ 24개월</span><span class="rd-year">📅 2042</span></div><div class="rd-requires">선행: <a href="#rd-zero_trust">zero_trust</a>, <a href="#rd-quantum_sim">quantum_sim</a></div><div class="rd-effect">고장률 -10%</div></div>
+
+      </div>
+
+      <!-- ===== sim (8) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">sim &mdash; 시뮬레이션 <span class="category-badge badge-cyan">8개</span></h3>
+      <div class="cat-objective">실제 팹에 반영하기 전에 가상으로 검증해 시행착오 비용을 줄이는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-tcad_sim"><div class="rd-header"><span class="rd-icon">🧮</span><div class="rd-title"><h5>TCAD 공정 시뮬레이션</h5><span class="rd-id">tcad_sim</span></div><span class="category-badge badge-cyan">sim</span></div><p class="rd-desc">반도체 소자의 물리적 특성을 시뮬레이션하여 실험 횟수를 대폭 절감. 연구속도 +15%</p><div class="rd-meta"><span class="rd-cost">💰 $40M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">연구속도 +15%</div></div>
+
+        <div class="rd-card" id="rd-eda_tools"><div class="rd-header"><span class="rd-icon">📐</span><div class="rd-title"><h5>EDA 툴 라이선스</h5><span class="rd-id">eda_tools</span></div><span class="category-badge badge-cyan">sim</span></div><p class="rd-desc">Synopsys/Cadence급 EDA 라이선스로 칩 설계·검증 자동화. 연구속도 +20%</p><div class="rd-meta"><span class="rd-cost">💰 $100M</span><span class="rd-duration">⏱ 12개월</span><span class="rd-year">📅 2014</span></div><div class="rd-requires">선행: <a href="#rd-dx_plm">dx_plm</a></div><div class="rd-effect">연구속도 +20%</div></div>
+
+        <div class="rd-card" id="rd-litho_sim"><div class="rd-header"><span class="rd-icon">🔬</span><div class="rd-title"><h5>리소 시뮬레이션</h5><span class="rd-id">litho_sim</span></div><span class="category-badge badge-cyan">sim</span></div><p class="rd-desc">리소그래피 공정을 가상으로 시뮬레이션하여 마스크 설계 최적화. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $50M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2016</span></div><div class="rd-requires">선행: <a href="#rd-tcad_sim">tcad_sim</a></div><div class="rd-effect">수율 +2%</div></div>
+
+        <div class="rd-card" id="rd-cfd_thermal"><div class="rd-header"><span class="rd-icon">🌡️</span><div class="rd-title"><h5>열유체 시뮬레이션</h5><span class="rd-id">cfd_thermal</span></div><span class="category-badge badge-cyan">sim</span></div><p class="rd-desc">설비 내부 열 분포를 유체역학 시뮬레이션으로 예측하여 냉각 최적화. 고장률 -5%</p><div class="rd-meta"><span class="rd-cost">💰 $30M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2014</span></div><div class="rd-requires">선행: <a href="#rd-tcad_sim">tcad_sim</a></div><div class="rd-effect">고장률 -5%</div></div>
+
+        <div class="rd-card" id="rd-digital_twin"><div class="rd-header"><span class="rd-icon">🔮</span><div class="rd-title"><h5>디지털 트윈</h5><span class="rd-id">digital_twin</span></div><span class="category-badge badge-cyan">sim</span></div><p class="rd-desc">실제 팹의 디지털 복제본으로 공정 변경을 가상 검증. 생산속도 +15%</p><div class="rd-meta"><span class="rd-cost">💰 $150M</span><span class="rd-duration">⏱ 20개월</span><span class="rd-year">📅 2022</span></div><div class="rd-requires">선행: <a href="#rd-dx_mes">dx_mes</a></div><div class="rd-effect">생산속도 +15%</div></div>
+
+        <div class="rd-card" id="rd-quantum_sim"><div class="rd-header"><span class="rd-icon">⚛️</span><div class="rd-title"><h5>양자 시뮬레이션</h5><span class="rd-id">quantum_sim</span></div><span class="category-badge badge-cyan">sim</span></div><p class="rd-desc">양자 컴퓨터로 분자 수준의 공정 시뮬레이션을 수행. 수율 +5%</p><div class="rd-meta"><span class="rd-cost">💰 $800M</span><span class="rd-duration">⏱ 36개월</span><span class="rd-year">📅 2030</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">수율 +5%</div></div>
+
+        <div class="rd-card" id="rd-atomistic_tcad"><div class="rd-header"><span class="rd-icon">🧪</span><div class="rd-title"><h5>원자수준 TCAD</h5><span class="rd-id">atomistic_tcad</span></div><span class="category-badge badge-cyan">sim</span></div><p class="rd-desc">원자 단위 소자·재료 시뮬레이션으로 실험 횟수를 더 줄입니다. 연구속도 +18%</p><div class="rd-meta"><span class="rd-cost">💰 $750M</span><span class="rd-duration">⏱ 24개월</span><span class="rd-year">📅 2033</span></div><div class="rd-requires">선행: <a href="#rd-tcad_sim">tcad_sim</a>, <a href="#rd-quantum_sim">quantum_sim</a></div><div class="rd-effect">연구속도 +18%</div></div>
+
+        <div class="rd-card" id="rd-fab_shadow_model"><div class="rd-header"><span class="rd-icon">🪞</span><div class="rd-title"><h5>실시간 Fab 섀도우 모델</h5><span class="rd-id">fab_shadow_model</span></div><span class="category-badge badge-cyan">sim</span></div><p class="rd-desc">전 팹 상태를 초단위로 복제해 램프업과 병목을 사전 검증. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $1.1B</span><span class="rd-duration">⏱ 30개월</span><span class="rd-year">📅 2038</span></div><div class="rd-requires">선행: <a href="#rd-digital_twin">digital_twin</a>, <a href="#rd-atomistic_tcad">atomistic_tcad</a></div><div class="rd-effect">수율 +3%</div></div>
+
+      </div>
+
+      <!-- ===== material (5) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">material &mdash; 소재 <span class="category-badge badge-amber">5개</span></h3>
+      <div class="cat-objective">웨이퍼, 화학, 가스, 재료 스택 자체를 개선해 공정 한계를 뒤로 미루는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-upw_upgrade"><div class="rd-header"><span class="rd-icon">💧</span><div class="rd-title"><h5>초순수 시스템 업그레이드</h5><span class="rd-id">upw_upgrade</span></div><span class="category-badge badge-amber">material</span></div><p class="rd-desc">18.2MΩ·cm 이상의 초순수를 생산하는 UPW 시스템 업그레이드. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $40M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">수율 +2%</div></div>
+
+        <div class="rd-card" id="rd-adv_chemicals"><div class="rd-header"><span class="rd-icon">🧪</span><div class="rd-title"><h5>고순도 화학약품</h5><span class="rd-id">adv_chemicals</span></div><span class="category-badge badge-amber">material</span></div><p class="rd-desc">불순물 1ppb 미만의 초고순도 세정액·감광액으로 공정 결함 감소. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $60M</span><span class="rd-duration">⏱ 12개월</span><span class="rd-year">📅 2015</span></div><div class="rd-requires">선행: <a href="#rd-yield_eng">yield_eng</a></div><div class="rd-effect">수율 +3%</div></div>
+
+        <div class="rd-card" id="rd-wafer_450mm"><div class="rd-header"><span class="rd-icon">💿</span><div class="rd-title"><h5>450mm 웨이퍼 전환</h5><span class="rd-id">wafer_450mm</span></div><span class="category-badge badge-amber">material</span></div><p class="rd-desc">300mm에서 450mm 웨이퍼로 전환하여 웨이퍼당 다이 수 2.25배 증가. 생산속도 +25%</p><div class="rd-meta"><span class="rd-cost">💰 $800M</span><span class="rd-duration">⏱ 36개월</span><span class="rd-year">📅 2025</span></div><div class="rd-requires">선행: <a href="#rd-smart_factory">smart_factory</a></div><div class="rd-effect">생산속도 +25%</div></div>
+
+        <div class="rd-card" id="rd-materials_informatics"><div class="rd-header"><span class="rd-icon">🧬</span><div class="rd-title"><h5>소재 인포매틱스</h5><span class="rd-id">materials_informatics</span></div><span class="category-badge badge-amber">material</span></div><p class="rd-desc">조성·불순물·계면 특성을 AI로 탐색해 차세대 소재 도입을 가속. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $520M</span><span class="rd-duration">⏱ 22개월</span><span class="rd-year">📅 2034</span></div><div class="rd-requires">선행: <a href="#rd-adv_chemicals">adv_chemicals</a>, <a href="#rd-atomistic_tcad">atomistic_tcad</a></div><div class="rd-effect">수율 +3%</div></div>
+
+        <div class="rd-card" id="rd-two_d_stack"><div class="rd-header"><span class="rd-icon">🧱</span><div class="rd-title"><h5>2D 소재 적층 채널</h5><span class="rd-id">two_d_stack</span></div><span class="category-badge badge-amber">material</span></div><p class="rd-desc">2D 반도체 채널과 저온 적층 스택으로 초미세 누설을 억제. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $1.6B</span><span class="rd-duration">⏱ 34개월</span><span class="rd-year">📅 2040</span></div><div class="rd-requires">선행: <a href="#rd-materials_informatics">materials_informatics</a></div><div class="rd-effect">수율 +3%</div></div>
+
+      </div>
+
+      <!-- ===== equip (4) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">equip &mdash; 설비 <span class="category-badge badge-cyan">4개</span></h3>
+      <div class="cat-objective">장비 안정성과 셋업 효율을 높여 고장과 비가동 손실을 줄이는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-spare_parts_mgmt"><div class="rd-header"><span class="rd-icon">🔧</span><div class="rd-title"><h5>예비부품 관리 시스템</h5><span class="rd-id">spare_parts_mgmt</span></div><span class="category-badge badge-cyan">equip</span></div><p class="rd-desc">예비부품 재고를 최적 수준으로 관리하여 수리 대기 시간 최소화. 고장률 -15%</p><div class="rd-meta"><span class="rd-cost">💰 $15M</span><span class="rd-duration">⏱ 5개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">고장률 -15%</div></div>
+
+        <div class="rd-card" id="rd-remote_diag"><div class="rd-header"><span class="rd-icon">📡</span><div class="rd-title"><h5>원격 진단 시스템</h5><span class="rd-id">remote_diag</span></div><span class="category-badge badge-cyan">equip</span></div><p class="rd-desc">설비에 원격 접속하여 실시간 진단·파라미터 조정. 현장 출동 시간 절감. 고장률 -20%</p><div class="rd-meta"><span class="rd-cost">💰 $25M</span><span class="rd-duration">⏱ 7개월</span><span class="rd-year">📅 2012</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">고장률 -20%</div></div>
+
+        <div class="rd-card" id="rd-equip_recipe_opt"><div class="rd-header"><span class="rd-icon">📝</span><div class="rd-title"><h5>설비 레시피 최적화</h5><span class="rd-id">equip_recipe_opt</span></div><span class="category-badge badge-cyan">equip</span></div><p class="rd-desc">DOE(실험계획법)로 설비 파라미터를 미세 조정하여 처리 속도 개선. 생산속도 +8%</p><div class="rd-meta"><span class="rd-cost">💰 $35M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2013</span></div><div class="rd-requires">선행: <a href="#rd-dx_apc">dx_apc</a></div><div class="rd-effect">생산속도 +8%</div></div>
+
+        <div class="rd-card" id="rd-self_calibrating_tools"><div class="rd-header"><span class="rd-icon">🛠️</span><div class="rd-title"><h5>자가보정 설비군</h5><span class="rd-id">self_calibrating_tools</span></div><span class="category-badge badge-cyan">equip</span></div><p class="rd-desc">메트롤로지 피드백으로 장비가 드리프트를 스스로 보정. 고장률 -12%</p><div class="rd-meta"><span class="rd-cost">💰 $480M</span><span class="rd-duration">⏱ 20개월</span><span class="rd-year">📅 2032</span></div><div class="rd-requires">선행: <a href="#rd-remote_diag">remote_diag</a>, <a href="#rd-ai_quality_pred">ai_quality_pred</a></div><div class="rd-effect">고장률 -12%</div></div>
+
+      </div>
+
+      <!-- ===== logistics (5) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">logistics &mdash; 물류 <span class="category-badge badge-amber">5개</span></h3>
+      <div class="cat-objective">FOUP, 창고, 반송 흐름을 매끈하게 만들어 WIP 병목을 줄이는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-warehouse_auto"><div class="rd-header"><span class="rd-icon">📦</span><div class="rd-title"><h5>창고 자동화</h5><span class="rd-id">warehouse_auto</span></div><span class="category-badge badge-amber">logistics</span></div><p class="rd-desc">자동 적재/출하 로봇과 컨베이어로 창고 입출고 자동화. 생산속도 +5%</p><div class="rd-meta"><span class="rd-cost">💰 $25M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2012</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">생산속도 +5%</div></div>
+
+        <div class="rd-card" id="rd-oht_upgrade"><div class="rd-header"><span class="rd-icon">🚂</span><div class="rd-title"><h5>OHT 경로 최적화</h5><span class="rd-id">oht_upgrade</span></div><span class="category-badge badge-amber">logistics</span></div><p class="rd-desc">OHT 경로 알고리즘을 개선하여 교차·대기 시간 최소화. 로봇 효율 +15%</p><div class="rd-meta"><span class="rd-cost">💰 $45M</span><span class="rd-duration">⏱ 12개월</span><span class="rd-year">📅 2014</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">로봇 효율 +15%</div></div>
+
+        <div class="rd-card" id="rd-agv_fleet"><div class="rd-header"><span class="rd-icon">🚗</span><div class="rd-title"><h5>AGV 무인반송 확대</h5><span class="rd-id">agv_fleet</span></div><span class="category-badge badge-amber">logistics</span></div><p class="rd-desc">자율주행 무인반송차(AGV)를 도입하여 바닥 물류 자동화. 로봇 효율 +10%</p><div class="rd-meta"><span class="rd-cost">💰 $35M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2018</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">로봇 효율 +10%</div></div>
+
+        <div class="rd-card" id="rd-amr_swarm"><div class="rd-header"><span class="rd-icon">🤖</span><div class="rd-title"><h5>AMR 스웜 물류</h5><span class="rd-id">amr_swarm</span></div><span class="category-badge badge-amber">logistics</span></div><p class="rd-desc">자율주행 반송 로봇이 군집 제어로 병목 구간을 회피. 로봇 효율 +12%</p><div class="rd-meta"><span class="rd-cost">💰 $380M</span><span class="rd-duration">⏱ 18개월</span><span class="rd-year">📅 2031</span></div><div class="rd-requires">선행: <a href="#rd-agv_fleet">agv_fleet</a>, <a href="#rd-private_5g">private_5g</a></div><div class="rd-effect">로봇 효율 +12%</div></div>
+
+        <div class="rd-card" id="rd-interfab_orchestration"><div class="rd-header"><span class="rd-icon">🔀</span><div class="rd-title"><h5>인터팹 물류 오케스트레이션</h5><span class="rd-id">interfab_orchestration</span></div><span class="category-badge badge-amber">logistics</span></div><p class="rd-desc">복수 팹의 재공과 자재 흐름을 통합 스케줄링. 생산속도 +7%</p><div class="rd-meta"><span class="rd-cost">💰 $850M</span><span class="rd-duration">⏱ 26개월</span><span class="rd-year">📅 2040</span></div><div class="rd-requires">선행: <a href="#rd-amr_swarm">amr_swarm</a>, <a href="#rd-digital_thread">digital_thread</a></div><div class="rd-effect">생산속도 +7%</div></div>
+
+      </div>
+
+      <!-- ===== quality (5) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">quality &mdash; 품질 <span class="category-badge badge-mint">5개</span></h3>
+      <div class="cat-objective">불량을 더 빨리 찾고 편차를 더 촘촘하게 제어해 고객 품질을 지키는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-yield_eng"><div class="rd-header"><span class="rd-icon">📈</span><div class="rd-title"><h5>수율 엔지니어링</h5><span class="rd-id">yield_eng</span></div><span class="category-badge badge-mint">quality</span></div><p class="rd-desc">수율 데이터를 체계적으로 분석하는 전문 팀 구축. 수율 +5%</p><div class="rd-meta"><span class="rd-cost">💰 $80M</span><span class="rd-duration">⏱ 14개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">수율 +5%</div></div>
+
+        <div class="rd-card" id="rd-spc_system"><div class="rd-header"><span class="rd-icon">📊</span><div class="rd-title"><h5>SPC 통계적 공정관리</h5><span class="rd-id">spc_system</span></div><span class="category-badge badge-mint">quality</span></div><p class="rd-desc">관리도(X-bar, R차트)로 공정 변동을 실시간 감시하고 이탈 시 경고. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $20M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">수율 +2%</div></div>
+
+        <div class="rd-card" id="rd-burn_in_test"><div class="rd-header"><span class="rd-icon">🔥</span><div class="rd-title"><h5>Burn-in 테스트 강화</h5><span class="rd-id">burn_in_test</span></div><span class="category-badge badge-mint">quality</span></div><p class="rd-desc">고온·고전압 스트레스로 초기 불량 칩을 출하 전에 걸러내는 테스트. 수율 +1%</p><div class="rd-meta"><span class="rd-cost">💰 $15M</span><span class="rd-duration">⏱ 5개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">수율 +1%</div></div>
+
+        <div class="rd-card" id="rd-inline_metrology"><div class="rd-header"><span class="rd-icon">🔍</span><div class="rd-title"><h5>인라인 계측 강화</h5><span class="rd-id">inline_metrology</span></div><span class="category-badge badge-mint">quality</span></div><p class="rd-desc">공정 중간에 막두께·선폭을 실시간 측정하여 불량을 조기 발견. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $50M</span><span class="rd-duration">⏱ 12개월</span><span class="rd-year">📅 2016</span></div><div class="rd-requires">선행: <a href="#rd-dx_apc">dx_apc</a></div><div class="rd-effect">수율 +3%</div></div>
+
+        <div class="rd-card" id="rd-inline_xray_ct"><div class="rd-header"><span class="rd-icon">🩻</span><div class="rd-title"><h5>인라인 X-ray CT</h5><span class="rd-id">inline_xray_ct</span></div><span class="category-badge badge-mint">quality</span></div><p class="rd-desc">적층 패키지 내부 결함을 비파괴로 검사해 조기 선별. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $920M</span><span class="rd-duration">⏱ 24개월</span><span class="rd-year">📅 2037</span></div><div class="rd-requires">선행: <a href="#rd-inline_metrology">inline_metrology</a>, <a href="#rd-hybrid_bonding">hybrid_bonding</a></div><div class="rd-effect">수율 +3%</div></div>
+
+      </div>
+
+      <!-- ===== energy (6) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">energy &mdash; 에너지 <span class="category-badge badge-amber">6개</span></h3>
+      <div class="cat-objective">전력 비용과 환경 부담을 낮춰 대형 팹 운영비를 줄이는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-green_fab"><div class="rd-header"><span class="rd-icon">🌿</span><div class="rd-title"><h5>친환경 팹</h5><span class="rd-id">green_fab</span></div><span class="category-badge badge-amber">energy</span></div><p class="rd-desc">고효율 HVAC, LED 조명, 절전 모터 등으로 팹 전체 에너지 효율 개선. 전기료 -20%</p><div class="rd-meta"><span class="rd-cost">💰 $60M</span><span class="rd-duration">⏱ 14개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">전기료 -20%</div></div>
+
+        <div class="rd-card" id="rd-solar_panels"><div class="rd-header"><span class="rd-icon">☀️</span><div class="rd-title"><h5>태양광 발전 설비</h5><span class="rd-id">solar_panels</span></div><span class="category-badge badge-amber">energy</span></div><p class="rd-desc">팹 옥상/부지에 태양광 패널을 설치하여 자체 전력 생산. 전기료 -15%</p><div class="rd-meta"><span class="rd-cost">💰 $45M</span><span class="rd-duration">⏱ 12개월</span><span class="rd-year">📅 2015</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">전기료 -15%</div></div>
+
+        <div class="rd-card" id="rd-heat_recovery"><div class="rd-header"><span class="rd-icon">♻️</span><div class="rd-title"><h5>폐열 회수 시스템</h5><span class="rd-id">heat_recovery</span></div><span class="category-badge badge-amber">energy</span></div><p class="rd-desc">설비 폐열을 히트펌프로 회수하여 냉난방·초순수 가열에 재활용. 전기료 -10%</p><div class="rd-meta"><span class="rd-cost">💰 $25M</span><span class="rd-duration">⏱ 10개월</span><span class="rd-year">📅 2018</span></div><div class="rd-requires">선행: <a href="#rd-green_fab">green_fab</a></div><div class="rd-effect">전기료 -10%</div></div>
+
+        <div class="rd-card" id="rd-carbon_capture"><div class="rd-header"><span class="rd-icon">🌲</span><div class="rd-title"><h5>탄소 포집 기술</h5><span class="rd-id">carbon_capture</span></div><span class="category-badge badge-amber">energy</span></div><p class="rd-desc">배기가스에서 CO₂를 포집·저장하는 CCUS 기술 도입. 전기료 -5%</p><div class="rd-meta"><span class="rd-cost">💰 $80M</span><span class="rd-duration">⏱ 18개월</span><span class="rd-year">📅 2022</span></div><div class="rd-requires">선행: <a href="#rd-green_fab">green_fab</a></div><div class="rd-effect">전기료 -5%</div></div>
+
+        <div class="rd-card" id="rd-smart_microgrid"><div class="rd-header"><span class="rd-icon">🔋</span><div class="rd-title"><h5>스마트 마이크로그리드</h5><span class="rd-id">smart_microgrid</span></div><span class="category-badge badge-amber">energy</span></div><p class="rd-desc">자체 발전, ESS, 수요반응을 통합 제어해 전력 비용을 낮춥니다. 전기료 -12%</p><div class="rd-meta"><span class="rd-cost">💰 $420M</span><span class="rd-duration">⏱ 20개월</span><span class="rd-year">📅 2032</span></div><div class="rd-requires">선행: <a href="#rd-solar_panels">solar_panels</a>, <a href="#rd-ai_energy_opt">ai_energy_opt</a></div><div class="rd-effect">전기료 -12%</div></div>
+
+        <div class="rd-card" id="rd-fusion_ppa"><div class="rd-header"><span class="rd-icon">⚡</span><div class="rd-title"><h5>핵융합 PPA</h5><span class="rd-id">fusion_ppa</span></div><span class="category-badge badge-amber">energy</span></div><p class="rd-desc">장기 핵융합 전력 계약으로 초대형 팹의 전력 단가를 안정화. 전기료 -15%</p><div class="rd-meta"><span class="rd-cost">💰 $1.8B</span><span class="rd-duration">⏱ 30개월</span><span class="rd-year">📅 2038</span></div><div class="rd-requires">선행: <a href="#rd-smart_microgrid">smart_microgrid</a>, <a href="#rd-carbon_capture">carbon_capture</a></div><div class="rd-effect">전기료 -15%</div></div>
+
+      </div>
+
+      <!-- ===== manufacturing (6) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">manufacturing &mdash; 제조 기술 <span class="category-badge badge-cyan">6개</span></h3>
+      <div class="cat-objective">패터닝, 적층, 패키징 구조를 바꿔 제품 경쟁력 자체를 끌어올리는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-multi_pattern"><div class="rd-header"><span class="rd-icon">🧬</span><div class="rd-title"><h5>다중 패터닝 기술</h5><span class="rd-id">multi_pattern</span></div><span class="category-badge badge-cyan">manufacturing</span></div><p class="rd-desc">SADP/SAQP 다중 패터닝으로 EUV 없이도 미세 패턴 해상도 확보. 수율 +4%</p><div class="rd-meta"><span class="rd-cost">💰 $120M</span><span class="rd-duration">⏱ 18개월</span><span class="rd-year">📅 2020</span></div><div class="rd-requires">선행: <a href="#rd-yield_eng">yield_eng</a></div><div class="rd-effect">수율 +4%</div></div>
+
+        <div class="rd-card" id="rd-chiplet_design"><div class="rd-header"><span class="rd-icon">🧩</span><div class="rd-title"><h5>칩릿 설계 기술</h5><span class="rd-id">chiplet_design</span></div><span class="category-badge badge-cyan">manufacturing</span></div><p class="rd-desc">하나의 큰 다이를 여러 작은 칩릿으로 분할하여 수율과 유연성 향상. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $100M</span><span class="rd-duration">⏱ 16개월</span><span class="rd-year">📅 2022</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">수율 +3%</div></div>
+
+        <div class="rd-card" id="rd-hybrid_bonding"><div class="rd-header"><span class="rd-icon">📦</span><div class="rd-title"><h5>하이브리드 본딩</h5><span class="rd-id">hybrid_bonding</span></div><span class="category-badge badge-cyan">manufacturing</span></div><p class="rd-desc">범프 없이 구리 패드를 직접 접합하는 3D 적층 기술. 수율 +3%</p><div class="rd-meta"><span class="rd-cost">💰 $110M</span><span class="rd-duration">⏱ 18개월</span><span class="rd-year">📅 2024</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">수율 +3%</div></div>
+
+        <div class="rd-card" id="rd-backside_power"><div class="rd-header"><span class="rd-icon">⚡</span><div class="rd-title"><h5>백사이드 전력 배선</h5><span class="rd-id">backside_power</span></div><span class="category-badge badge-cyan">manufacturing</span></div><p class="rd-desc">칩 후면에 전력 배선을 배치하여 신호 경로 최적화. 수율 +2%</p><div class="rd-meta"><span class="rd-cost">💰 $150M</span><span class="rd-duration">⏱ 20개월</span><span class="rd-year">📅 2026</span></div><div class="rd-requires">선행: <a href="#rd-chiplet_design">chiplet_design</a></div><div class="rd-effect">수율 +2%</div></div>
+
+        <div class="rd-card" id="rd-glass_core_pkg"><div class="rd-header"><span class="rd-icon">🪟</span><div class="rd-title"><h5>글라스 코어 패키징</h5><span class="rd-id">glass_core_pkg</span></div><span class="category-badge badge-cyan">manufacturing</span></div><p class="rd-desc">대형 인터포저와 글라스 코어 기판으로 칩렛 집적도를 높입니다. 생산속도 +6%</p><div class="rd-meta"><span class="rd-cost">💰 $620M</span><span class="rd-duration">⏱ 24개월</span><span class="rd-year">📅 2033</span></div><div class="rd-requires">선행: <a href="#rd-chiplet_design">chiplet_design</a>, <a href="#rd-hybrid_bonding">hybrid_bonding</a></div><div class="rd-effect">생산속도 +6%</div></div>
+
+        <div class="rd-card" id="rd-co_packaged_optics"><div class="rd-header"><span class="rd-icon">💡</span><div class="rd-title"><h5>공패키지 광인터커넥트</h5><span class="rd-id">co_packaged_optics</span></div><span class="category-badge badge-cyan">manufacturing</span></div><p class="rd-desc">광입출력을 패키지 내부에 통합해 AI 시스템 대역폭 병목을 줄입니다. 생산속도 +8%</p><div class="rd-meta"><span class="rd-cost">💰 $1.4B</span><span class="rd-duration">⏱ 32개월</span><span class="rd-year">📅 2042</span></div><div class="rd-requires">선행: <a href="#rd-glass_core_pkg">glass_core_pkg</a>, <a href="#rd-backside_power">backside_power</a></div><div class="rd-effect">생산속도 +8%</div></div>
+
+      </div>
+
+      <!-- ===== marketing (2) ===== -->
+      <h3 class="fade-in" style="margin-top:32px;">marketing &mdash; 마케팅 <span class="category-badge badge-amber">2개</span></h3>
+      <div class="cat-objective">더 좋은 고객과 더 큰 시장을 확보해 주문 단가와 안정성을 높이는 연구입니다.</div>
+      <div class="rd-grid fade-in">
+
+        <div class="rd-card" id="rd-marketing_team"><div class="rd-header"><span class="rd-icon">📣</span><div class="rd-title"><h5>마케팅팀 구축</h5><span class="rd-id">marketing_team</span></div><span class="category-badge badge-amber">marketing</span></div><p class="rd-desc">전담 영업팀을 구성하여 국내 중견 고객사를 적극 발굴. Tier 1 고객 해금</p><div class="rd-meta"><span class="rd-cost">💰 $10M</span><span class="rd-duration">⏱ 4개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: 없음</div><div class="rd-effect">Tier 1 고객 해금</div></div>
+
+        <div class="rd-card" id="rd-marketing_global"><div class="rd-header"><span class="rd-icon">🌍</span><div class="rd-title"><h5>글로벌 마케팅</h5><span class="rd-id">marketing_global</span></div><span class="category-badge badge-amber">marketing</span></div><p class="rd-desc">해외 법인·전시회·기술 세미나로 글로벌 대형 고객을 확보. Tier 2 고객 해금</p><div class="rd-meta"><span class="rd-cost">💰 $40M</span><span class="rd-duration">⏱ 8개월</span><span class="rd-year">📅 2010</span></div><div class="rd-requires">선행: <a href="#rd-marketing_team">marketing_team</a></div><div class="rd-effect">Tier 2 고객 해금</div></div>
+
+      </div>
 
     </div>
   </section>
