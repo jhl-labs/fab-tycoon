@@ -4,9 +4,135 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>게임 매뉴얼 — Fab Tycoon</title>
-  <meta name="description" content="Fab Tycoon 게임 매뉴얼. 핵심 시스템, 팹 관리, 설비, 생산, 인력, 경제, R&D, 경쟁사, 키보드 단축키 정보.">
+  <meta name="description" content="Fab Tycoon 게임 매뉴얼. 팹 시스템, 설비, 생산, 인력, 품질, ESG, 공급망, 경쟁사, 시대 이벤트 등 모든 시스템 상세 설명.">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🏭</text></svg>">
+  <style>
+    details { margin-bottom: 8px; }
+    details summary {
+      cursor: pointer;
+      padding: 14px 20px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-bright);
+      transition: all var(--transition);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::before {
+      content: '\25B6';
+      font-size: 0.7rem;
+      color: var(--mint);
+      transition: transform var(--transition);
+      flex-shrink: 0;
+    }
+    details[open] summary::before { transform: rotate(90deg); }
+    details summary:hover { border-color: var(--border-hover); background: rgba(105,214,181,0.04); }
+    details .details-body {
+      padding: 20px 24px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      background: var(--panel);
+    }
+    .manual-toc {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+      margin: 24px 0 48px;
+    }
+    .manual-toc a {
+      display: block;
+      padding: 10px 16px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      transition: all var(--transition);
+    }
+    .manual-toc a:hover {
+      border-color: var(--border-hover);
+      color: var(--mint);
+      background: rgba(105,214,181,0.04);
+    }
+    .manual-toc a span { color: var(--mint); font-weight: 600; margin-right: 6px; }
+    .loop-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      align-items: center;
+      margin: 16px 0;
+    }
+    .loop-step {
+      padding: 8px 14px;
+      background: var(--glow-mint);
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: var(--mint);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .loop-arrow { color: var(--text-muted); padding: 0 4px; font-size: 0.8rem; }
+    .badge-mint {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--glow-mint);
+      color: var(--mint);
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .badge-amber {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--glow-amber);
+      color: var(--amber);
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .badge-cyan {
+      display: inline-block;
+      padding: 2px 8px;
+      background: rgba(125,218,240,0.12);
+      color: var(--cyan);
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .info-box {
+      padding: 16px 20px;
+      border-left: 3px solid var(--mint);
+      background: rgba(105,214,181,0.06);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    .warn-box {
+      padding: 16px 20px;
+      border-left: 3px solid var(--amber);
+      background: rgba(247,184,93,0.06);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 64px 0;
+    }
+  </style>
 </head>
 <body>
 
@@ -36,25 +162,128 @@
     </div>
   </div>
 
-  <!-- Game Overview -->
-  <section class="section" style="padding-top: 0;">
+  <!-- Table of Contents -->
+  <section class="section" style="padding-top: 0; padding-bottom: 0;">
+    <div class="container fade-in">
+      <div class="manual-toc">
+        <a href="#overview"><span>01</span> 게임 개요</a>
+        <a href="#modes"><span>02</span> 게임 모드</a>
+        <a href="#time"><span>03</span> 시간 구조</a>
+        <a href="#core-loop"><span>04</span> 코어 플레이 루프</a>
+        <a href="#fab"><span>05</span> 팹 시스템</a>
+        <a href="#equipment"><span>06</span> 설비 시스템</a>
+        <a href="#production"><span>07</span> 생산 시스템</a>
+        <a href="#workforce"><span>08</span> 인력 시스템</a>
+        <a href="#quality"><span>09</span> 품질/인증 시스템</a>
+        <a href="#esg"><span>10</span> ESG 시스템</a>
+        <a href="#supply"><span>11</span> 공급망 관리</a>
+        <a href="#facility"><span>12</span> 시설 관리</a>
+        <a href="#competitors"><span>13</span> 경쟁사</a>
+        <a href="#events"><span>14</span> 시대 이벤트</a>
+        <a href="#brand"><span>15</span> 브랜드/마케팅</a>
+        <a href="#save"><span>16</span> 저장 시스템</a>
+        <a href="#controls"><span>17</span> 키보드 단축키</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. Game Overview -->
+  <section class="section" id="overview" style="padding-top: 24px;">
     <div class="container">
       <div class="manual-section fade-in">
-        <h2><span class="sec-dot"></span> 게임 개요</h2>
+        <h2><span class="sec-dot"></span> 1. 게임 개요</h2>
         <div class="card" style="cursor: default; transform: none;">
           <p>
-            <strong>Fab Tycoon</strong>은 2010~2050년 반도체 산업을 경험하는 경영 시뮬레이션 게임입니다.
+            <strong class="text-mint">Fab Tycoon</strong>은 <strong>2010~2050년</strong> 반도체 산업을 경험하는 경영 시뮬레이션 게임입니다.
             플레이어는 반도체 팹(Fabrication Plant)의 CEO로서 설비 투자, 인력 관리, R&D, 고객 주문 관리 등
             종합적인 경영 판단을 내려 세계 최고의 반도체 기업을 만들어야 합니다.
           </p>
-          <div class="mt-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+
+          <h4 class="text-cyan mt-3 mb-1">4가지 게임성 레이어</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
             <div>
-              <h4 class="text-mint mb-1">시간 구조</h4>
-              <p class="text-muted">게임 내 1개월 = 실제 72초<br>2010년 1월부터 시작, 최대 2050년까지</p>
+              <p><strong class="text-mint">1. 팹 생산 시뮬레이션</strong><br>
+              <span class="text-muted">설비 배치, FOUP 관리, 공정 수율 최적화</span></p>
             </div>
             <div>
-              <h4 class="text-amber mb-1">게임 모드</h4>
-              <p class="text-muted"><strong>Tycoon Mode:</strong> $500M, 빈 부지에서 시작<br><strong>Full Fab Mode:</strong> $2B, 완성된 팹으로 시작</p>
+              <p><strong class="text-amber">2. 회사 경영</strong><br>
+              <span class="text-muted">인사, 재무, 품질, ESG 종합 관리</span></p>
+            </div>
+            <div>
+              <p><strong class="text-cyan">3. 기술 로드맵</strong><br>
+              <span class="text-muted">R&D 투자, 차세대 노드 개발, 테크트리 진행</span></p>
+            </div>
+            <div>
+              <p><strong class="text-mint">4. 산업 전략</strong><br>
+              <span class="text-muted">경쟁사 대응, 시장 점유율, 멀티팹 확장</span></p>
+            </div>
+          </div>
+
+          <div class="info-box mt-3">
+            <strong class="text-mint">최종 목표:</strong> 2050년 캠페인 점수 최대화 &mdash; 시장 지배력, 기술 리더십, 팹 포트폴리오, 재무 성과를 종합 평가합니다.
+          </div>
+
+          <div class="warn-box">
+            <strong class="text-amber">실패 조건:</strong> 자금이 <strong>-$50M 이하</strong>로 떨어지면 즉시 게임 오버. <strong>$10M 미만</strong>이면 파산 경고가 표시됩니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Game Modes -->
+  <section class="section" id="modes" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 2. 게임 모드</h2>
+        <div class="modes-grid">
+          <div class="mode-card tycoon">
+            <span class="mode-tag">Tycoon Mode</span>
+            <h3>타이쿤 모드</h3>
+            <p class="mode-money">시작 자금: $500M</p>
+            <p>경영 중심 모드. 빈 부지에서 시작하여 팹을 직접 건설하고 키워나갑니다. 전략적 투자와 타이밍이 핵심입니다.</p>
+          </div>
+          <div class="mode-card fullfab">
+            <span class="mode-tag">Full Fab Mode</span>
+            <h3>풀팹 모드</h3>
+            <p class="mode-money">시작 자금: $2.0B</p>
+            <p>완성된 팹과 함께 시작합니다. 초기 인력, OHT 3대, FOUP 20개가 포함되며, 28nm Logic 레시피가 활성화된 상태입니다. 생산 최적화에 집중할 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Time Structure -->
+  <section class="section" id="time" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 3. 시간 구조</h2>
+        <div class="card" style="cursor: default; transform: none;">
+          <div class="stats-bar" style="margin-bottom: 0;">
+            <div class="stat-item">
+              <div class="stat-value">24h</div>
+              <div class="stat-label">= 1 게임일</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">30일</div>
+              <div class="stat-label">= 1 게임월</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">360일</div>
+              <div class="stat-label">= 1 게임년</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">~72초</div>
+              <div class="stat-label">= 실제 1게임월 (기본속도)</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">2010</div>
+              <div class="stat-label">시작 연도</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">2050</div>
+              <div class="stat-label">종료 연도 (40년 캠페인)</div>
             </div>
           </div>
         </div>
@@ -62,235 +291,631 @@
     </div>
   </section>
 
-  <!-- Core Systems -->
-  <section class="section" style="padding-top: 0;">
+  <!-- 4. Core Play Loop -->
+  <section class="section" id="core-loop" style="padding-top: 0;">
     <div class="container">
-      <div class="section-header fade-in">
-        <span class="section-label">Core Systems</span>
-        <h2>핵심 시스템</h2>
-        <p>6가지 핵심 시스템으로 구성된 경영 시뮬레이션</p>
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 4. 코어 플레이 루프</h2>
+        <div class="card" style="cursor: default; transform: none;">
+          <p class="mb-2">게임은 10단계 순환 구조로 진행됩니다.</p>
+          <div class="loop-steps">
+            <span class="loop-step">1. 레시피 선택</span><span class="loop-arrow">&rarr;</span>
+            <span class="loop-step">2. FOUP 투입</span><span class="loop-arrow">&rarr;</span>
+            <span class="loop-step">3. 설비가 공정 수행</span><span class="loop-arrow">&rarr;</span>
+            <span class="loop-step">4. 완성 다이 판매/주문 납품</span><span class="loop-arrow">&rarr;</span>
+            <span class="loop-step">5. 수익으로 설비 증설</span><span class="loop-arrow">&rarr;</span>
+            <span class="loop-step">6. R&D 투자</span><span class="loop-arrow">&rarr;</span>
+            <span class="loop-step">7. 차세대 노드 해금</span><span class="loop-arrow">&rarr;</span>
+            <span class="loop-step">8. 신규 레시피 전환</span><span class="loop-arrow">&rarr;</span>
+            <span class="loop-step">9. 멀티팹 확장</span><span class="loop-arrow">&rarr;</span>
+            <span class="loop-step">10. 시장 지배</span><span class="loop-arrow">&#x21BB;</span>
+          </div>
+          <p class="text-muted mt-2">초반에는 1~5단계 반복에 집중하고, 자금이 안정되면 6~10단계로 확장합니다.</p>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Fab Management -->
-      <div class="expand-card fade-in">
-        <button class="expand-card-header">
-          <span class="ec-icon" style="background: var(--glow-mint); color: var(--mint);">&#127981;</span>
-          <h3>팹 관리</h3>
-          <span class="ec-arrow">&#9660;</span>
-        </button>
-        <div class="expand-card-body">
-          <div class="expand-card-body-inner">
-            <p class="mb-2">6종류의 팹을 건설하고 운영할 수 있습니다. 각 팹은 전용 설비와 레시피를 가지고 있습니다.</p>
-            <div class="table-wrap">
+  <!-- 5. Fab System -->
+  <section class="section" id="fab" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 5. 팹 시스템</h2>
+        <p class="text-muted mb-2">6종의 팹을 건설하고 운영할 수 있습니다. 각 팹은 전용 설비와 레시피를 가지고 있습니다.</p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>팹 유형</th><th>건설 비용</th><th>건설 기간</th><th>해금 조건</th><th>특성</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong class="text-mint">Logic</strong></td><td>$800M</td><td>12개월</td><td>2010 (시작)</td><td>기본 파운드리 &mdash; CPU, GPU, AP, AI 가속기 생산</td></tr>
+              <tr><td><strong class="text-cyan">DRAM</strong></td><td>$600M</td><td>9개월</td><td>2010 (시작)</td><td>메모리 특화 &mdash; DDR, HBM 생산</td></tr>
+              <tr><td><strong class="text-amber">NAND</strong></td><td>$500M</td><td>9개월</td><td>2010 (시작)</td><td>저장장치 특화 &mdash; 3D NAND Flash</td></tr>
+              <tr><td><strong class="text-mint">GaN</strong></td><td>$300M</td><td>6개월</td><td>2020</td><td>전력반도체 &mdash; 전력 소자, RF 칩</td></tr>
+              <tr><td><strong class="text-cyan">Photonics</strong></td><td>$1.2B</td><td>12개월</td><td>2035 (node_photonic 필요)</td><td>광반도체 &mdash; 광 인터커넥트, 라이다</td></tr>
+              <tr><td><strong class="text-amber">Quantum</strong></td><td>$2B</td><td>18개월</td><td>2040 (node_quantum 필요)</td><td>양자칩</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <details class="mt-2">
+          <summary>팹 레이아웃 상세</summary>
+          <div class="details-body">
+            <p>각 팹은 <strong>35 x 38 그리드</strong>로 구성되며, 7개의 구역으로 나뉩니다:</p>
+            <div class="table-wrap mt-2">
               <table class="data-table">
                 <thead>
-                  <tr><th>팹 유형</th><th>건설 비용</th><th>주요 제품</th><th>언락 시기</th></tr>
+                  <tr><th>구역</th><th>배치 장비</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td><strong class="text-mint">Logic</strong></td><td>$800M</td><td>CPU, GPU, AP, AI 가속기</td><td>2010 (시작)</td></tr>
-                  <tr><td><strong class="text-cyan">DRAM</strong></td><td>$600M</td><td>DDR5, DDR6, HBM</td><td>2013</td></tr>
-                  <tr><td><strong class="text-amber">NAND</strong></td><td>$500M</td><td>3D NAND Flash</td><td>2016</td></tr>
-                  <tr><td><strong class="text-mint">GaN</strong></td><td>$300M</td><td>전력 반도체, RF 칩</td><td>2023</td></tr>
-                  <tr><td><strong class="text-cyan">Photonics</strong></td><td>$1.2B</td><td>광 인터커넥트, 라이다</td><td>2029</td></tr>
-                  <tr><td><strong class="text-amber">Quantum</strong></td><td>$2B</td><td>양자칩</td><td>2036</td></tr>
+                  <tr><td><strong class="text-mint">Diffusion Bay</strong></td><td>Diffusion Furnace, Wet Clean Station</td></tr>
+                  <tr><td><strong class="text-cyan">Photo Bay</strong></td><td>Coater/Developer, Stepper/Scanner, EUV 장비</td></tr>
+                  <tr><td><strong class="text-amber">Etch Bay</strong></td><td>Dry Etcher, HAR Etcher</td></tr>
+                  <tr><td><strong class="text-mint">Implant/CVD Bay</strong></td><td>Ion Implanter, CVD Chamber, PVD/Sputter, ALD Chamber</td></tr>
+                  <tr><td><strong class="text-cyan">CMP/Metrology Bay</strong></td><td>CMP Tool, Metrology Tool, E-beam Inspector</td></tr>
+                  <tr><td><strong class="text-amber">Back-end Bay</strong></td><td>Dicing Saw, Wire Bonder, Mold Press, IC Tester, Laser Marker</td></tr>
+                  <tr><td><strong class="text-mint">R&D Office</strong></td><td>연구 관련 시설 (연구원 배치)</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
-        </div>
+        </details>
       </div>
+    </div>
+  </section>
 
-      <!-- Equipment -->
-      <div class="expand-card fade-in">
-        <button class="expand-card-header">
-          <span class="ec-icon" style="background: rgba(125,218,240,0.12); color: var(--cyan);">&#9881;</span>
-          <h3>설비 시스템</h3>
-          <span class="ec-arrow">&#9660;</span>
-        </button>
-        <div class="expand-card-body">
-          <div class="expand-card-body-inner">
-            <p class="mb-2">27종의 반도체 장비를 베이(Bay)별로 배치합니다. 각 장비는 <strong class="text-mint">가동</strong>, <strong class="text-amber">정비</strong>, <strong class="text-cyan">고장</strong> 3가지 상태를 가집니다.</p>
-            <p><strong>주요 장비 카테고리:</strong></p>
-            <ul style="list-style: none; padding: 0; margin-top: 8px;">
-              <li style="padding: 4px 0;"><strong class="text-mint">노광(Litho):</strong> DUV Stepper, DUV Scanner, EUV Stepper, High-NA EUV</li>
-              <li style="padding: 4px 0;"><strong class="text-cyan">증착(Depo):</strong> CVD, PVD, ALD, Epitaxy</li>
-              <li style="padding: 4px 0;"><strong class="text-amber">식각(Etch):</strong> Dry Etch, Wet Etch, ALE</li>
-              <li style="padding: 4px 0;"><strong class="text-mint">세정/연마:</strong> Wet Clean, CMP</li>
-              <li style="padding: 4px 0;"><strong class="text-cyan">열처리:</strong> Furnace, RTP</li>
-              <li style="padding: 4px 0;"><strong class="text-amber">이온주입:</strong> Ion Implanter, Plasma Doping</li>
-              <li style="padding: 4px 0;"><strong class="text-mint">검사/계측:</strong> CD-SEM, Overlay, Defect Inspection, E-Beam Inspection</li>
-              <li style="padding: 4px 0;"><strong class="text-cyan">패키징:</strong> Die Bonder, Wire Bonder, Tester</li>
-            </ul>
-            <p class="mt-2">장비 인스펙터에서 가동률, MTBF, 정비 이력 등을 확인할 수 있습니다.</p>
-          </div>
+  <!-- 6. Equipment System -->
+  <section class="section" id="equipment" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 6. 설비 시스템</h2>
+        <p class="text-muted mb-2">27종의 반도체 장비를 4개 카테고리로 분류합니다. 설비 슬롯 상한은 <strong class="text-mint">40 + 시설확장수 &times; 15</strong>입니다.</p>
+
+        <div class="info-box mb-2">
+          <strong>설비 상태 6종:</strong>
+          <span class="badge-mint">idle</span>
+          <span class="badge-mint">processing</span>
+          <span class="badge-cyan">loading</span>
+          <span class="badge-cyan">unloading</span>
+          <span class="badge-amber">maintenance</span>
+          <span class="badge-amber">broken</span>
         </div>
-      </div>
 
-      <!-- Production -->
-      <div class="expand-card fade-in">
-        <button class="expand-card-header">
-          <span class="ec-icon" style="background: var(--glow-amber); color: var(--amber);">&#128230;</span>
-          <h3>생산 시스템</h3>
-          <span class="ec-arrow">&#9660;</span>
-        </button>
-        <div class="expand-card-body">
-          <div class="expand-card-body-inner">
-            <p class="mb-2">레시피 기반 생산 시스템으로, FOUP(Front Opening Unified Pod) 단위로 웨이퍼를 처리합니다.</p>
-            <p><strong>생산 흐름:</strong></p>
-            <div style="display: flex; align-items: center; gap: 8px; margin: 12px 0; flex-wrap: wrap;">
-              <span style="padding: 6px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">레시피 선택</span>
-              <span class="text-muted">&rarr;</span>
-              <span style="padding: 6px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">FOUP 투입</span>
-              <span class="text-muted">&rarr;</span>
-              <span style="padding: 6px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">공정 스텝 처리</span>
-              <span class="text-muted">&rarr;</span>
-              <span style="padding: 6px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">검사</span>
-              <span class="text-muted">&rarr;</span>
-              <span style="padding: 6px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">다이 완성</span>
-            </div>
-            <p>총 59개 레시피가 있으며, 공정 노드와 제품 유형에 따라 다른 레시피를 사용합니다. 수율(Yield)은 장비 상태, 직원 숙련도, R&D 수준에 따라 결정됩니다.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Workforce -->
-      <div class="expand-card fade-in">
-        <button class="expand-card-header">
-          <span class="ec-icon" style="background: rgba(125,218,240,0.12); color: var(--cyan);">&#128100;</span>
-          <h3>인력 관리</h3>
-          <span class="ec-arrow">&#9660;</span>
-        </button>
-        <div class="expand-card-body">
-          <div class="expand-card-body-inner">
-            <p class="mb-2">19종의 직원을 채용하고 관리합니다. 교육과 복지 프로그램으로 역량을 향상시킬 수 있습니다.</p>
+        <!-- Common Equipment -->
+        <details>
+          <summary>공통 장비 (13종)</summary>
+          <div class="details-body">
             <div class="table-wrap">
               <table class="data-table">
                 <thead>
-                  <tr><th>직종</th><th>역할</th><th>월급 범위</th></tr>
+                  <tr><th>장비명</th><th>공정</th><th>비용</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>Operator</td><td>장비 운영, 웨이퍼 처리</td><td>$3K~$5K</td></tr>
-                  <tr><td>Process Engineer</td><td>공정 최적화, 수율 개선</td><td>$8K~$12K</td></tr>
-                  <tr><td>Equipment Engineer</td><td>장비 정비, 고장 수리</td><td>$7K~$11K</td></tr>
-                  <tr><td>Device Researcher</td><td>R&D 연구 수행</td><td>$10K~$15K</td></tr>
-                  <tr><td>SW Developer</td><td>MES, 자동화 시스템 개발</td><td>$9K~$14K</td></tr>
-                  <tr><td>Quality Engineer</td><td>품질 관리, 검사</td><td>$7K~$10K</td></tr>
-                  <tr><td>Yield Engineer</td><td>수율 분석, 개선</td><td>$9K~$13K</td></tr>
-                  <tr><td>Safety Manager</td><td>안전 관리, ESG</td><td>$6K~$9K</td></tr>
-                  <tr><td>HR Manager</td><td>인사 관리, 채용</td><td>$7K~$10K</td></tr>
-                  <tr><td>Finance Manager</td><td>재무 관리, 비용 분석</td><td>$8K~$12K</td></tr>
+                  <tr><td>Wet Clean Station</td><td>clean</td><td>$3M</td></tr>
+                  <tr><td>Diffusion Furnace</td><td>oxidation</td><td>$8M</td></tr>
+                  <tr><td>Coater/Developer</td><td>coat</td><td>$18M</td></tr>
+                  <tr><td>Dry Etcher</td><td>etch</td><td>$18M</td></tr>
+                  <tr><td>CVD Chamber</td><td>cvd</td><td>$12M</td></tr>
+                  <tr><td>PVD/Sputter</td><td>pvd</td><td>$10M</td></tr>
+                  <tr><td>CMP Tool</td><td>cmp</td><td>$15M</td></tr>
+                  <tr><td>Metrology Tool</td><td>metrology</td><td>$8M</td></tr>
+                  <tr><td>Dicing Saw</td><td>dicing</td><td>$4M</td></tr>
+                  <tr><td>Wire Bonder</td><td>bonding</td><td>$3M</td></tr>
+                  <tr><td>Mold Press</td><td>molding</td><td>$5M</td></tr>
+                  <tr><td>IC Tester</td><td>test</td><td>$12M</td></tr>
+                  <tr><td>Laser Marker</td><td>marking</td><td>$2M</td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="mt-2 text-muted" style="font-size: 0.85rem;">* 이외에도 Marketing, Sales, Logistics, Facilities, IT 등 총 19종의 직원이 있습니다.</p>
+          </div>
+        </details>
+
+        <!-- Logic/Advanced Equipment -->
+        <details>
+          <summary>로직/첨단 장비 (6종)</summary>
+          <div class="details-body">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>장비명</th><th>공정</th><th>비용</th><th>해금 조건</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Stepper/Scanner</td><td>litho</td><td>$80M</td><td>기본</td></tr>
+                  <tr><td>Ion Implanter</td><td>implant</td><td>$22M</td><td>기본</td></tr>
+                  <tr><td><strong class="text-mint">EUV Stepper</strong></td><td>litho</td><td>$350M</td><td>node_7nm 필요</td></tr>
+                  <tr><td><strong class="text-cyan">High-NA EUV</strong></td><td>litho</td><td>$400M</td><td>node_3nm 필요</td></tr>
+                  <tr><td>ALD Chamber</td><td>ald</td><td>$18M</td><td>node_14nm 필요</td></tr>
+                  <tr><td>E-beam Inspector</td><td>metrology</td><td>$25M</td><td>node_7nm 필요</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <!-- DRAM Equipment -->
+        <details>
+          <summary>DRAM 전용 장비 (4종)</summary>
+          <div class="details-body">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>장비명</th><th>공정</th><th>비용</th><th>해금 조건</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Capacitor Former</td><td>cap_form</td><td>$30M</td><td>기본</td></tr>
+                  <tr><td>Cell Patterning Tool</td><td>cell_pat</td><td>$40M</td><td>기본</td></tr>
+                  <tr><td>DRAM Tester</td><td>dram_test</td><td>$15M</td><td>기본</td></tr>
+                  <tr><td><strong class="text-cyan">HBM TSV Bonder</strong></td><td>bonding</td><td>$30M</td><td>node_7nm 필요</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <!-- NAND Equipment -->
+        <details>
+          <summary>NAND 전용 장비 (4종)</summary>
+          <div class="details-body">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>장비명</th><th>공정</th><th>비용</th><th>해금 조건</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>HAR Etcher</td><td>har_etch</td><td>$50M</td><td>기본</td></tr>
+                  <tr><td>3D Stack Tool</td><td>stack</td><td>$60M</td><td>기본</td></tr>
+                  <tr><td>NAND Tester</td><td>nand_test</td><td>$12M</td><td>기본</td></tr>
+                  <tr><td><strong class="text-amber">Multi-Stack Tool</strong></td><td>stack</td><td>$50M</td><td>node_5nm 필요</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Production System -->
+  <section class="section" id="production" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 7. 생산 시스템</h2>
+        <div class="card" style="cursor: default; transform: none;">
+          <p class="mb-2">
+            레시피 기반 생산 시스템으로, <strong>FOUP</strong>(Front Opening Unified Pod) 단위로 웨이퍼를 처리합니다.
+            총 <strong class="text-mint">59개 레시피</strong>가 있으며, 공정 노드와 제품 유형에 따라 다른 레시피를 사용합니다.
+          </p>
+
+          <h4 class="text-cyan mt-2 mb-1">수율 특성</h4>
+          <ul style="list-style: none; padding: 0;">
+            <li style="padding: 4px 0;"><span class="badge-mint">성숙 노드</span> 높은 수율 (28nm 이상)</li>
+            <li style="padding: 4px 0;"><span class="badge-cyan">첨단 노드</span> 3nm+ 에서 수율 하락 체감</li>
+            <li style="padding: 4px 0;"><span class="badge-amber">최첨단</span> 1nm / Sub-1nm 에서 매우 낮은 초기 수율</li>
+          </ul>
+        </div>
+
+        <details class="mt-2">
+          <summary>주요 레시피 복잡도 (스텝 수)</summary>
+          <div class="details-body">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>레시피</th><th>스텝 수</th><th>난이도</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>28nm Logic</td><td>30</td><td><span class="badge-mint">보통</span></td></tr>
+                  <tr><td>7nm Logic</td><td>34</td><td><span class="badge-cyan">높음</span></td></tr>
+                  <tr><td>2nm Logic</td><td>35</td><td><span class="badge-cyan">높음</span></td></tr>
+                  <tr><td>1nm AI Accelerator</td><td>42</td><td><span class="badge-amber">매우 높음</span></td></tr>
+                  <tr><td>Sub-1nm AI</td><td>46</td><td><span class="badge-amber">극한</span></td></tr>
+                  <tr><td>Quantum Chip</td><td>16</td><td><span class="badge-mint">특수</span></td></tr>
+                  <tr><td>DDR4 8GB</td><td>22</td><td><span class="badge-mint">보통</span></td></tr>
+                  <tr><td>HBM6</td><td>36</td><td><span class="badge-amber">매우 높음</span></td></tr>
+                  <tr><td>NAND 64L TLC</td><td>21</td><td><span class="badge-mint">보통</span></td></tr>
+                  <tr><td>NAND 1000L</td><td>42</td><td><span class="badge-amber">매우 높음</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Workforce System -->
+  <section class="section" id="workforce" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 8. 인력 시스템</h2>
+        <p class="text-muted mb-2">19종의 직원을 채용하고 관리합니다. 교육과 복지 프로그램으로 역량을 향상시킬 수 있습니다.</p>
+
+        <details>
+          <summary>전체 직종 목록 (19종)</summary>
+          <div class="details-body">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>직종</th><th>역할 / 효과</th><th>해금</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Operator</strong></td><td>설비 로딩 속도 <span class="text-mint">+5%/명</span> (최대 50%)</td><td>2010</td></tr>
+                  <tr><td><strong>Shift Leader</strong></td><td>Operator 효율 <span class="text-mint">+10%/명</span></td><td>2010</td></tr>
+                  <tr><td><strong>Process Engineer</strong></td><td>수율 <span class="text-mint">+1%/레벨</span></td><td>2010</td></tr>
+                  <tr><td><strong>Etch Engineer</strong></td><td>에칭 공정 효율 <span class="text-mint">+5%/레벨</span></td><td>2010</td></tr>
+                  <tr><td><strong>Litho Engineer</strong></td><td>리소그래피 효율 <span class="text-mint">+5%/레벨</span></td><td>2010</td></tr>
+                  <tr><td><strong>Thin Film Engineer</strong></td><td>증착/CMP 공정 <span class="text-mint">+5%/레벨</span></td><td>2010</td></tr>
+                  <tr><td><strong>Equipment Engineer</strong></td><td>고장률 <span class="text-cyan">-10%/레벨</span> (최대 -80%)</td><td>2010</td></tr>
+                  <tr><td><strong>Facility Engineer</strong></td><td>시설 유지비 <span class="text-cyan">-5%/레벨</span> (최대 -50%)</td><td>2010</td></tr>
+                  <tr><td><strong>Quality Manager</strong></td><td>품질 <span class="text-mint">+0.5%/레벨</span></td><td>2010</td></tr>
+                  <tr><td><strong>Metrology Engineer</strong></td><td>수율 <span class="text-mint">+1%/레벨</span></td><td>2010</td></tr>
+                  <tr><td><strong>Device Researcher</strong></td><td>테크노드 R&D 속도 <span class="text-mint">+20%/명</span></td><td>2010</td></tr>
+                  <tr><td><strong>Material Researcher</strong></td><td>소재 R&D 속도 <span class="text-mint">+20%/명</span></td><td>2010</td></tr>
+                  <tr><td><strong>SW Developer</strong></td><td>SW R&D 속도 <span class="text-mint">+20%/명</span></td><td>2010</td></tr>
+                  <tr><td><strong>AI Engineer</strong></td><td>AI/ML R&D 속도 <span class="text-mint">+20%/명</span></td><td><span class="badge-cyan">2018</span></td></tr>
+                  <tr><td><strong>Safety Manager</strong></td><td>사고/고장률 <span class="text-cyan">-5%/레벨</span></td><td>2010</td></tr>
+                  <tr><td><strong>Sustainability Manager</strong></td><td>ESG 등급 향상</td><td>2010</td></tr>
+                  <tr><td><strong>Automation Engineer</strong></td><td>로봇 효율 <span class="text-mint">+15%/명</span></td><td><span class="badge-cyan">2015</span></td></tr>
+                  <tr><td><strong>Data Scientist</strong></td><td>수율 <span class="text-mint">+2%/명</span></td><td><span class="badge-cyan">2015</span></td></tr>
+                  <tr><td><strong>Quantum Engineer</strong></td><td>양자 R&D 속도 <span class="text-mint">+20%/명</span></td><td><span class="badge-amber">2035</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>교육 프로그램 (8종)</summary>
+          <div class="details-body">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>프로그램</th><th>설명</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Onboarding</strong></td><td>신규 입사자 적응 교육</td></tr>
+                  <tr><td><strong>Safety Training</strong></td><td>안전 의식 및 사고 예방 교육</td></tr>
+                  <tr><td><strong>Leadership</strong></td><td>리더십 역량 강화</td></tr>
+                  <tr><td><strong>Technical Certification</strong></td><td>기술 자격 인증 교육</td></tr>
+                  <tr><td><strong>MBA Support</strong></td><td>경영학 석사 지원 프로그램</td></tr>
+                  <tr><td><strong>Wellness</strong></td><td>건강 및 웰빙 프로그램</td></tr>
+                  <tr><td><strong>Stock Options</strong></td><td>스톡옵션 부여</td></tr>
+                  <tr><td><strong>Remote Work</strong></td><td>원격 근무 지원</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="mt-2">복지 프로그램은 <strong>지속형 6종</strong>과 <strong>특별 행사 6종</strong>으로 나뉩니다.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Quality / Certification -->
+  <section class="section" id="quality" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 9. 품질 / 인증 시스템</h2>
+
+        <div class="card mb-2" style="cursor: default; transform: none;">
+          <h4 class="text-cyan mb-1">초기 품질 지표</h4>
+          <div class="stats-bar" style="margin-bottom: 0;">
+            <div class="stat-item">
+              <div class="stat-value">60</div>
+              <div class="stat-label">Yield</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">0.8</div>
+              <div class="stat-label">Cpk</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">5000</div>
+              <div class="stat-label">DPPM</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">5%</div>
+              <div class="stat-label">Claim Rate</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Economy -->
-      <div class="expand-card fade-in">
-        <button class="expand-card-header">
-          <span class="ec-icon" style="background: var(--glow-amber); color: var(--amber);">&#128176;</span>
-          <h3>경제 시스템</h3>
-          <span class="ec-arrow">&#9660;</span>
-        </button>
-        <div class="expand-card-body">
-          <div class="expand-card-body-inner">
-            <p class="mb-2">수익과 비용의 균형을 맞추며 기업을 성장시킵니다.</p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-              <div>
-                <h4 class="text-mint mb-1">수익원</h4>
-                <ul style="list-style: none; padding: 0;">
-                  <li style="padding: 4px 0;">&#8226; 다이(Die) 스팟 판매</li>
-                  <li style="padding: 4px 0;">&#8226; 고객 주문 납품 보상</li>
-                  <li style="padding: 4px 0;">&#8226; 장기 계약 프리미엄</li>
-                  <li style="padding: 4px 0;">&#8226; 기술 라이선스</li>
-                </ul>
-              </div>
-              <div>
-                <h4 class="text-amber mb-1">비용 구조</h4>
-                <ul style="list-style: none; padding: 0;">
-                  <li style="padding: 4px 0;">&#8226; 팹 건설/운영비</li>
-                  <li style="padding: 4px 0;">&#8226; 장비 구매/정비비</li>
-                  <li style="padding: 4px 0;">&#8226; 인건비 (급여, 복지)</li>
-                  <li style="padding: 4px 0;">&#8226; R&D 투자비</li>
-                  <li style="padding: 4px 0;">&#8226; 재료비 (웨이퍼, 가스 등)</li>
-                </ul>
-              </div>
+        <details>
+          <summary>인증 목록 (7종)</summary>
+          <div class="details-body">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>인증</th><th>효과</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong class="text-mint">ISO 9001</strong></td><td>수율 및 단가 보정 &mdash; 품질경영 기본 인증</td></tr>
+                  <tr><td><strong class="text-mint">ISO 14001</strong></td><td>ESG 보정 &mdash; 환경경영 시스템</td></tr>
+                  <tr><td><strong class="text-amber">IATF 16949</strong></td><td>자동차 고객 해금 &mdash; 자동차 품질경영</td></tr>
+                  <tr><td><strong class="text-mint">ISO 45001</strong></td><td>안전성 강화 &mdash; 산업안전보건 시스템</td></tr>
+                  <tr><td><strong class="text-cyan">ISO 27001</strong></td><td>보안 강화 &mdash; 정보보안 시스템</td></tr>
+                  <tr><td><strong class="text-cyan">ISO 50001</strong></td><td>에너지 효율 개선 &mdash; 에너지경영 시스템</td></tr>
+                  <tr><td><strong class="text-cyan">ISO 22301</strong></td><td>비즈니스 연속성 &mdash; 위기관리 시스템</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. ESG System -->
+  <section class="section" id="esg" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 10. ESG 시스템</h2>
+        <div class="card" style="cursor: default; transform: none;">
+          <p class="mb-2">ESG 등급은 <strong class="text-mint">A</strong> / <strong class="text-cyan">B</strong> / C / <strong class="text-amber">D</strong> / F 5단계로 평가됩니다. 투자를 통해 등급을 높일 수 있습니다.</p>
+
+          <h4 class="text-mint mt-2 mb-1">투자 항목 (9종)</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px;">
+            <div style="padding: 10px 14px; background: var(--glow-mint); border-radius: 8px;">
+              <strong class="text-mint">Wastewater</strong>
+              <p class="text-muted" style="font-size: 0.82rem;">폐수 처리 시설</p>
+            </div>
+            <div style="padding: 10px 14px; background: var(--glow-mint); border-radius: 8px;">
+              <strong class="text-mint">Renewable</strong>
+              <p class="text-muted" style="font-size: 0.82rem;">재생에너지 전환</p>
+            </div>
+            <div style="padding: 10px 14px; background: var(--glow-mint); border-radius: 8px;">
+              <strong class="text-mint">Safety</strong>
+              <p class="text-muted" style="font-size: 0.82rem;">안전 설비 투자</p>
+            </div>
+            <div style="padding: 10px 14px; background: var(--glow-mint); border-radius: 8px;">
+              <strong class="text-mint">Community</strong>
+              <p class="text-muted" style="font-size: 0.82rem;">지역사회 공헌</p>
+            </div>
+            <div style="padding: 10px 14px; background: var(--glow-mint); border-radius: 8px;">
+              <strong class="text-mint">Carbon Capture</strong>
+              <p class="text-muted" style="font-size: 0.82rem;">탄소 포집 설비</p>
+            </div>
+            <div style="padding: 10px 14px; background: var(--glow-mint); border-radius: 8px;">
+              <strong class="text-mint">Solar Panels</strong>
+              <p class="text-muted" style="font-size: 0.82rem;">태양광 패널 설치</p>
+            </div>
+            <div style="padding: 10px 14px; background: var(--glow-mint); border-radius: 8px;">
+              <strong class="text-mint">Water Recycle</strong>
+              <p class="text-muted" style="font-size: 0.82rem;">용수 재활용 시설</p>
+            </div>
+            <div style="padding: 10px 14px; background: var(--glow-mint); border-radius: 8px;">
+              <strong class="text-mint">Green Building</strong>
+              <p class="text-muted" style="font-size: 0.82rem;">친환경 건축물</p>
+            </div>
+            <div style="padding: 10px 14px; background: var(--glow-mint); border-radius: 8px;">
+              <strong class="text-mint">Biodiversity</strong>
+              <p class="text-muted" style="font-size: 0.82rem;">생물다양성 보전</p>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- R&D -->
-      <div class="expand-card fade-in">
-        <button class="expand-card-header">
-          <span class="ec-icon" style="background: var(--glow-mint); color: var(--mint);">&#128300;</span>
-          <h3>R&D 시스템</h3>
-          <span class="ec-arrow">&#9660;</span>
-        </button>
-        <div class="expand-card-body">
-          <div class="expand-card-body-inner">
-            <p class="mb-2">16개 공정 노드와 88개 일반 연구 항목으로 구성됩니다. Device Researcher가 R&D 속도에 영향을 줍니다.</p>
-            <p><strong>R&D 진행 방식:</strong></p>
-            <ul style="list-style: none; padding: 0; margin-top: 8px;">
-              <li style="padding: 4px 0;">1. 연구 항목 선택 (비용 및 기간 확인)</li>
-              <li style="padding: 4px 0;">2. 연구비 투입 시작</li>
-              <li style="padding: 4px 0;">3. 연구자 배정 (속도 가속)</li>
-              <li style="padding: 4px 0;">4. 완료 시 해당 기술/노드 언락</li>
-            </ul>
-            <p class="mt-2">일부 연구는 선행 연구가 필요합니다. 테크트리 뷰에서 의존 관계를 확인하세요.</p>
+  <!-- 11. Supply Chain -->
+  <section class="section" id="supply" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 11. 공급망 관리</h2>
+        <div class="card" style="cursor: default; transform: none;">
+          <h4 class="text-cyan mb-1">자원 (7종)</h4>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+            <span class="badge-mint">Wafer (웨이퍼)</span>
+            <span class="badge-cyan">Neon Gas (네온 가스)</span>
+            <span class="badge-cyan">Helium Gas (헬륨 가스)</span>
+            <span class="badge-amber">Chemical (화학물질)</span>
+            <span class="badge-mint">Photoresist (포토레지스트)</span>
+            <span class="badge-cyan">Target (타겟 소재)</span>
+            <span class="badge-amber">Slurry (슬러리)</span>
+          </div>
+
+          <h4 class="text-amber mb-1">운영 옵션</h4>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>옵션</th><th>설명</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>자동발주</strong></td><td>재고가 기준점 이하가 되면 자동으로 주문</td></tr>
+                <tr><td><strong>재주문기준점</strong></td><td>자동발주 트리거 재고 수준 설정</td></tr>
+                <tr><td><strong>주문수량</strong></td><td>1회 발주 시 주문 수량 설정</td></tr>
+                <tr><td><strong>장기계약</strong></td><td>단가 할인, 안정적 공급 확보</td></tr>
+                <tr><td><strong>이중소싱</strong></td><td>복수 공급처 확보로 리스크 분산</td></tr>
+                <tr><td><strong>전략비축</strong></td><td>위기 대비 추가 재고 확보</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- Competitors -->
-  <section class="section">
+  <!-- 12. Facility Management -->
+  <section class="section" id="facility" style="padding-top: 0;">
     <div class="container">
-      <div class="section-header fade-in">
-        <span class="section-label">Competitors</span>
-        <h2>경쟁사</h2>
-        <p>6개의 AI 경쟁사와 시장 점유율을 다투세요</p>
-      </div>
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 12. 시설 관리</h2>
 
-      <div class="competitors-grid fade-in">
-        <div class="competitor-card">
-          <h4 class="text-mint">TMSC</h4>
-          <p>세계 최대 파운드리. Logic 공정 선두주자.</p>
-        </div>
-        <div class="competitor-card">
-          <h4 class="text-cyan">Samsong</h4>
-          <p>종합 반도체 기업. 메모리와 파운드리 겸업.</p>
-        </div>
-        <div class="competitor-card">
-          <h4 class="text-amber">Intal</h4>
-          <p>IDM 전통 강자. 자체 제품 + 파운드리.</p>
-        </div>
-        <div class="competitor-card">
-          <h4 class="text-mint">GloFo</h4>
-          <p>특수 공정 전문. 차량용/IoT 반도체.</p>
-        </div>
-        <div class="competitor-card">
-          <h4 class="text-cyan">UMG</h4>
-          <p>성숙 공정 전문. 가격 경쟁력 강점.</p>
-        </div>
-        <div class="competitor-card">
-          <h4 class="text-amber">SMEC</h4>
-          <p>신흥 파운드리. 빠른 성장세.</p>
+        <details>
+          <summary>클린룸 등급</summary>
+          <div class="details-body">
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>등급</th><th>월 유지비</th><th>노드 요구</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Class 1000</strong></td><td>$2M</td><td>제한 없음</td></tr>
+                  <tr><td><strong>Class 100</strong></td><td>$5M</td><td>제한 없음</td></tr>
+                  <tr><td><strong class="text-cyan">Class 10</strong></td><td>$12M</td><td>14nm 이하 필요</td></tr>
+                  <tr><td><strong class="text-mint">Class 1</strong></td><td>$30M</td><td>7nm 이하 / 고급메모리 / 포토닉 / 양자</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="mt-2"><strong>업그레이드 비용:</strong> $200M &rarr; $400M &rarr; $600M (단계별 증가)</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>유틸리티 시스템</summary>
+          <div class="details-body">
+            <p>3가지 유틸리티가 팹 운영에 영향을 줍니다:</p>
+            <div class="table-wrap mt-2">
+              <table class="data-table">
+                <thead>
+                  <tr><th>유틸리티</th><th>설명</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong class="text-mint">Power</strong></td><td>전력 공급 시스템</td></tr>
+                  <tr><td><strong class="text-cyan">UPW</strong></td><td>초순수 (Ultra Pure Water) 시스템</td></tr>
+                  <tr><td><strong class="text-amber">HVAC</strong></td><td>공조 시스템 (온도/습도/입자 제어)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="warn-box mt-2">
+              <strong>유틸리티 열화:</strong> 매월 <strong>0.5</strong>씩 자동 하락하며, 바닥값은 <strong>50</strong>입니다.
+            </div>
+            <p class="mt-2"><strong>수율 패널티:</strong></p>
+            <ul style="list-style: none; padding: 0;">
+              <li style="padding: 4px 0;"><span class="badge-amber">유틸리티 &lt; 55</span> 수율 <strong>-5%</strong></li>
+              <li style="padding: 4px 0;"><span class="badge-amber">유틸리티 &lt; 65</span> 수율 <strong>-2%</strong></li>
+              <li style="padding: 4px 0;"><span class="badge-cyan">유틸리티 &lt; 75</span> 수율 <strong>-1%</strong></li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. Competitors -->
+  <section class="section" id="competitors" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 13. 경쟁사</h2>
+        <p class="text-muted mb-2">6개의 AI 경쟁사와 시장 점유율을 다투세요. 점유율은 기술, 평판, 브랜드, 규모, 폭, 실행력, 기술 리더십을 종합하여 결정됩니다.</p>
+
+        <div class="competitors-grid">
+          <div class="competitor-card">
+            <h4 class="text-mint">TMSC</h4>
+            <p>세계 최대 파운드리. Logic 공정 선두주자.</p>
+          </div>
+          <div class="competitor-card">
+            <h4 class="text-cyan">Samsong</h4>
+            <p>종합 반도체 기업. 메모리와 파운드리 겸업.</p>
+          </div>
+          <div class="competitor-card">
+            <h4 class="text-amber">Intal</h4>
+            <p>IDM 전통 강자. 자체 제품 + 파운드리.</p>
+          </div>
+          <div class="competitor-card">
+            <h4 class="text-mint">GloFo</h4>
+            <p>특수 공정 전문. 차량용/IoT 반도체.</p>
+          </div>
+          <div class="competitor-card">
+            <h4 class="text-cyan">UMG</h4>
+            <p>성숙 공정 전문. 가격 경쟁력 강점.</p>
+          </div>
+          <div class="competitor-card">
+            <h4 class="text-amber">SMEC</h4>
+            <p>신흥 파운드리. 빠른 성장세.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Keyboard Shortcuts -->
-  <section class="section">
+  <!-- 14. Era Events -->
+  <section class="section" id="events" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 14. 시대 이벤트</h2>
+        <p class="text-muted mb-2">게임 진행 중 실제 반도체 산업사를 반영한 이벤트가 발생합니다. 각 이벤트는 시장 수요, 공급망, 가격에 영향을 줍니다.</p>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>연도/월</th><th>이벤트</th><th>영향</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>2011 / 01</strong></td><td class="text-mint">스마트폰 붐</td><td>AP, 모바일 칩 수요 급증</td></tr>
+              <tr><td><strong>2012 / 06</strong></td><td class="text-cyan">메모리 슈퍼사이클</td><td>DRAM/NAND 가격 상승</td></tr>
+              <tr><td><strong>2018 / 01</strong></td><td class="text-mint">EUV 시대 개막</td><td>EUV 장비 해금, 7nm 이하 가능</td></tr>
+              <tr><td><strong>2019 / 07</strong></td><td class="text-amber">일본 수출규제</td><td>소재 공급 불안정</td></tr>
+              <tr><td><strong>2020 / 03</strong></td><td class="text-amber">COVID-19 반도체 대란</td><td>수요 폭증, 공급 혼란</td></tr>
+              <tr><td><strong>2021 / 06</strong></td><td class="text-mint">CHIPS Act 보조금</td><td>설비투자 보조금 기회</td></tr>
+              <tr><td><strong>2022 / 03</strong></td><td class="text-amber">네온 가스 위기</td><td>네온 가스 가격 급등, 공급 부족</td></tr>
+              <tr><td><strong>2024 / 01</strong></td><td class="text-mint">AI 반도체 수요 폭발</td><td>AI 가속기, HBM 수요 급증</td></tr>
+              <tr><td><strong>2024 / 06</strong></td><td class="text-cyan">HBM 공급 부족</td><td>HBM 가격 프리미엄</td></tr>
+              <tr><td><strong>2027 / 06</strong></td><td class="text-cyan">차세대 AMR 로봇 해금</td><td>자동화 효율 대폭 개선</td></tr>
+              <tr><td><strong>2033 / 01</strong></td><td class="text-mint">AGI 시대 개막</td><td>전례 없는 컴퓨팅 수요</td></tr>
+              <tr><td><strong>2050 / 01</strong></td><td class="text-mint">반도체 10조 달러 시대</td><td>최종 캠페인 점수 집계</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15. Brand / Marketing -->
+  <section class="section" id="brand" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 15. 브랜드 / 마케팅</h2>
+        <div class="card" style="cursor: default; transform: none;">
+          <p class="mb-2">
+            초기 브랜드 이미지는 <strong class="text-mint">30</strong>에서 시작합니다.
+            총 <strong>17종</strong>의 마케팅 활동을 통해 브랜드를 높일 수 있으며, 각각 비용, 쿨다운, 연도 제한, 브랜드 상승량이 다릅니다.
+          </p>
+
+          <div class="warn-box">
+            <strong class="text-amber">주의:</strong> ESG 상태가 나쁜 상태에서 친환경 메시지를 사용하면 <strong>역효과</strong>가 발생합니다. ESG 투자와 마케팅을 연계하여 진행하세요.
+          </div>
+
+          <div class="info-box mt-2">
+            <strong>브랜드 영향:</strong> 높은 브랜드 이미지는 고객 주문 확보, 인재 채용, 시장 점유율에 긍정적 영향을 줍니다. 경쟁사 점유율 결정 시 브랜드 점수가 중요한 가중치를 차지합니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16. Save System -->
+  <section class="section" id="save" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 16. 저장 시스템</h2>
+        <div class="card" style="cursor: default; transform: none;">
+          <p class="mb-2"><strong>자동저장:</strong> <span class="text-mint">5 게임월</span>마다 자동으로 저장됩니다.</p>
+
+          <h4 class="text-cyan mb-1">저장 데이터 포함 항목</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px;">
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">게임 시간 / 모드</span>
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">경제 시스템</span>
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">연구 진행도</span>
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">인사 데이터</span>
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">ESG / 품질 / 브랜드</span>
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">주문 / 업적</span>
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">경쟁사 상태</span>
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">재고 / 공급망</span>
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">히스토리</span>
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">엔티티 / FabManager</span>
+            <span style="padding: 8px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">시설 (Facility)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17. Keyboard Shortcuts -->
+  <section class="section" id="controls" style="padding-top: 0;">
     <div class="container">
       <div class="section-header fade-in">
         <span class="section-label">Controls</span>
-        <h2>키보드 단축키</h2>
+        <h2>17. 키보드 단축키</h2>
         <p>효율적인 플레이를 위한 조작법</p>
       </div>
 
@@ -378,23 +1003,6 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // Expandable cards
-    document.querySelectorAll('.expand-card-header').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const card = btn.closest('.expand-card');
-        const body = card.querySelector('.expand-card-body');
-        const isOpen = card.classList.contains('open');
-
-        if (isOpen) {
-          card.classList.remove('open');
-          body.style.maxHeight = null;
-        } else {
-          card.classList.add('open');
-          body.style.maxHeight = body.scrollHeight + 'px';
-        }
-      });
-    });
   </script>
 
 </body>
