@@ -80,6 +80,11 @@
     .rd-effect { font-size: 0.82rem; color: var(--mint); font-weight: 600; margin-top: 4px; }
     .rd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 10px; }
     .cat-objective { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; padding: 12px 16px; background: rgba(105,214,181,0.04); border-left: 3px solid var(--mint); border-radius: 0 8px 8px 0; margin-bottom: 16px; }
+    /* R&D Tech Tree Canvas */
+    .rd-tree-container{overflow:auto;border:1px solid var(--border);border-radius:16px;background:linear-gradient(135deg,rgba(10,27,33,0.6),rgba(8,18,24,0.8));margin:24px 0;max-height:70vh;position:relative}
+    .rd-tree-tooltip{position:fixed;pointer-events:none;z-index:100;max-width:320px;padding:12px 16px;border-radius:10px;background:rgba(8,19,24,0.95);border:1px solid var(--border);backdrop-filter:blur(12px);font-size:0.82rem;line-height:1.5;color:var(--text-bright,#eef6f1);box-shadow:0 8px 32px rgba(0,0,0,0.4);display:none}
+    #rdLegend .leg-item{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:6px;font-size:0.78rem;background:rgba(10,24,30,0.5);border:1px solid var(--border);color:var(--text-muted)}
+    #rdLegend .leg-dot{width:10px;height:10px;border-radius:3px}
   </style>
 </head>
 <body>
@@ -292,45 +297,14 @@ graph LR
         </pre>
       </div>
 
-      <div class="mermaid-wrap fade-in">
-        <h4>R&D 주요 의존 관계</h4>
-        <pre class="mermaid">
-graph TD
-  dx_mes["MES/ERP<br/>$35M"]
-  dx_apc["APC<br/>$45M"]
-  dx_scada["SCADA<br/>$8M"]
-  dx_fdc["FDC<br/>$30M"]
-  yield_eng["수율 엔지니어링<br/>$80M"]
-  marketing_team["마케팅팀<br/>$10M"]
-  marketing_global["글로벌 마케팅<br/>$40M"]
-  ax_defect["AI 결함 검출<br/>$75M"]
-  smart_factory["스마트팩토리<br/>$200M"]
-  ai_yield["AI 수율 최적화<br/>$80M"]
-  autonomous_fab["자율 팹 운영<br/>$500M"]
-  gen_ai["생성형 AI 설계<br/>$120M"]
-  digital_twin["디지털 트윈<br/>$150M"]
-  quantum_sim["양자 시뮬레이션<br/>$800M"]
-
-  dx_mes --> dx_apc
-  dx_mes --> dx_fdc
-  dx_mes --> ax_defect
-  dx_mes --> smart_factory
-  dx_mes --> digital_twin
-  dx_apc --> yield_eng
-  dx_apc --> ai_yield
-  ax_defect --> smart_factory
-  ai_yield --> gen_ai
-  smart_factory --> autonomous_fab
-  marketing_team --> marketing_global
-
-  classDef dx fill:#1a3a3a,stroke:#69d6b5,color:#eef6f1
-  classDef ai fill:#2a1a35,stroke:#c084fc,color:#eef6f1
-  classDef other fill:#1a2a35,stroke:#f7b85d,color:#eef6f1
-
-  class dx_mes,dx_apc,dx_scada,dx_fdc,smart_factory,autonomous_fab,digital_twin dx
-  class ax_defect,ai_yield,gen_ai ai
-  class yield_eng,marketing_team,marketing_global,quantum_sim other
-        </pre>
+      <!-- R&D 88종 전체 테크트리 (Canvas 2D) -->
+      <div class="fade-in" style="margin:32px 0">
+        <h4>R&D 전체 의존 관계 (88종)</h4>
+        <div id="rdLegend" style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px;justify-content:center"></div>
+        <div class="rd-tree-container" id="rdTreeWrap">
+          <canvas id="rdTreeCanvas"></canvas>
+          <div class="rd-tree-tooltip" id="rdTreeTooltip"></div>
+        </div>
       </div>
 
       <!-- Full Tech Node Table -->
@@ -1939,6 +1913,289 @@ graph TD
         scrollTopBtn.classList.remove('visible');
       }
     });
+  </script>
+
+  <!-- R&D 88종 Canvas Tech Tree -->
+  <script>
+  (function(){
+    var RD_DATA=[
+      {id:'dx_mes',name:'MES/ERP \uB3C4\uC785',icon:'\u{1F4CA}',requires:[],year:2010,cat:'dx',cost:'$35M',dur:'8\uAC1C\uC6D4',desc:'\uC6E8\uC774\uD37C \uC774\uB3D9\xB7\uC124\uBE44 \uC0C1\uD0DC\xB7\uACF5\uC815 \uC774\uB825\uC744 \uC2E4\uC2DC\uAC04 \uCD94\uC801\uD558\uB294 \uC81C\uC870\uC2E4\uD589\uC2DC\uC2A4\uD15C. \uC0DD\uC0B0 \uD6A8\uC728 +10%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +10%'},
+      {id:'dx_apc',name:'APC \uC2DC\uC2A4\uD15C',icon:'\u{1F3AF}',requires:['dx_mes'],year:2010,cat:'dx',cost:'$45M',dur:'10\uAC1C\uC6D4',desc:'\uC2E4\uC2DC\uAC04 \uC13C\uC11C \uD53C\uB4DC\uBC31\uC73C\uB85C \uACF5\uC815 \uBCC0\uC218\uB97C \uB098\uB178\uBBF8\uD130 \uB2E8\uC704\uB85C \uC790\uB3D9 \uBCF4\uC815. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'dx_scada',name:'SCADA \uC2DC\uC2A4\uD15C',icon:'\u{1F5A5}\uFE0F',requires:[],year:2010,cat:'dx',cost:'$8M',dur:'4\uAC1C\uC6D4',desc:'\uC124\uBE44 \uC13C\uC11C \uB370\uC774\uD130\uB97C \uC2E4\uC2DC\uAC04 \uC218\uC9D1\xB7\uC2DC\uAC01\uD654\uD558\uB294 \uAC10\uC2DC\uC81C\uC5B4 \uC2DC\uC2A4\uD15C. \uACE0\uC7A5\uB960 -10%',effect:'\uACE0\uC7A5\uB960 -10%'},
+      {id:'dx_wms',name:'WMS \uCC3D\uACE0\uAD00\uB9AC',icon:'\u{1F4E6}',requires:[],year:2010,cat:'dx',cost:'$8M',dur:'4\uAC1C\uC6D4',desc:'\uC6D0\uC790\uC7AC\xB7\uBD80\uD488\xB7\uC644\uC81C\uD488\uC758 \uC785\uCD9C\uACE0\uC640 \uC7AC\uACE0\uB97C \uC790\uB3D9 \uCD94\uC801. \uC0DD\uC0B0\uC18D\uB3C4 +3%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +3%'},
+      {id:'dx_rms',name:'\uB808\uC2DC\uD53C \uAD00\uB9AC',icon:'\u{1F4C1}',requires:['dx_mes'],year:2011,cat:'dx',cost:'$12M',dur:'5\uAC1C\uC6D4',desc:'\uC218\uCC9C \uAC1C \uACF5\uC815 \uB808\uC2DC\uD53C\uB97C \uC911\uC559\uC5D0\uC11C \uBC84\uC804 \uAD00\uB9AC\xB7\uBC30\uD3EC. \uC0DD\uC0B0\uC18D\uB3C4 +5%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +5%'},
+      {id:'dx_fdc',name:'FDC \uACB0\uD568\uAC10\uC9C0',icon:'\u{1F6A8}',requires:['dx_mes'],year:2012,cat:'dx',cost:'$30M',dur:'8\uAC1C\uC6D4',desc:'\uC13C\uC11C \uB370\uC774\uD130 \uD328\uD134\uC73C\uB85C \uACF5\uC815 \uC774\uC0C1\uC744 \uC790\uB3D9 \uAC10\uC9C0\uD558\uACE0 \uC6D0\uC778\uC744 \uBD84\uB958. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'dx_plm',name:'PLM \uC218\uBA85\uC8FC\uAE30',icon:'\u{1F4CB}',requires:['dx_mes'],year:2012,cat:'dx',cost:'$30M',dur:'8\uAC1C\uC6D4',desc:'\uC81C\uD488 \uC124\uACC4\uBD80\uD130 \uC591\uC0B0\xB7\uB2E8\uC885\uAE4C\uC9C0 \uC804 \uC218\uBA85\uC8FC\uAE30 \uAD00\uB9AC. \uC5F0\uAD6C\uC18D\uB3C4 +10%',effect:'\uC5F0\uAD6C\uC18D\uB3C4 +10%'},
+      {id:'dx_yms',name:'YMS \uC218\uC728\uAD00\uB9AC',icon:'\u{1F4C8}',requires:['dx_mes'],year:2013,cat:'dx',cost:'$25M',dur:'7\uAC1C\uC6D4',desc:'\uC6E8\uC774\uD37C\uBCC4 \uC218\uC728 \uB370\uC774\uD130\uB97C \uC218\uC9D1\xB7\uBD84\uC11D\uD558\uC5EC \uC190\uC2E4 \uC6D0\uC778 \uD30C\uC545. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'dx_r2r',name:'R2R \uACF5\uC815\uC81C\uC5B4',icon:'\u{1F504}',requires:['dx_apc','dx_fdc'],year:2014,cat:'dx',cost:'$50M',dur:'10\uAC1C\uC6D4',desc:'\uC774\uC804 \uC6E8\uC774\uD37C \uACB0\uACFC\uB97C \uD53C\uB4DC\uBC31\uD558\uC5EC \uB2E4\uC74C \uC6E8\uC774\uD37C \uACF5\uC815 \uD30C\uB77C\uBBF8\uD130\uB97C \uC790\uB3D9 \uBCF4\uC815. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'smart_factory',name:'\uC2A4\uB9C8\uD2B8\uD329\uD1A0\uB9AC',icon:'\u{1F3ED}',requires:['dx_mes','ax_defect'],year:2016,cat:'dx',cost:'$200M',dur:'20\uAC1C\uC6D4',desc:'\uB85C\uBD07\xB7OHT\xB7\uC124\uBE44\uB97C MES\uC640 \uC5F0\uB3D9\uD558\uC5EC \uBB34\uC778 \uC790\uB3D9 \uC6B4\uC601 \uCCB4\uACC4 \uAD6C\uCD95. \uB85C\uBD07 \uD6A8\uC728 +20%',effect:'\uB85C\uBD07 +20%'},
+      {id:'autonomous_fab',name:'\uC790\uC728 \uD329 \uC6B4\uC601',icon:'\u{1F3ED}',requires:['smart_factory'],year:2027,cat:'dx',cost:'$500M',dur:'30\uAC1C\uC6D4',desc:'AI\uAC00 \uACF5\uC815 \uD310\uB2E8\xB7\uC124\uBE44 \uC81C\uC5B4\xB7\uD488\uC9C8 \uAD00\uB9AC\uB97C \uC218\uD589. \uB85C\uBD07 \uD6A8\uC728 +40%',effect:'\uB85C\uBD07 +40%'},
+      {id:'fab_os',name:'Fab OS',icon:'\u{1F9E9}',requires:['autonomous_fab','api_platform'],year:2032,cat:'dx',cost:'$450M',dur:'24\uAC1C\uC6D4',desc:'MES\xB7APC\xB7\uC124\uBE44 \uC81C\uC5B4\uB97C \uB2E8\uC77C \uC6B4\uC601 \uB808\uC774\uC5B4\uB85C \uD1B5\uD569. \uC0DD\uC0B0\uC18D\uB3C4 +7%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +7%'},
+      {id:'digital_thread',name:'\uB514\uC9C0\uD138 \uC2A4\uB808\uB4DC',icon:'\u{1F9F5}',requires:['fab_os','dx_plm'],year:2036,cat:'dx',cost:'$650M',dur:'28\uAC1C\uC6D4',desc:'\uC124\uACC4 \uBCC0\uACBD, \uB808\uC2DC\uD53C, \uD488\uC9C8 \uC774\uB825\uC744 \uB2E8\uC77C \uB370\uC774\uD130 \uD750\uB984\uC73C\uB85C \uC5F0\uACB0. \uC5F0\uAD6C\uC18D\uB3C4 +12%',effect:'\uC5F0\uAD6C\uC18D\uB3C4 +12%'},
+      {id:'lights_out_ops',name:'Lights-Out',icon:'\u{1F319}',requires:['digital_thread','self_healing_process'],year:2041,cat:'dx',cost:'$1.2B',dur:'32\uAC1C\uC6D4',desc:'\uC57C\uAC04 \uBB34\uC778 \uC6B4\uC601\uACFC \uC6D0\uACA9 \uC2B9\uC778 \uCCB4\uACC4\uB85C 24\uC2DC\uAC04 \uC790\uC728 \uC6B4\uC601. \uB85C\uBD07 \uD6A8\uC728 +18%',effect:'\uB85C\uBD07 +18%'},
+      {id:'ax_defect',name:'AI \uACB0\uD568 \uAC80\uCD9C',icon:'\u{1F916}',requires:['dx_mes'],year:2016,cat:'ai',cost:'$75M',dur:'12\uAC1C\uC6D4',desc:'\uC6E8\uC774\uD37C \uD45C\uBA74 \uC774\uBBF8\uC9C0\uB97C \uB525\uB7EC\uB2DD\uC73C\uB85C \uBD84\uC11D\uD558\uC5EC \uB098\uB178 \uACB0\uD568\uC744 \uC790\uB3D9 \uAC80\uCD9C. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'ax_predict',name:'AI \uC608\uC9C0\uBCF4\uC804',icon:'\u{1F52E}',requires:['ax_defect'],year:2017,cat:'ai',cost:'$60M',dur:'10\uAC1C\uC6D4',desc:'\uC124\uBE44 \uC9C4\uB3D9\xB7\uC628\uB3C4 \uB370\uC774\uD130\uB85C \uACE0\uC7A5\uC744 \uC0AC\uC804 \uC608\uCE21. \uACE0\uC7A5\uB960 -50%',effect:'\uACE0\uC7A5\uB960 -50%'},
+      {id:'ai_scheduling',name:'AI \uC2A4\uCF00\uC904\uB7EC',icon:'\u{1F4C5}',requires:['dx_mes','ax_defect'],year:2019,cat:'ai',cost:'$70M',dur:'12\uAC1C\uC6D4',desc:'AI\uAC00 \uC124\uBE44 \uC0C1\uD0DC\uC640 WIP \uC815\uBCF4\uB97C \uC885\uD569 \uD310\uB2E8\uD558\uC5EC \uCD5C\uC801 \uB514\uC2A4\uD328\uCE6D. \uC0DD\uC0B0\uC18D\uB3C4 +12%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +12%'},
+      {id:'ai_yield',name:'AI \uC218\uC728 \uCD5C\uC801\uD654',icon:'\u{1F916}',requires:['dx_apc'],year:2020,cat:'ai',cost:'$80M',dur:'12\uAC1C\uC6D4',desc:'\uACF5\uC815 \uBE45\uB370\uC774\uD130\uB97C ML\uB85C \uBD84\uC11D\uD558\uC5EC \uC218\uC728 \uC800\uD558 \uC6D0\uC778\uC744 \uC790\uB3D9 \uCD94\uCC9C. \uC218\uC728 +4%',effect:'\uC218\uC728 +4%'},
+      {id:'ai_energy_opt',name:'AI \uC5D0\uB108\uC9C0 \uCD5C\uC801\uD654',icon:'\u{1F50B}',requires:['cloud_analytics'],year:2020,cat:'ai',cost:'$35M',dur:'8\uAC1C\uC6D4',desc:'\uC124\uBE44\uBCC4 \uC804\uB825 \uC18C\uBE44 \uD328\uD134\uC744 \uD559\uC2B5\uD558\uC5EC \uBE44\uAC00\uB3D9 \uC2DC \uC790\uB3D9 \uC808\uC804. \uC804\uAE30\uB8CC -12%',effect:'\uC804\uAE30\uB8CC -12%'},
+      {id:'ai_supply_opt',name:'AI \uACF5\uAE09\uB9DD \uCD5C\uC801\uD654',icon:'\u{1F4E6}',requires:['cloud_analytics'],year:2021,cat:'ai',cost:'$45M',dur:'8\uAC1C\uC6D4',desc:'\uC218\uC694 \uC608\uCE21 AI\uB85C \uC6D0\uC790\uC7AC \uBC1C\uC8FC\xB7\uC7AC\uACE0 \uC218\uC900\uC744 \uC790\uB3D9 \uCD5C\uC801\uD654. \uC0DD\uC0B0\uC18D\uB3C4 +8%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +8%'},
+      {id:'ai_quality_pred',name:'AI \uD488\uC9C8 \uC608\uCE21',icon:'\u{1F52E}',requires:['ax_defect','dx_fdc'],year:2021,cat:'ai',cost:'$65M',dur:'10\uAC1C\uC6D4',desc:'\uACF5\uC815 \uB370\uC774\uD130\uB85C \uC644\uC131 \uC804 \uD488\uC9C8\uC744 \uC608\uCE21\uD558\uC5EC \uBD88\uB7C9 \uC6E8\uC774\uD37C\uB97C \uC870\uAE30 \uCC28\uB2E8. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'ai_recipe_gen',name:'AI \uB808\uC2DC\uD53C \uC0DD\uC131',icon:'\u{1F9EA}',requires:['ai_yield'],year:2022,cat:'ai',cost:'$90M',dur:'14\uAC1C\uC6D4',desc:'\uAC15\uD654\uD559\uC2B5\uC73C\uB85C \uC218\uCC9C \uAC00\uC9C0 \uD30C\uB77C\uBBF8\uD130 \uC870\uD569\uC744 \uD0D0\uC0C9\uD558\uC5EC \uCD5C\uC801 \uB808\uC2DC\uD53C \uB3C4\uCD9C. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'ai_anomaly',name:'AI \uC774\uC0C1 \uD0D0\uC9C0',icon:'\u{1F50E}',requires:['ai_yield','o11y_monitoring'],year:2022,cat:'ai',cost:'$55M',dur:'10\uAC1C\uC6D4',desc:'\uBE44\uC9C0\uB3C4\uD559\uC2B5\uC73C\uB85C \uC815\uC0C1 \uACF5\uC815 \uD328\uD134\uC744 \uD559\uC2B5\uD558\uACE0 \uBBF8\uC138\uD55C \uC774\uC0C1\uC744 \uC790\uB3D9 \uD0D0\uC9C0. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'ai_mask_opt',name:'AI \uB9C8\uC2A4\uD06C \uCD5C\uC801\uD654',icon:'\u{1F3AD}',requires:['ai_yield','gen_ai_design'],year:2024,cat:'ai',cost:'$150M',dur:'18\uAC1C\uC6D4',desc:'GPU \uAC00\uC18D AI\uB85C \uD3EC\uD1A0\uB9C8\uC2A4\uD06C OPC/ILT\uB97C \uCD5C\uC801\uD654. \uC218\uC728 +4%',effect:'\uC218\uC728 +4%'},
+      {id:'federated_learning',name:'\uC5F0\uD569\uD559\uC2B5',icon:'\u{1F91D}',requires:['ai_yield','cybersecurity'],year:2024,cat:'ai',cost:'$70M',dur:'12\uAC1C\uC6D4',desc:'\uBCF5\uC218 \uD329\uC758 \uB370\uC774\uD130\uB97C \uACF5\uC720\uD558\uC9C0 \uC54A\uACE0 AI \uBAA8\uB378\uB9CC \uAD50\uD658\uD558\uC5EC \uD559\uC2B5. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'gen_ai_design',name:'\uC0DD\uC131\uD615 AI \uC124\uACC4',icon:'\u{1F4A1}',requires:['ai_yield'],year:2025,cat:'ai',cost:'$120M',dur:'18\uAC1C\uC6D4',desc:'\uC0DD\uC131\uD615 AI\uAC00 \uC124\uACC4 \uADDC\uCE59 \uB0B4\uC5D0\uC11C \uCD5C\uC801 \uCE69 \uB808\uC774\uC544\uC6C3\uC744 \uC790\uB3D9 \uC0DD\uC131. \uC5F0\uAD6C\uC18D\uB3C4 +30%',effect:'\uC5F0\uAD6C\uC18D\uB3C4 +30%'},
+      {id:'fab_foundation_model',name:'Fab \uD30C\uC6B4\uB370\uC774\uC158 \uBAA8\uB378',icon:'\u{1F9E0}',requires:['gen_ai_design','mlops'],year:2031,cat:'ai',cost:'$650M',dur:'24\uAC1C\uC6D4',desc:'\uACF5\uC815\xB7\uC124\uBE44\xB7\uD488\uC9C8 \uB85C\uADF8\uB97C \uD1B5\uD569 \uD559\uC2B5\uD55C \uB3C4\uBA54\uC778 \uD2B9\uD654 AI \uBAA8\uB378. \uC5F0\uAD6C\uC18D\uB3C4 +18%',effect:'\uC5F0\uAD6C\uC18D\uB3C4 +18%'},
+      {id:'multi_agent_apc',name:'\uBA40\uD2F0\uC5D0\uC774\uC804\uD2B8 APC',icon:'\u{1F916}',requires:['fab_foundation_model','ai_mask_opt'],year:2034,cat:'ai',cost:'$900M',dur:'28\uAC1C\uC6D4',desc:'\uBCF5\uC218 AI \uC5D0\uC774\uC804\uD2B8\uAC00 \uACF5\uC815\uCC3D\uACFC \uBCD1\uBAA9\uC744 \uB3D9\uC2DC \uCD5C\uC801\uD654. \uC0DD\uC0B0\uC18D\uB3C4 +10%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +10%'},
+      {id:'self_healing_process',name:'\uC790\uAC00\uBCF5\uAD6C \uACF5\uC815\uC81C\uC5B4',icon:'\u267B\uFE0F',requires:['multi_agent_apc','federated_learning'],year:2038,cat:'ai',cost:'$1.4B',dur:'30\uAC1C\uC6D4',desc:'\uC774\uC0C1 \uC9D5\uD6C4 \uAC10\uC9C0 \uC2DC \uB808\uC2DC\uD53C\uB97C \uC989\uC2DC \uBCF4\uC815\uD558\uACE0 \uC815\uBE44\uB97C \uC120\uC81C \uC804\uD658. \uACE0\uC7A5\uB960 -12%',effect:'\uACE0\uC7A5\uB960 -12%'},
+      {id:'autonomous_ramp',name:'\uC790\uC728 \uB7A8\uD504\uC5C5',icon:'\u{1F680}',requires:['self_healing_process','fab_shadow_model'],year:2046,cat:'ai',cost:'$2.2B',dur:'36\uAC1C\uC6D4',desc:'\uC2E0\uADDC \uB77C\uC778\uC758 \uC218\uC728 \uB7A8\uD504\uC5C5\uACFC \uACE0\uAC1D \uC778\uC99D \uC77C\uC815\uC744 AI\uAC00 \uB3D9\uC2DC \uC870\uC815. \uC0DD\uC0B0\uC18D\uB3C4 +8%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +8%'},
+      {id:'devops_cicd',name:'CI/CD',icon:'\u{1F504}',requires:['dx_mes'],year:2015,cat:'devops',cost:'$10M',dur:'5\uAC1C\uC6D4',desc:'\uB808\uC2DC\uD53C\xB7\uC124\uBE44 SW\uB97C \uC790\uB3D9 \uBE4C\uB4DC\xB7\uD14C\uC2A4\uD2B8\xB7\uBC30\uD3EC. \uC0DD\uC0B0\uC18D\uB3C4 +4%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +4%'},
+      {id:'o11y_monitoring',name:'\uD1B5\uD569 \uBAA8\uB2C8\uD130\uB9C1',icon:'\u{1F4C9}',requires:['dx_scada'],year:2016,cat:'devops',cost:'$15M',dur:'6\uAC1C\uC6D4',desc:'\uC124\uBE44\xB7\uB124\uD2B8\uC6CC\uD06C\xB7SW\uB97C \uD1B5\uD569 \uB300\uC2DC\uBCF4\uB4DC\uB85C \uC2E4\uC2DC\uAC04 \uAD00\uCE21. \uACE0\uC7A5\uB960 -12%',effect:'\uACE0\uC7A5\uB960 -12%'},
+      {id:'infra_as_code',name:'IaC',icon:'\u{1F4DC}',requires:['devops_cicd'],year:2017,cat:'devops',cost:'$6M',dur:'4\uAC1C\uC6D4',desc:'\uC124\uBE44 \uAD6C\uC131\uACFC \uB124\uD2B8\uC6CC\uD06C \uC138\uD305\uC744 \uCF54\uB4DC\uB85C \uAD00\uB9AC. \uC0DD\uC0B0\uC18D\uB3C4 +3%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +3%'},
+      {id:'o11y_tracing',name:'\uBD84\uC0B0 \uD2B8\uB808\uC774\uC2F1',icon:'\u{1F50D}',requires:['o11y_monitoring'],year:2018,cat:'devops',cost:'$8M',dur:'4\uAC1C\uC6D4',desc:'\uC6E8\uC774\uD37C \uACF5\uC815 \uB2E8\uACC4\uB97C \uCD94\uC801\uD558\uC5EC \uBCD1\uBAA9\uACFC \uC9C0\uC5F0 \uC6D0\uC778 \uD30C\uC545. \uC0DD\uC0B0\uC18D\uB3C4 +5%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +5%'},
+      {id:'o11y_alerting',name:'\uC9C0\uB2A5\uD615 \uC54C\uB9BC',icon:'\u{1F514}',requires:['o11y_monitoring','ax_defect'],year:2019,cat:'devops',cost:'$12M',dur:'5\uAC1C\uC6D4',desc:'ML\uC774 \uC815\uC0C1 \uD328\uD134\uC744 \uD559\uC2B5\uD558\uACE0 \uC774\uC0C1 \uBC1C\uC0DD \uC2DC \uC989\uC2DC \uC54C\uB9BC. \uACE0\uC7A5\uB960 -8%',effect:'\uACE0\uC7A5\uB960 -8%'},
+      {id:'chaos_eng',name:'\uCE74\uC624\uC2A4 \uC5D4\uC9C0\uB2C8\uC5B4\uB9C1',icon:'\u{1F525}',requires:['o11y_monitoring','devops_cicd'],year:2020,cat:'devops',cost:'$12M',dur:'5\uAC1C\uC6D4',desc:'\uC758\uB3C4\uC801 \uC7A5\uC560 \uC2DC\uBBAC\uB808\uC774\uC158\uC73C\uB85C \uC2DC\uC2A4\uD15C \uCDE8\uC57D\uC810 \uBC1C\uACAC\xB7\uBCF4\uAC15. \uACE0\uC7A5\uB960 -10%',effect:'\uACE0\uC7A5\uB960 -10%'},
+      {id:'autonomous_incident',name:'\uC790\uC728 \uC7A5\uC560 \uB300\uC751',icon:'\u{1F6DF}',requires:['chaos_eng','digital_thread'],year:2039,cat:'devops',cost:'$600M',dur:'22\uAC1C\uC6D4',desc:'\uC2E4\uC2DC\uAC04 \uC6D0\uC778 \uBD84\uC11D\uACFC \uC790\uB3D9 \uC6B0\uD68C\uB85C \uC7A5\uC560 \uBCF5\uAD6C \uC2DC\uAC04 \uB2E8\uCD95. \uACE0\uC7A5\uB960 -10%',effect:'\uACE0\uC7A5\uB960 -10%'},
+      {id:'cloud_analytics',name:'\uD074\uB77C\uC6B0\uB4DC \uBD84\uC11D',icon:'\u2601\uFE0F',requires:['dx_mes'],year:2014,cat:'infra',cost:'$50M',dur:'10\uAC1C\uC6D4',desc:'\uACF5\uC815 \uB370\uC774\uD130\uB97C \uD074\uB77C\uC6B0\uB4DC\uC5D0\uC11C \uB300\uADDC\uBAA8 \uBD84\uC11D. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'cybersecurity',name:'\uC0AC\uC774\uBC84 \uBCF4\uC548',icon:'\u{1F512}',requires:['dx_mes'],year:2015,cat:'infra',cost:'$35M',dur:'8\uAC1C\uC6D4',desc:'\uD329 OT \uB124\uD2B8\uC6CC\uD06C\uC5D0 \uBC29\uD654\uBCBD\xB7IDS\xB7\uC811\uADFC\uC81C\uC5B4. \uACE0\uC7A5\uB960 -15%',effect:'\uACE0\uC7A5\uB960 -15%'},
+      {id:'api_platform',name:'API \uD50C\uB7AB\uD3FC',icon:'\u{1F517}',requires:['dx_mes'],year:2016,cat:'infra',cost:'$12M',dur:'5\uAC1C\uC6D4',desc:'\uD329 \uB0B4 \uC2DC\uC2A4\uD15C\uC744 REST/gRPC API\uB85C \uC5F0\uB3D9. \uC0DD\uC0B0\uC18D\uB3C4 +4%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +4%'},
+      {id:'data_lake',name:'\uB370\uC774\uD130 \uB808\uC774\uD06C',icon:'\u{1F4BE}',requires:['cloud_analytics'],year:2018,cat:'infra',cost:'$55M',dur:'10\uAC1C\uC6D4',desc:'\uC13C\uC11C\xB7\uC124\uBE44\xB7\uD488\uC9C8 \uB370\uC774\uD130\uB97C \uD558\uB098\uC758 \uC800\uC7A5\uC18C\uC5D0 \uD1B5\uD569. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'edge_computing',name:'\uC5E3\uC9C0 \uCEF4\uD4E8\uD305',icon:'\u{1F4BB}',requires:['cloud_analytics'],year:2020,cat:'infra',cost:'$40M',dur:'8\uAC1C\uC6D4',desc:'\uC124\uBE44 \uC606 \uC5E3\uC9C0 \uC11C\uBC84\uC5D0\uC11C AI \uCD94\uB860. \uC0DD\uC0B0\uC18D\uB3C4 +6%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +6%'},
+      {id:'zero_trust',name:'\uC81C\uB85C\uD2B8\uB7EC\uC2A4\uD2B8',icon:'\u{1F6E1}\uFE0F',requires:['cybersecurity'],year:2020,cat:'infra',cost:'$40M',dur:'10\uAC1C\uC6D4',desc:'\uBAA8\uB4E0 \uC0AC\uC6A9\uC790\xB7\uAE30\uAE30\uC758 \uC811\uADFC\uC744 \uB9E4\uBC88 \uAC80\uC99D. \uACE0\uC7A5\uB960 -8%',effect:'\uACE0\uC7A5\uB960 -8%'},
+      {id:'private_5g',name:'\uC0AC\uB0B4 5G',icon:'\u{1F4F6}',requires:['smart_factory'],year:2022,cat:'infra',cost:'$70M',dur:'12\uAC1C\uC6D4',desc:'\uD329 \uB0B4 \uC0AC\uC124 5G\uB85C \uB85C\uBD07\xB7OHT\xB7\uC13C\uC11C \uAC04 \uCD08\uC800\uC9C0\uC5F0 \uD1B5\uC2E0. \uB85C\uBD07 +10%',effect:'\uB85C\uBD07 +10%'},
+      {id:'data_mesh',name:'\uB370\uC774\uD130 \uBA54\uC2DC',icon:'\u{1F578}\uFE0F',requires:['data_lake'],year:2022,cat:'infra',cost:'$25M',dur:'6\uAC1C\uC6D4',desc:'\uAC01 \uBD80\uC11C\uAC00 \uC790\uCCB4 \uB370\uC774\uD130\uB97C \uCC45\uC784\uC9C0\uACE0 \uD45C\uC900 \uC778\uD130\uD398\uC774\uC2A4\uB85C \uACF5\uC720. \uC5F0\uAD6C\uC18D\uB3C4 +10%',effect:'\uC5F0\uAD6C\uC18D\uB3C4 +10%'},
+      {id:'mlops',name:'MLOps',icon:'\u{1F6E0}\uFE0F',requires:['ai_yield'],year:2023,cat:'infra',cost:'$30M',dur:'8\uAC1C\uC6D4',desc:'AI \uBAA8\uB378\uC758 \uD559\uC2B5\xB7\uBC30\uD3EC\xB7\uBAA8\uB2C8\uD130\uB9C1\xB7\uC7AC\uD559\uC2B5 \uC790\uB3D9\uD654. \uC5F0\uAD6C\uC18D\uB3C4 +20%',effect:'\uC5F0\uAD6C\uC18D\uB3C4 +20%'},
+      {id:'post_quantum_security',name:'\uD3EC\uC2A4\uD2B8\uC591\uC790 \uBCF4\uC548',icon:'\u{1F6E1}\uFE0F',requires:['zero_trust','quantum_sim'],year:2042,cat:'infra',cost:'$700M',dur:'24\uAC1C\uC6D4',desc:'\uC591\uC790 \uB0B4\uC131 \uC554\uD638\uC640 \uD558\uB4DC\uC6E8\uC5B4 \uB8E8\uD2B8\uC624\uBE0C\uD2B8\uB7EC\uC2A4\uD2B8. \uACE0\uC7A5\uB960 -10%',effect:'\uACE0\uC7A5\uB960 -10%'},
+      {id:'tcad_sim',name:'TCAD \uC2DC\uBBAC\uB808\uC774\uC158',icon:'\u{1F9EE}',requires:[],year:2010,cat:'sim',cost:'$40M',dur:'8\uAC1C\uC6D4',desc:'\uBC18\uB3C4\uCCB4 \uC18C\uC790\uC758 \uBB3C\uB9AC\uC801 \uD2B9\uC131\uC744 \uC2DC\uBBAC\uB808\uC774\uC158. \uC5F0\uAD6C\uC18D\uB3C4 +15%',effect:'\uC5F0\uAD6C\uC18D\uB3C4 +15%'},
+      {id:'eda_tools',name:'EDA \uB77C\uC774\uC120\uC2A4',icon:'\u{1F4D0}',requires:['dx_plm'],year:2014,cat:'sim',cost:'$100M',dur:'12\uAC1C\uC6D4',desc:'\uCE69 \uC124\uACC4\xB7\uAC80\uC99D \uC790\uB3D9\uD654. \uC5F0\uAD6C\uC18D\uB3C4 +20%',effect:'\uC5F0\uAD6C\uC18D\uB3C4 +20%'},
+      {id:'cfd_thermal',name:'\uC5F4\uC720\uCCB4 \uC2DC\uBBAC\uB808\uC774\uC158',icon:'\u{1F321}\uFE0F',requires:['tcad_sim'],year:2014,cat:'sim',cost:'$30M',dur:'8\uAC1C\uC6D4',desc:'\uC124\uBE44 \uB0B4\uBD80 \uC5F4 \uBD84\uD3EC\uB97C \uC720\uCCB4\uC5ED\uD559\uC73C\uB85C \uC608\uCE21. \uACE0\uC7A5\uB960 -5%',effect:'\uACE0\uC7A5\uB960 -5%'},
+      {id:'litho_sim',name:'\uB9AC\uC18C \uC2DC\uBBAC\uB808\uC774\uC158',icon:'\u{1F52C}',requires:['tcad_sim'],year:2016,cat:'sim',cost:'$50M',dur:'10\uAC1C\uC6D4',desc:'\uB9AC\uC18C\uADF8\uB798\uD53C \uACF5\uC815\uC744 \uAC00\uC0C1 \uC2DC\uBBAC\uB808\uC774\uC158. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'digital_twin',name:'\uB514\uC9C0\uD138 \uD2B8\uC708',icon:'\u{1F52E}',requires:['dx_mes'],year:2022,cat:'sim',cost:'$150M',dur:'20\uAC1C\uC6D4',desc:'\uC2E4\uC81C \uD329\uC758 \uB514\uC9C0\uD138 \uBCF5\uC81C\uBCF8\uC73C\uB85C \uACF5\uC815 \uBCC0\uACBD\uC744 \uAC00\uC0C1 \uAC80\uC99D. \uC0DD\uC0B0\uC18D\uB3C4 +15%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +15%'},
+      {id:'quantum_sim',name:'\uC591\uC790 \uC2DC\uBBAC\uB808\uC774\uC158',icon:'\u269B\uFE0F',requires:[],year:2030,cat:'sim',cost:'$800M',dur:'36\uAC1C\uC6D4',desc:'\uC591\uC790 \uCEF4\uD4E8\uD130\uB85C \uBD84\uC790 \uC218\uC900\uC758 \uACF5\uC815 \uC2DC\uBBAC\uB808\uC774\uC158. \uC218\uC728 +5%',effect:'\uC218\uC728 +5%'},
+      {id:'atomistic_tcad',name:'\uC6D0\uC790\uC218\uC900 TCAD',icon:'\u{1F9EA}',requires:['tcad_sim','quantum_sim'],year:2033,cat:'sim',cost:'$750M',dur:'24\uAC1C\uC6D4',desc:'\uC6D0\uC790 \uB2E8\uC704 \uC18C\uC790\xB7\uC7AC\uB8CC \uC2DC\uBBAC\uB808\uC774\uC158. \uC5F0\uAD6C\uC18D\uB3C4 +18%',effect:'\uC5F0\uAD6C\uC18D\uB3C4 +18%'},
+      {id:'fab_shadow_model',name:'Fab \uC12C\uB3C4\uC6B0 \uBAA8\uB378',icon:'\u{1FA9E}',requires:['digital_twin','atomistic_tcad'],year:2038,cat:'sim',cost:'$1.1B',dur:'30\uAC1C\uC6D4',desc:'\uC804 \uD329 \uC0C1\uD0DC\uB97C \uCD08\uB2E8\uC704\uB85C \uBCF5\uC81C\uD574 \uB7A8\uD504\uC5C5\uACFC \uBCD1\uBAA9\uC744 \uC0AC\uC804 \uAC80\uC99D. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'upw_upgrade',name:'\uCD08\uC21C\uC218 \uC2DC\uC2A4\uD15C',icon:'\u{1F4A7}',requires:[],year:2010,cat:'material',cost:'$40M',dur:'10\uAC1C\uC6D4',desc:'18.2M\u03A9\xB7cm \uC774\uC0C1\uC758 \uCD08\uC21C\uC218 UPW \uC2DC\uC2A4\uD15C. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'adv_chemicals',name:'\uACE0\uC21C\uB3C4 \uD654\uD559\uC57D\uD488',icon:'\u{1F9EA}',requires:['yield_eng'],year:2015,cat:'material',cost:'$60M',dur:'12\uAC1C\uC6D4',desc:'\uBD88\uC21C\uBB3C 1ppb \uBBF8\uB9CC\uC758 \uCD08\uACE0\uC21C\uB3C4 \uC138\uC815\uC561\xB7\uAC10\uAD11\uC561. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'wafer_450mm',name:'450mm \uC6E8\uC774\uD37C',icon:'\u{1F4BF}',requires:['smart_factory'],year:2025,cat:'material',cost:'$800M',dur:'36\uAC1C\uC6D4',desc:'300\u2192450mm \uC6E8\uC774\uD37C \uC804\uD658, \uB2E4\uC774 \uC218 2.25\uBC30. \uC0DD\uC0B0\uC18D\uB3C4 +25%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +25%'},
+      {id:'materials_informatics',name:'\uC18C\uC7AC \uC778\uD3EC\uB9E4\uD2F1\uC2A4',icon:'\u{1F9EC}',requires:['adv_chemicals','atomistic_tcad'],year:2034,cat:'material',cost:'$520M',dur:'22\uAC1C\uC6D4',desc:'AI\uB85C \uCC28\uC138\uB300 \uC18C\uC7AC \uB3C4\uC785\uC744 \uAC00\uC18D. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'two_d_stack',name:'2D \uC18C\uC7AC \uC801\uCE35',icon:'\u{1F9F1}',requires:['materials_informatics'],year:2040,cat:'material',cost:'$1.6B',dur:'34\uAC1C\uC6D4',desc:'2D \uBC18\uB3C4\uCCB4 \uCC44\uB110\uACFC \uC800\uC628 \uC801\uCE35\uC73C\uB85C \uCD08\uBBF8\uC138 \uB204\uC124 \uC5B5\uC81C. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'spare_parts_mgmt',name:'\uC608\uBE44\uBD80\uD488 \uAD00\uB9AC',icon:'\u{1F527}',requires:[],year:2010,cat:'equip',cost:'$15M',dur:'5\uAC1C\uC6D4',desc:'\uC608\uBE44\uBD80\uD488 \uC7AC\uACE0 \uCD5C\uC801 \uAD00\uB9AC. \uACE0\uC7A5\uB960 -15%',effect:'\uACE0\uC7A5\uB960 -15%'},
+      {id:'remote_diag',name:'\uC6D0\uACA9 \uC9C4\uB2E8',icon:'\u{1F4E1}',requires:[],year:2012,cat:'equip',cost:'$25M',dur:'7\uAC1C\uC6D4',desc:'\uC124\uBE44\uC5D0 \uC6D0\uACA9 \uC811\uC18D\uD558\uC5EC \uC2E4\uC2DC\uAC04 \uC9C4\uB2E8. \uACE0\uC7A5\uB960 -20%',effect:'\uACE0\uC7A5\uB960 -20%'},
+      {id:'equip_recipe_opt',name:'\uC124\uBE44 \uB808\uC2DC\uD53C \uCD5C\uC801\uD654',icon:'\u{1F4DD}',requires:['dx_apc'],year:2013,cat:'equip',cost:'$35M',dur:'10\uAC1C\uC6D4',desc:'DOE\uB85C \uC124\uBE44 \uD30C\uB77C\uBBF8\uD130 \uBBF8\uC138 \uC870\uC815. \uC0DD\uC0B0\uC18D\uB3C4 +8%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +8%'},
+      {id:'self_calibrating_tools',name:'\uC790\uAC00\uBCF4\uC815 \uC124\uBE44\uAD70',icon:'\u{1F6E0}\uFE0F',requires:['remote_diag','ai_quality_pred'],year:2032,cat:'equip',cost:'$480M',dur:'20\uAC1C\uC6D4',desc:'\uBA54\uD2B8\uB864\uB85C\uC9C0 \uD53C\uB4DC\uBC31\uC73C\uB85C \uC7A5\uBE44\uAC00 \uB4DC\uB9AC\uD504\uD2B8\uB97C \uC790\uB3D9 \uBCF4\uC815. \uACE0\uC7A5\uB960 -12%',effect:'\uACE0\uC7A5\uB960 -12%'},
+      {id:'warehouse_auto',name:'\uCC3D\uACE0 \uC790\uB3D9\uD654',icon:'\u{1F4E6}',requires:[],year:2012,cat:'logistics',cost:'$25M',dur:'8\uAC1C\uC6D4',desc:'\uC790\uB3D9 \uC801\uC7AC/\uCD9C\uD558 \uB85C\uBD07\uACFC \uCEE8\uBCA0\uC774\uC5B4. \uC0DD\uC0B0\uC18D\uB3C4 +5%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +5%'},
+      {id:'oht_upgrade',name:'OHT \uCD5C\uC801\uD654',icon:'\u{1F682}',requires:[],year:2014,cat:'logistics',cost:'$45M',dur:'12\uAC1C\uC6D4',desc:'OHT \uACBD\uB85C \uC54C\uACE0\uB9AC\uC998 \uAC1C\uC120. \uB85C\uBD07 +15%',effect:'\uB85C\uBD07 +15%'},
+      {id:'agv_fleet',name:'AGV \uD655\uB300',icon:'\u{1F697}',requires:[],year:2018,cat:'logistics',cost:'$35M',dur:'10\uAC1C\uC6D4',desc:'\uC790\uC728\uC8FC\uD589 \uBB34\uC778\uBC18\uC1A1\uCC28 \uB3C4\uC785. \uB85C\uBD07 +10%',effect:'\uB85C\uBD07 +10%'},
+      {id:'amr_swarm',name:'AMR \uC2A4\uC6DC \uBB3C\uB958',icon:'\u{1F916}',requires:['agv_fleet','private_5g'],year:2031,cat:'logistics',cost:'$380M',dur:'18\uAC1C\uC6D4',desc:'\uC790\uC728\uC8FC\uD589 \uBC18\uC1A1 \uB85C\uBD07 \uAD70\uC9D1 \uC81C\uC5B4. \uB85C\uBD07 +12%',effect:'\uB85C\uBD07 +12%'},
+      {id:'interfab_orchestration',name:'\uC778\uD130\uD329 \uBB3C\uB958',icon:'\u{1F500}',requires:['amr_swarm','digital_thread'],year:2040,cat:'logistics',cost:'$850M',dur:'26\uAC1C\uC6D4',desc:'\uBCF5\uC218 \uD329\uC758 \uC7AC\uACF5\uACFC \uC790\uC7AC \uD750\uB984\uC744 \uD1B5\uD569 \uC2A4\uCF00\uC904\uB9C1. \uC0DD\uC0B0\uC18D\uB3C4 +7%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +7%'},
+      {id:'yield_eng',name:'\uC218\uC728 \uC5D4\uC9C0\uB2C8\uC5B4\uB9C1',icon:'\u{1F4C8}',requires:[],year:2010,cat:'quality',cost:'$80M',dur:'14\uAC1C\uC6D4',desc:'\uC218\uC728 \uB370\uC774\uD130\uB97C \uCCB4\uACC4\uC801\uC73C\uB85C \uBD84\uC11D\uD558\uB294 \uC804\uBB38 \uD300 \uAD6C\uCD95. \uC218\uC728 +5%',effect:'\uC218\uC728 +5%'},
+      {id:'spc_system',name:'SPC \uACF5\uC815\uAD00\uB9AC',icon:'\u{1F4CA}',requires:[],year:2010,cat:'quality',cost:'$20M',dur:'8\uAC1C\uC6D4',desc:'\uAD00\uB9AC\uB3C4\uB85C \uACF5\uC815 \uBCC0\uB3D9\uC744 \uC2E4\uC2DC\uAC04 \uAC10\uC2DC. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'burn_in_test',name:'Burn-in \uD14C\uC2A4\uD2B8',icon:'\u{1F525}',requires:[],year:2010,cat:'quality',cost:'$15M',dur:'5\uAC1C\uC6D4',desc:'\uACE0\uC628\xB7\uACE0\uC804\uC555 \uC2A4\uD2B8\uB808\uC2A4\uB85C \uCD08\uAE30 \uBD88\uB7C9 \uCE69\uC744 \uCD9C\uD558 \uC804 \uC120\uBCC4. \uC218\uC728 +1%',effect:'\uC218\uC728 +1%'},
+      {id:'inline_metrology',name:'\uC778\uB77C\uC778 \uACC4\uCE21',icon:'\u{1F50D}',requires:['dx_apc'],year:2016,cat:'quality',cost:'$50M',dur:'12\uAC1C\uC6D4',desc:'\uACF5\uC815 \uC911\uAC04\uC5D0 \uB9C9\uB450\uAED8\xB7\uC120\uD3ED\uC744 \uC2E4\uC2DC\uAC04 \uCE21\uC815. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'inline_xray_ct',name:'\uC778\uB77C\uC778 X-ray CT',icon:'\u{1FA7B}',requires:['inline_metrology','hybrid_bonding'],year:2037,cat:'quality',cost:'$920M',dur:'24\uAC1C\uC6D4',desc:'\uC801\uCE35 \uD328\uD0A4\uC9C0 \uB0B4\uBD80 \uACB0\uD568\uC744 \uBE44\uD30C\uAD34 \uAC80\uC0AC. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'green_fab',name:'\uCE5C\uD658\uACBD \uD329',icon:'\u{1F33F}',requires:[],year:2010,cat:'energy',cost:'$60M',dur:'14\uAC1C\uC6D4',desc:'\uACE0\uD6A8\uC728 HVAC, LED \uC870\uBA85, \uC808\uC804 \uBAA8\uD130 \uB4F1. \uC804\uAE30\uB8CC -20%',effect:'\uC804\uAE30\uB8CC -20%'},
+      {id:'solar_panels',name:'\uD0DC\uC591\uAD11 \uBC1C\uC804',icon:'\u2600\uFE0F',requires:[],year:2015,cat:'energy',cost:'$45M',dur:'12\uAC1C\uC6D4',desc:'\uD329 \uC625\uC0C1/\uBD80\uC9C0\uC5D0 \uD0DC\uC591\uAD11 \uD328\uB110. \uC804\uAE30\uB8CC -15%',effect:'\uC804\uAE30\uB8CC -15%'},
+      {id:'heat_recovery',name:'\uD3D0\uC5F4 \uD68C\uC218',icon:'\u267B\uFE0F',requires:['green_fab'],year:2018,cat:'energy',cost:'$25M',dur:'10\uAC1C\uC6D4',desc:'\uC124\uBE44 \uD3D0\uC5F4\uC744 \uD788\uD2B8\uD38C\uD504\uB85C \uD68C\uC218. \uC804\uAE30\uB8CC -10%',effect:'\uC804\uAE30\uB8CC -10%'},
+      {id:'carbon_capture',name:'\uD0C4\uC18C \uD3EC\uC9D1',icon:'\u{1F332}',requires:['green_fab'],year:2022,cat:'energy',cost:'$80M',dur:'18\uAC1C\uC6D4',desc:'\uBC30\uAE30\uAC00\uC2A4\uC5D0\uC11C CO\u2082\uB97C \uD3EC\uC9D1\xB7\uC800\uC7A5. \uC804\uAE30\uB8CC -5%',effect:'\uC804\uAE30\uB8CC -5%'},
+      {id:'smart_microgrid',name:'\uC2A4\uB9C8\uD2B8 \uB9C8\uC774\uD06C\uB85C\uADF8\uB9AC\uB4DC',icon:'\u{1F50B}',requires:['solar_panels','ai_energy_opt'],year:2032,cat:'energy',cost:'$420M',dur:'20\uAC1C\uC6D4',desc:'\uC790\uCCB4 \uBC1C\uC804, ESS, \uC218\uC694\uBC18\uC751\uC744 \uD1B5\uD569 \uC81C\uC5B4. \uC804\uAE30\uB8CC -12%',effect:'\uC804\uAE30\uB8CC -12%'},
+      {id:'fusion_ppa',name:'\uD575\uC735\uD569 PPA',icon:'\u26A1',requires:['smart_microgrid','carbon_capture'],year:2038,cat:'energy',cost:'$1.8B',dur:'30\uAC1C\uC6D4',desc:'\uC7A5\uAE30 \uD575\uC735\uD569 \uC804\uB825 \uACC4\uC57D\uC73C\uB85C \uC804\uB825 \uB2E8\uAC00 \uC548\uC815\uD654. \uC804\uAE30\uB8CC -15%',effect:'\uC804\uAE30\uB8CC -15%'},
+      {id:'multi_pattern',name:'\uB2E4\uC911 \uD328\uD130\uB2DD',icon:'\u{1F9EC}',requires:['yield_eng'],year:2020,cat:'manufacturing',cost:'$120M',dur:'18\uAC1C\uC6D4',desc:'SADP/SAQP \uB2E4\uC911 \uD328\uD130\uB2DD\uC73C\uB85C \uBBF8\uC138 \uD328\uD134 \uD574\uC0C1\uB3C4 \uD655\uBCF4. \uC218\uC728 +4%',effect:'\uC218\uC728 +4%'},
+      {id:'chiplet_design',name:'\uCE69\uB9BF \uC124\uACC4',icon:'\u{1F9E9}',requires:[],year:2022,cat:'manufacturing',cost:'$100M',dur:'16\uAC1C\uC6D4',desc:'\uD070 \uB2E4\uC774\uB97C \uC5EC\uB7EC \uC791\uC740 \uCE69\uB9BF\uC73C\uB85C \uBD84\uD560. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'hybrid_bonding',name:'\uD558\uC774\uBE0C\uB9AC\uB4DC \uBCF8\uB529',icon:'\u{1F4E6}',requires:[],year:2024,cat:'manufacturing',cost:'$110M',dur:'18\uAC1C\uC6D4',desc:'\uBC94\uD504 \uC5C6\uC774 \uAD6C\uB9AC \uD328\uB4DC\uB97C \uC9C1\uC811 \uC811\uD569\uD558\uB294 3D \uC801\uCE35. \uC218\uC728 +3%',effect:'\uC218\uC728 +3%'},
+      {id:'backside_power',name:'\uBC31\uC0AC\uC774\uB4DC \uC804\uB825 \uBC30\uC120',icon:'\u26A1',requires:['chiplet_design'],year:2026,cat:'manufacturing',cost:'$150M',dur:'20\uAC1C\uC6D4',desc:'\uCE69 \uD6C4\uBA74\uC5D0 \uC804\uB825 \uBC30\uC120\uC744 \uBC30\uCE58. \uC218\uC728 +2%',effect:'\uC218\uC728 +2%'},
+      {id:'glass_core_pkg',name:'\uAE00\uB77C\uC2A4 \uCF54\uC5B4 \uD328\uD0A4\uC9D5',icon:'\u{1FA9F}',requires:['chiplet_design','hybrid_bonding'],year:2033,cat:'manufacturing',cost:'$620M',dur:'24\uAC1C\uC6D4',desc:'\uB300\uD615 \uC778\uD130\uD3EC\uC800\uC640 \uAE00\uB77C\uC2A4 \uCF54\uC5B4 \uAE30\uD310. \uC0DD\uC0B0\uC18D\uB3C4 +6%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +6%'},
+      {id:'co_packaged_optics',name:'\uAD11\uC778\uD130\uCEE4\uB125\uD2B8',icon:'\u{1F4A1}',requires:['glass_core_pkg','backside_power'],year:2042,cat:'manufacturing',cost:'$1.4B',dur:'32\uAC1C\uC6D4',desc:'\uAD11\uC785\uCD9C\uB825\uC744 \uD328\uD0A4\uC9C0 \uB0B4\uBD80\uC5D0 \uD1B5\uD569. \uC0DD\uC0B0\uC18D\uB3C4 +8%',effect:'\uC0DD\uC0B0\uC18D\uB3C4 +8%'},
+      {id:'marketing_team',name:'\uB9C8\uCF00\uD305\uD300 \uAD6C\uCD95',icon:'\u{1F4E3}',requires:[],year:2010,cat:'marketing',cost:'$10M',dur:'4\uAC1C\uC6D4',desc:'\uC804\uB2F4 \uC601\uC5C5\uD300 \uAD6C\uC131. Tier 1 \uACE0\uAC1D \uD574\uAE08',effect:'Tier 1 \uACE0\uAC1D'},
+      {id:'marketing_global',name:'\uAE00\uB85C\uBC8C \uB9C8\uCF00\uD305',icon:'\u{1F30D}',requires:['marketing_team'],year:2010,cat:'marketing',cost:'$40M',dur:'8\uAC1C\uC6D4',desc:'\uD574\uC678 \uBC95\uC778\xB7\uC804\uC2DC\uD68C\xB7\uAE30\uC220 \uC138\uBBF8\uB098\uB85C \uAE00\uB85C\uBC8C \uB300\uD615 \uACE0\uAC1D \uD655\uBCF4. Tier 2 \uACE0\uAC1D \uD574\uAE08',effect:'Tier 2 \uACE0\uAC1D'}
+    ];
+
+    var CAT_COLORS={dx:'#69d6b5',ai:'#c084fc',devops:'#60a5fa',infra:'#7ddaf0',sim:'#f7b85d',material:'#fb923c',equip:'#4ade80',logistics:'#fbbf24',quality:'#f472b6',energy:'#34d399',manufacturing:'#a78bfa',marketing:'#f87171'};
+    var CAT_LABELS={dx:'DX',ai:'AI',devops:'DevOps',infra:'\uC778\uD504\uB77C',sim:'\uC2DC\uBBAC\uB808\uC774\uC158',material:'\uC18C\uC7AC',equip:'\uC124\uBE44',logistics:'\uBB3C\uB958',quality:'\uD488\uC9C8',energy:'\uC5D0\uB108\uC9C0',manufacturing:'\uC81C\uC870',marketing:'\uB9C8\uCF00\uD305'};
+
+    var NODE_W=130,NODE_H=48,H_GAP=36,V_GAP=10,PAD_X=20,PAD_Y=16;
+
+    // Build lookup
+    var byId=new Map();
+    RD_DATA.forEach(function(n){byId.set(n.id,n)});
+
+    // Calc layers
+    function calcLayer(id,memo){
+      if(memo.has(id))return memo.get(id);
+      var node=byId.get(id);
+      if(!node||node.requires.length===0){memo.set(id,0);return 0;}
+      var maxP=Math.max.apply(null,node.requires.map(function(r){return calcLayer(r,memo)}));
+      var layer=maxP+1;
+      memo.set(id,layer);
+      return layer;
+    }
+    var memo=new Map();
+    RD_DATA.forEach(function(n){calcLayer(n.id,memo)});
+
+    var maxLayer=Math.max.apply(null,Array.from(memo.values()));
+    var layers=[];
+    for(var i=0;i<=maxLayer;i++)layers.push([]);
+    RD_DATA.forEach(function(n){layers[memo.get(n.id)].push(n)});
+    layers.forEach(function(l){l.sort(function(a,b){return a.year-b.year||a.id.localeCompare(b.id)})});
+
+    // Assign positions
+    var nodeMap=new Map();
+    layers.forEach(function(layer,li){
+      layer.forEach(function(n,ni){
+        nodeMap.set(n.id,{id:n.id,name:n.name,icon:n.icon,requires:n.requires,year:n.year,cat:n.cat,cost:n.cost,dur:n.dur,desc:n.desc,effect:n.effect,x:PAD_X+li*(NODE_W+H_GAP),y:PAD_Y+ni*(NODE_H+V_GAP)});
+      });
+    });
+
+    var maxPerLayer=Math.max.apply(null,layers.map(function(l){return l.length}));
+    var canvasW=PAD_X*2+(maxLayer+1)*NODE_W+maxLayer*H_GAP;
+    var canvasH=PAD_Y*2+maxPerLayer*NODE_H+(maxPerLayer-1)*V_GAP;
+
+    // Legend
+    var legend=document.getElementById('rdLegend');
+    if(legend){
+      Object.keys(CAT_COLORS).forEach(function(k){
+        var el=document.createElement('span');
+        el.className='leg-item';
+        var dot=document.createElement('span');
+        dot.className='leg-dot';
+        dot.style.background=CAT_COLORS[k];
+        el.appendChild(dot);
+        el.appendChild(document.createTextNode(' '+CAT_LABELS[k]));
+        legend.appendChild(el);
+      });
+    }
+
+    // Canvas
+    var canvas=document.getElementById('rdTreeCanvas');
+    if(!canvas)return;
+    var dpr=window.devicePixelRatio||1;
+    canvas.width=canvasW*dpr;
+    canvas.height=canvasH*dpr;
+    canvas.style.width=canvasW+'px';
+    canvas.style.height=canvasH+'px';
+    var ctx=canvas.getContext('2d');
+    ctx.scale(dpr,dpr);
+
+    // Draw connections
+    ctx.lineWidth=1.2;
+    RD_DATA.forEach(function(n){
+      var to=nodeMap.get(n.id);
+      if(!to)return;
+      n.requires.forEach(function(rid){
+        var from=nodeMap.get(rid);
+        if(!from)return;
+        var x1=from.x+NODE_W,y1=from.y+NODE_H/2;
+        var x2=to.x,y2=to.y+NODE_H/2;
+        var cpx=(x1+x2)/2;
+        ctx.beginPath();
+        ctx.moveTo(x1,y1);
+        ctx.bezierCurveTo(cpx,y1,cpx,y2,x2,y2);
+        ctx.strokeStyle='rgba(105,214,181,0.25)';
+        ctx.stroke();
+        // arrowhead
+        ctx.beginPath();
+        ctx.moveTo(x2,y2);
+        ctx.lineTo(x2-6,y2-3.5);
+        ctx.lineTo(x2-6,y2+3.5);
+        ctx.closePath();
+        ctx.fillStyle='rgba(105,214,181,0.35)';
+        ctx.fill();
+      });
+    });
+
+    // Draw nodes
+    function roundRect(cx,x,y,w,h,r){
+      cx.beginPath();
+      cx.moveTo(x+r,y);
+      cx.lineTo(x+w-r,y);cx.arcTo(x+w,y,x+w,y+r,r);
+      cx.lineTo(x+w,y+h-r);cx.arcTo(x+w,y+h,x+w-r,y+h,r);
+      cx.lineTo(x+r,y+h);cx.arcTo(x,y+h,x,y+h-r,r);
+      cx.lineTo(x,y+r);cx.arcTo(x,y,x+r,y,r);
+      cx.closePath();
+    }
+
+    nodeMap.forEach(function(n){
+      var col=CAT_COLORS[n.cat]||'#69d6b5';
+      roundRect(ctx,n.x,n.y,NODE_W,NODE_H,8);
+      ctx.fillStyle='rgba(10,24,30,0.85)';
+      ctx.fill();
+      ctx.strokeStyle=col;
+      ctx.lineWidth=1.5;
+      ctx.stroke();
+      // icon
+      ctx.font='14px sans-serif';
+      ctx.fillStyle='#fff';
+      ctx.textBaseline='middle';
+      ctx.fillText(n.icon,n.x+6,n.y+NODE_H/2);
+      // name (truncate)
+      ctx.font='bold 10px "Space Grotesk",sans-serif';
+      ctx.fillStyle=col;
+      var label=n.name;
+      while(ctx.measureText(label).width>NODE_W-32&&label.length>4)label=label.slice(0,-1);
+      if(label!==n.name)label+='\u2026';
+      ctx.fillText(label,n.x+24,n.y+NODE_H/2);
+    });
+
+    // Tooltip
+    var tooltip=document.getElementById('rdTreeTooltip');
+    var wrap=document.getElementById('rdTreeWrap');
+
+    canvas.addEventListener('mousemove',function(e){
+      var rect=canvas.getBoundingClientRect();
+      var scaleX=parseFloat(canvas.style.width)/rect.width;
+      var scaleY=parseFloat(canvas.style.height)/rect.height;
+      var cx=(e.clientX-rect.left)*scaleX+wrap.scrollLeft;
+      var cy=(e.clientY-rect.top)*scaleY+wrap.scrollTop;
+      var hit=null;
+      nodeMap.forEach(function(n){
+        if(cx>=n.x&&cx<=n.x+NODE_W&&cy>=n.y&&cy<=n.y+NODE_H)hit=n;
+      });
+      if(hit){
+        var reqNames=hit.requires.map(function(r){var rn=byId.get(r);return rn?rn.name:r}).join(', ')||'\uC5C6\uC74C';
+        // Build tooltip content safely with DOM
+        tooltip.textContent='';
+        var h=document.createElement('div');
+        h.style.cssText='font-size:1.1rem;margin-bottom:4px';
+        h.textContent=hit.icon+' '+hit.name;
+        h.style.fontWeight='bold';
+        tooltip.appendChild(h);
+        var catDiv=document.createElement('div');
+        catDiv.style.cssText='color:'+CAT_COLORS[hit.cat]+';font-size:0.75rem;margin-bottom:6px';
+        catDiv.textContent=CAT_LABELS[hit.cat]+' \xB7 '+hit.year+'\uB144';
+        tooltip.appendChild(catDiv);
+        var descDiv=document.createElement('div');
+        descDiv.style.marginBottom='6px';
+        descDiv.textContent=hit.desc;
+        tooltip.appendChild(descDiv);
+        var metaDiv=document.createElement('div');
+        metaDiv.style.cssText='display:flex;gap:12px;font-size:0.78rem;margin-bottom:4px';
+        var costSpan=document.createElement('span');
+        costSpan.style.color='#f7b85d';
+        costSpan.textContent='\u{1F4B0} '+hit.cost;
+        var durSpan=document.createElement('span');
+        durSpan.textContent='\u23F1 '+hit.dur;
+        metaDiv.appendChild(costSpan);
+        metaDiv.appendChild(durSpan);
+        tooltip.appendChild(metaDiv);
+        var reqDiv=document.createElement('div');
+        reqDiv.style.cssText='font-size:0.78rem;margin-bottom:2px';
+        reqDiv.textContent='\u{1F517} \uC120\uD589: '+reqNames;
+        tooltip.appendChild(reqDiv);
+        var effDiv=document.createElement('div');
+        effDiv.style.cssText='color:#69d6b5;font-weight:600;font-size:0.82rem';
+        effDiv.textContent='\u2728 '+hit.effect;
+        tooltip.appendChild(effDiv);
+        tooltip.style.display='block';
+        var tx=e.clientX+14,ty=e.clientY+14;
+        if(tx+330>window.innerWidth)tx=e.clientX-330;
+        if(ty+200>window.innerHeight)ty=e.clientY-200;
+        tooltip.style.left=tx+'px';
+        tooltip.style.top=ty+'px';
+      } else {
+        tooltip.style.display='none';
+      }
+    });
+    canvas.addEventListener('mouseleave',function(){tooltip.style.display='none'});
+  })();
   </script>
 
 </body>
