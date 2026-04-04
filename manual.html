@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게임 매뉴얼 — Fab Tycoon</title>
+  <meta name="description" content="Fab Tycoon 게임 매뉴얼. 핵심 시스템, 팹 관리, 설비, 생산, 인력, 경제, R&D, 경쟁사, 키보드 단축키 정보.">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🏭</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">FT</span>
+        Fab Tycoon
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">홈</a></li>
+        <li><a href="guide.html">공략 가이드</a></li>
+        <li><a href="manual.html" class="active">게임 매뉴얼</a></li>
+        <li><a href="https://declue.github.io/fab-tycoon/" class="nav-cta" target="_blank">Play Now</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container fade-in">
+      <span class="section-label">Manual</span>
+      <h1>게임 매뉴얼</h1>
+      <p>Fab Tycoon의 모든 시스템을 상세하게 알아보세요</p>
+    </div>
+  </div>
+
+  <!-- Game Overview -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="manual-section fade-in">
+        <h2><span class="sec-dot"></span> 게임 개요</h2>
+        <div class="card" style="cursor: default; transform: none;">
+          <p>
+            <strong>Fab Tycoon</strong>은 2010~2050년 반도체 산업을 경험하는 경영 시뮬레이션 게임입니다.
+            플레이어는 반도체 팹(Fabrication Plant)의 CEO로서 설비 투자, 인력 관리, R&D, 고객 주문 관리 등
+            종합적인 경영 판단을 내려 세계 최고의 반도체 기업을 만들어야 합니다.
+          </p>
+          <div class="mt-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div>
+              <h4 class="text-mint mb-1">시간 구조</h4>
+              <p class="text-muted">게임 내 1개월 = 실제 72초<br>2010년 1월부터 시작, 최대 2050년까지</p>
+            </div>
+            <div>
+              <h4 class="text-amber mb-1">게임 모드</h4>
+              <p class="text-muted"><strong>Tycoon Mode:</strong> $500M, 빈 부지에서 시작<br><strong>Full Fab Mode:</strong> $2B, 완성된 팹으로 시작</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Systems -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Core Systems</span>
+        <h2>핵심 시스템</h2>
+        <p>6가지 핵심 시스템으로 구성된 경영 시뮬레이션</p>
+      </div>
+
+      <!-- Fab Management -->
+      <div class="expand-card fade-in">
+        <button class="expand-card-header">
+          <span class="ec-icon" style="background: var(--glow-mint); color: var(--mint);">&#127981;</span>
+          <h3>팹 관리</h3>
+          <span class="ec-arrow">&#9660;</span>
+        </button>
+        <div class="expand-card-body">
+          <div class="expand-card-body-inner">
+            <p class="mb-2">6종류의 팹을 건설하고 운영할 수 있습니다. 각 팹은 전용 설비와 레시피를 가지고 있습니다.</p>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>팹 유형</th><th>건설 비용</th><th>주요 제품</th><th>언락 시기</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong class="text-mint">Logic</strong></td><td>$800M</td><td>CPU, GPU, AP, AI 가속기</td><td>2010 (시작)</td></tr>
+                  <tr><td><strong class="text-cyan">DRAM</strong></td><td>$600M</td><td>DDR5, DDR6, HBM</td><td>2013</td></tr>
+                  <tr><td><strong class="text-amber">NAND</strong></td><td>$500M</td><td>3D NAND Flash</td><td>2016</td></tr>
+                  <tr><td><strong class="text-mint">GaN</strong></td><td>$300M</td><td>전력 반도체, RF 칩</td><td>2023</td></tr>
+                  <tr><td><strong class="text-cyan">Photonics</strong></td><td>$1.2B</td><td>광 인터커넥트, 라이다</td><td>2029</td></tr>
+                  <tr><td><strong class="text-amber">Quantum</strong></td><td>$2B</td><td>양자칩</td><td>2036</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Equipment -->
+      <div class="expand-card fade-in">
+        <button class="expand-card-header">
+          <span class="ec-icon" style="background: rgba(125,218,240,0.12); color: var(--cyan);">&#9881;</span>
+          <h3>설비 시스템</h3>
+          <span class="ec-arrow">&#9660;</span>
+        </button>
+        <div class="expand-card-body">
+          <div class="expand-card-body-inner">
+            <p class="mb-2">27종의 반도체 장비를 베이(Bay)별로 배치합니다. 각 장비는 <strong class="text-mint">가동</strong>, <strong class="text-amber">정비</strong>, <strong class="text-cyan">고장</strong> 3가지 상태를 가집니다.</p>
+            <p><strong>주요 장비 카테고리:</strong></p>
+            <ul style="list-style: none; padding: 0; margin-top: 8px;">
+              <li style="padding: 4px 0;"><strong class="text-mint">노광(Litho):</strong> DUV Stepper, DUV Scanner, EUV Stepper, High-NA EUV</li>
+              <li style="padding: 4px 0;"><strong class="text-cyan">증착(Depo):</strong> CVD, PVD, ALD, Epitaxy</li>
+              <li style="padding: 4px 0;"><strong class="text-amber">식각(Etch):</strong> Dry Etch, Wet Etch, ALE</li>
+              <li style="padding: 4px 0;"><strong class="text-mint">세정/연마:</strong> Wet Clean, CMP</li>
+              <li style="padding: 4px 0;"><strong class="text-cyan">열처리:</strong> Furnace, RTP</li>
+              <li style="padding: 4px 0;"><strong class="text-amber">이온주입:</strong> Ion Implanter, Plasma Doping</li>
+              <li style="padding: 4px 0;"><strong class="text-mint">검사/계측:</strong> CD-SEM, Overlay, Defect Inspection, E-Beam Inspection</li>
+              <li style="padding: 4px 0;"><strong class="text-cyan">패키징:</strong> Die Bonder, Wire Bonder, Tester</li>
+            </ul>
+            <p class="mt-2">장비 인스펙터에서 가동률, MTBF, 정비 이력 등을 확인할 수 있습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Production -->
+      <div class="expand-card fade-in">
+        <button class="expand-card-header">
+          <span class="ec-icon" style="background: var(--glow-amber); color: var(--amber);">&#128230;</span>
+          <h3>생산 시스템</h3>
+          <span class="ec-arrow">&#9660;</span>
+        </button>
+        <div class="expand-card-body">
+          <div class="expand-card-body-inner">
+            <p class="mb-2">레시피 기반 생산 시스템으로, FOUP(Front Opening Unified Pod) 단위로 웨이퍼를 처리합니다.</p>
+            <p><strong>생산 흐름:</strong></p>
+            <div style="display: flex; align-items: center; gap: 8px; margin: 12px 0; flex-wrap: wrap;">
+              <span style="padding: 6px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">레시피 선택</span>
+              <span class="text-muted">&rarr;</span>
+              <span style="padding: 6px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">FOUP 투입</span>
+              <span class="text-muted">&rarr;</span>
+              <span style="padding: 6px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">공정 스텝 처리</span>
+              <span class="text-muted">&rarr;</span>
+              <span style="padding: 6px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">검사</span>
+              <span class="text-muted">&rarr;</span>
+              <span style="padding: 6px 12px; background: var(--glow-mint); border-radius: 6px; font-size: 0.85rem; color: var(--mint);">다이 완성</span>
+            </div>
+            <p>총 59개 레시피가 있으며, 공정 노드와 제품 유형에 따라 다른 레시피를 사용합니다. 수율(Yield)은 장비 상태, 직원 숙련도, R&D 수준에 따라 결정됩니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Workforce -->
+      <div class="expand-card fade-in">
+        <button class="expand-card-header">
+          <span class="ec-icon" style="background: rgba(125,218,240,0.12); color: var(--cyan);">&#128100;</span>
+          <h3>인력 관리</h3>
+          <span class="ec-arrow">&#9660;</span>
+        </button>
+        <div class="expand-card-body">
+          <div class="expand-card-body-inner">
+            <p class="mb-2">19종의 직원을 채용하고 관리합니다. 교육과 복지 프로그램으로 역량을 향상시킬 수 있습니다.</p>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>직종</th><th>역할</th><th>월급 범위</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Operator</td><td>장비 운영, 웨이퍼 처리</td><td>$3K~$5K</td></tr>
+                  <tr><td>Process Engineer</td><td>공정 최적화, 수율 개선</td><td>$8K~$12K</td></tr>
+                  <tr><td>Equipment Engineer</td><td>장비 정비, 고장 수리</td><td>$7K~$11K</td></tr>
+                  <tr><td>Device Researcher</td><td>R&D 연구 수행</td><td>$10K~$15K</td></tr>
+                  <tr><td>SW Developer</td><td>MES, 자동화 시스템 개발</td><td>$9K~$14K</td></tr>
+                  <tr><td>Quality Engineer</td><td>품질 관리, 검사</td><td>$7K~$10K</td></tr>
+                  <tr><td>Yield Engineer</td><td>수율 분석, 개선</td><td>$9K~$13K</td></tr>
+                  <tr><td>Safety Manager</td><td>안전 관리, ESG</td><td>$6K~$9K</td></tr>
+                  <tr><td>HR Manager</td><td>인사 관리, 채용</td><td>$7K~$10K</td></tr>
+                  <tr><td>Finance Manager</td><td>재무 관리, 비용 분석</td><td>$8K~$12K</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="mt-2 text-muted" style="font-size: 0.85rem;">* 이외에도 Marketing, Sales, Logistics, Facilities, IT 등 총 19종의 직원이 있습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Economy -->
+      <div class="expand-card fade-in">
+        <button class="expand-card-header">
+          <span class="ec-icon" style="background: var(--glow-amber); color: var(--amber);">&#128176;</span>
+          <h3>경제 시스템</h3>
+          <span class="ec-arrow">&#9660;</span>
+        </button>
+        <div class="expand-card-body">
+          <div class="expand-card-body-inner">
+            <p class="mb-2">수익과 비용의 균형을 맞추며 기업을 성장시킵니다.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div>
+                <h4 class="text-mint mb-1">수익원</h4>
+                <ul style="list-style: none; padding: 0;">
+                  <li style="padding: 4px 0;">&#8226; 다이(Die) 스팟 판매</li>
+                  <li style="padding: 4px 0;">&#8226; 고객 주문 납품 보상</li>
+                  <li style="padding: 4px 0;">&#8226; 장기 계약 프리미엄</li>
+                  <li style="padding: 4px 0;">&#8226; 기술 라이선스</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="text-amber mb-1">비용 구조</h4>
+                <ul style="list-style: none; padding: 0;">
+                  <li style="padding: 4px 0;">&#8226; 팹 건설/운영비</li>
+                  <li style="padding: 4px 0;">&#8226; 장비 구매/정비비</li>
+                  <li style="padding: 4px 0;">&#8226; 인건비 (급여, 복지)</li>
+                  <li style="padding: 4px 0;">&#8226; R&D 투자비</li>
+                  <li style="padding: 4px 0;">&#8226; 재료비 (웨이퍼, 가스 등)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- R&D -->
+      <div class="expand-card fade-in">
+        <button class="expand-card-header">
+          <span class="ec-icon" style="background: var(--glow-mint); color: var(--mint);">&#128300;</span>
+          <h3>R&D 시스템</h3>
+          <span class="ec-arrow">&#9660;</span>
+        </button>
+        <div class="expand-card-body">
+          <div class="expand-card-body-inner">
+            <p class="mb-2">16개 공정 노드와 88개 일반 연구 항목으로 구성됩니다. Device Researcher가 R&D 속도에 영향을 줍니다.</p>
+            <p><strong>R&D 진행 방식:</strong></p>
+            <ul style="list-style: none; padding: 0; margin-top: 8px;">
+              <li style="padding: 4px 0;">1. 연구 항목 선택 (비용 및 기간 확인)</li>
+              <li style="padding: 4px 0;">2. 연구비 투입 시작</li>
+              <li style="padding: 4px 0;">3. 연구자 배정 (속도 가속)</li>
+              <li style="padding: 4px 0;">4. 완료 시 해당 기술/노드 언락</li>
+            </ul>
+            <p class="mt-2">일부 연구는 선행 연구가 필요합니다. 테크트리 뷰에서 의존 관계를 확인하세요.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Competitors -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Competitors</span>
+        <h2>경쟁사</h2>
+        <p>6개의 AI 경쟁사와 시장 점유율을 다투세요</p>
+      </div>
+
+      <div class="competitors-grid fade-in">
+        <div class="competitor-card">
+          <h4 class="text-mint">TMSC</h4>
+          <p>세계 최대 파운드리. Logic 공정 선두주자.</p>
+        </div>
+        <div class="competitor-card">
+          <h4 class="text-cyan">Samsong</h4>
+          <p>종합 반도체 기업. 메모리와 파운드리 겸업.</p>
+        </div>
+        <div class="competitor-card">
+          <h4 class="text-amber">Intal</h4>
+          <p>IDM 전통 강자. 자체 제품 + 파운드리.</p>
+        </div>
+        <div class="competitor-card">
+          <h4 class="text-mint">GloFo</h4>
+          <p>특수 공정 전문. 차량용/IoT 반도체.</p>
+        </div>
+        <div class="competitor-card">
+          <h4 class="text-cyan">UMG</h4>
+          <p>성숙 공정 전문. 가격 경쟁력 강점.</p>
+        </div>
+        <div class="competitor-card">
+          <h4 class="text-amber">SMEC</h4>
+          <p>신흥 파운드리. 빠른 성장세.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Keyboard Shortcuts -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Controls</span>
+        <h2>키보드 단축키</h2>
+        <p>효율적인 플레이를 위한 조작법</p>
+      </div>
+
+      <div class="shortcuts-grid fade-in">
+        <div class="shortcut-item">
+          <kbd>Space</kbd>
+          <span>일시정지 / 재개</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>1~3</kbd>
+          <span>게임 속도 조절 (x1, x2, x4)</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>W A S D</kbd>
+          <span>카메라 이동</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>Q / E</kbd>
+          <span>카메라 회전</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>Scroll</kbd>
+          <span>줌 인/아웃</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>Tab</kbd>
+          <span>대시보드 열기/닫기</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>R</kbd>
+          <span>R&D 패널</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>M</kbd>
+          <span>경영 관리 패널</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>H</kbd>
+          <span>도움말</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>Esc</kbd>
+          <span>패널 닫기 / 메뉴</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>Click</kbd>
+          <span>장비/직원/로봇 선택</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>F</kbd>
+          <span>선택 대상 추적</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="https://github.com/declue/fab-tycoon/issues" target="_blank">Bug Report</a></li>
+        <li><a href="https://github.com/declue/fab-tycoon/discussions" target="_blank">Discussions</a></li>
+        <li><a href="https://github.com/declue/fab-tycoon" target="_blank">GitHub</a></li>
+      </ul>
+      <span class="footer-note">Fab Tycoon &middot; Made with Three.js &middot; Open Source</span>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      navToggle.textContent = navLinks.classList.contains('open') ? '\u2715' : '\u2630';
+    });
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Expandable cards
+    document.querySelectorAll('.expand-card-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.expand-card');
+        const body = card.querySelector('.expand-card-body');
+        const isOpen = card.classList.contains('open');
+
+        if (isOpen) {
+          card.classList.remove('open');
+          body.style.maxHeight = null;
+        } else {
+          card.classList.add('open');
+          body.style.maxHeight = body.scrollHeight + 'px';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

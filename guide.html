@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공략 가이드 — Fab Tycoon</title>
+  <meta name="description" content="Fab Tycoon 공략 가이드. 초기 전략, 테크트리, 연도별 타임라인, R&D 카테고리 정보.">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🏭</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">FT</span>
+        Fab Tycoon
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">홈</a></li>
+        <li><a href="guide.html" class="active">공략 가이드</a></li>
+        <li><a href="manual.html">게임 매뉴얼</a></li>
+        <li><a href="https://declue.github.io/fab-tycoon/" class="nav-cta" target="_blank">Play Now</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container fade-in">
+      <span class="section-label">Strategy Guide</span>
+      <h1>공략 가이드</h1>
+      <p>초보부터 고수까지, Fab Tycoon 완벽 공략</p>
+    </div>
+  </div>
+
+  <!-- Quick Stats -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="stats-bar fade-in">
+        <div class="stat-item">
+          <div class="stat-value">16</div>
+          <div class="stat-label">공정 노드</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">88</div>
+          <div class="stat-label">R&D 항목</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">59</div>
+          <div class="stat-label">레시피</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">27</div>
+          <div class="stat-label">장비 종류</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">19</div>
+          <div class="stat-label">직원 유형</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">6</div>
+          <div class="stat-label">팹 종류</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Tips -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Early Game</span>
+        <h2>초반 핵심 전략</h2>
+        <p>게임 시작 후 가장 중요한 5가지 팁</p>
+      </div>
+      <div class="tips-grid">
+
+        <div class="tip-card fade-in">
+          <div class="tip-number">1</div>
+          <div>
+            <h4>28nm Logic 안정화 우선</h4>
+            <p>첫 번째 목표는 28nm Logic 공정의 수율을 안정화하는 것입니다. 수율이 60% 이상이 될 때까지 무리하게 다음 노드로 넘어가지 마세요.</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in">
+          <div class="tip-number">2</div>
+          <div>
+            <h4>초기 R&D 우선순위</h4>
+            <p><strong class="text-mint">MES/ERP</strong>, <strong class="text-mint">수율 엔지니어링</strong>, <strong class="text-mint">APC</strong>, <strong class="text-mint">마케팅</strong>을 먼저 연구하세요. 생산 효율과 매출에 직접적인 영향을 줍니다.</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in">
+          <div class="tip-number">3</div>
+          <div>
+            <h4>초기 인력 구성</h4>
+            <p><strong class="text-cyan">Operator</strong>, <strong class="text-cyan">Process Eng</strong>, <strong class="text-cyan">Equip Eng</strong>, <strong class="text-cyan">Device Researcher</strong>, <strong class="text-cyan">SW Developer</strong>를 우선 채용하세요.</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in">
+          <div class="tip-number">4</div>
+          <div>
+            <h4>14nm은 현금흐름 확인 후</h4>
+            <p>14nm 전환은 큰 투자가 필요합니다. 월 현금흐름이 안정적인지 확인한 후 도전하세요. 무리한 전환은 파산의 지름길입니다.</p>
+          </div>
+        </div>
+
+        <div class="tip-card fade-in">
+          <div class="tip-number">5</div>
+          <div>
+            <h4>7nm부터 EUV 필수</h4>
+            <p>7nm 이하 공정에는 <strong class="text-amber">EUV Stepper ($350M)</strong>가 필수입니다. 미리 자금을 확보하고, EUV 관련 R&D도 선행하세요.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Tree -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Tech Tree</span>
+        <h2>기술 로드맵</h2>
+        <p>공정 노드 진화 경로</p>
+      </div>
+
+      <div class="tech-tree fade-in">
+
+        <!-- Logic Track -->
+        <div class="tech-track logic">
+          <div class="tech-track-label logic">Logic</div>
+          <div class="tech-nodes">
+            <div class="tech-node"><div class="tech-node-dot">28</div><div class="tech-node-name">28nm</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">14</div><div class="tech-node-name">14nm</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">7</div><div class="tech-node-name">7nm</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">5</div><div class="tech-node-name">5nm</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">3</div><div class="tech-node-name">3nm</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">2</div><div class="tech-node-name">2nm</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">1.4</div><div class="tech-node-name">1.4nm</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">1</div><div class="tech-node-name">1nm</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">&lt;1</div><div class="tech-node-name">Sub-1nm</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">Q</div><div class="tech-node-name">Quantum</div></div>
+          </div>
+        </div>
+
+        <!-- Memory Track -->
+        <div class="tech-track memory">
+          <div class="tech-track-label memory">Memory (DRAM)</div>
+          <div class="tech-nodes">
+            <div class="tech-node"><div class="tech-node-dot">DDR5</div><div class="tech-node-name">DDR5</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">DDR6</div><div class="tech-node-name">DDR6</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">HBM</div><div class="tech-node-name">HBM4</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">ADV</div><div class="tech-node-name">고급적층</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">NC</div><div class="tech-node-name">무캐패시터</div></div>
+          </div>
+        </div>
+
+        <!-- NAND Track -->
+        <div class="tech-track nand">
+          <div class="tech-track-label nand">NAND Flash</div>
+          <div class="tech-nodes">
+            <div class="tech-node"><div class="tech-node-dot">128</div><div class="tech-node-name">128단</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">256</div><div class="tech-node-name">256단</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">512</div><div class="tech-node-name">512단</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">HS</div><div class="tech-node-name">하이퍼스택</div></div>
+            <div class="tech-connector"></div>
+            <div class="tech-node"><div class="tech-node-dot">Tb</div><div class="tech-node-name">테라비트</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Year-by-Year Timeline -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Timeline</span>
+        <h2>연도별 타임라인</h2>
+        <p>2010~2046년 주요 언락 이벤트</p>
+      </div>
+
+      <div class="accordion fade-in">
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            2010~2012
+            <span class="year-tag">초반기</span>
+            <span class="accordion-arrow">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <ul>
+                <li>28nm Logic 공정 시작</li>
+                <li>기본 장비(CVD, Etch, CMP, Furnace) 구매 가능</li>
+                <li>MES/ERP, 수율 엔지니어링 R&D 언락</li>
+                <li>첫 고객 주문 수주</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            2013~2015
+            <span class="year-tag">성장기</span>
+            <span class="accordion-arrow">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <ul>
+                <li>14nm Logic 공정 R&D 언락</li>
+                <li>FinFET 기술 연구 가능</li>
+                <li>DRAM 팹 건설 가능 ($600M)</li>
+                <li>APC(Advanced Process Control) R&D</li>
+                <li>첫 번째 경쟁사 등장: TMSC</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            2016~2018
+            <span class="year-tag">확장기</span>
+            <span class="accordion-arrow">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <ul>
+                <li>7nm Logic 공정 R&D 언락</li>
+                <li>EUV Stepper 구매 가능 ($350M)</li>
+                <li>NAND 팹 건설 가능 ($500M)</li>
+                <li>128단 3D NAND 생산 시작</li>
+                <li>브랜드 시스템 활성화</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            2019~2022
+            <span class="year-tag">전환기</span>
+            <span class="accordion-arrow">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <ul>
+                <li>5nm Logic 공정 R&D 언락</li>
+                <li>GAA(Gate-All-Around) 트랜지스터 기술</li>
+                <li>HBM 메모리 생산 가능</li>
+                <li>ESG 경영 시스템 활성화</li>
+                <li>AI 가속기 수요 급증</li>
+                <li>256단 NAND 생산</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            2023~2028
+            <span class="year-tag">고도화기</span>
+            <span class="accordion-arrow">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <ul>
+                <li>3nm, 2nm Logic 공정 순차 언락</li>
+                <li>BSPDN(Backside Power Delivery) 기술</li>
+                <li>GaN 팹 건설 가능 ($300M)</li>
+                <li>DDR6 메모리 생산</li>
+                <li>512단 NAND 생산</li>
+                <li>고급 패키징(3D IC) 연구</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            2029~2035
+            <span class="year-tag">첨단기</span>
+            <span class="accordion-arrow">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <ul>
+                <li>1.4nm, 1nm Logic 공정 언락</li>
+                <li>CFET(Complementary FET) 기술</li>
+                <li>Photonics 팹 건설 가능 ($1.2B)</li>
+                <li>하이퍼스택 NAND 생산</li>
+                <li>무캐패시터 DRAM 연구</li>
+                <li>자율 제조(Lights-Out Fab) R&D</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">
+            2036~2046
+            <span class="year-tag">미래기</span>
+            <span class="accordion-arrow">&#9660;</span>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <ul>
+                <li>Sub-1nm 공정 언락</li>
+                <li>Quantum 팹 건설 가능 ($2B)</li>
+                <li>양자칩 생산 — 최종 테크</li>
+                <li>테라비트 NAND 생산</li>
+                <li>뉴로모픽 칩 R&D</li>
+                <li>게임 승리 조건 달성 가능</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- R&D Categories -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Research</span>
+        <h2>R&D 카테고리</h2>
+        <p>88개 연구 항목의 카테고리별 분류</p>
+      </div>
+
+      <div class="table-wrap fade-in">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>카테고리</th>
+              <th>개수</th>
+              <th>첫 등장</th>
+              <th>평균 비용</th>
+              <th>대표 예시</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong class="text-mint">공정 노드</strong></td>
+              <td>16</td>
+              <td>2010</td>
+              <td>$200M~$800M</td>
+              <td>28nm, 7nm, 3nm, Sub-1nm</td>
+            </tr>
+            <tr>
+              <td><strong class="text-cyan">제조 기술</strong></td>
+              <td>14</td>
+              <td>2010</td>
+              <td>$30M~$150M</td>
+              <td>수율 엔지니어링, APC, EUV 최적화</td>
+            </tr>
+            <tr>
+              <td><strong class="text-amber">자동화</strong></td>
+              <td>12</td>
+              <td>2010</td>
+              <td>$20M~$100M</td>
+              <td>MES/ERP, AGV 시스템, AI 스케줄링</td>
+            </tr>
+            <tr>
+              <td><strong class="text-mint">소재/장비</strong></td>
+              <td>10</td>
+              <td>2013</td>
+              <td>$50M~$200M</td>
+              <td>High-K 소재, BSPDN, CFET</td>
+            </tr>
+            <tr>
+              <td><strong class="text-cyan">패키징</strong></td>
+              <td>8</td>
+              <td>2015</td>
+              <td>$40M~$180M</td>
+              <td>2.5D 패키징, 3D IC, 칩렛</td>
+            </tr>
+            <tr>
+              <td><strong class="text-amber">비즈니스</strong></td>
+              <td>10</td>
+              <td>2010</td>
+              <td>$10M~$50M</td>
+              <td>마케팅, 브랜드 전략, ESG 인증</td>
+            </tr>
+            <tr>
+              <td><strong class="text-mint">메모리</strong></td>
+              <td>10</td>
+              <td>2013</td>
+              <td>$80M~$300M</td>
+              <td>HBM, DDR6, 무캐패시터 DRAM</td>
+            </tr>
+            <tr>
+              <td><strong class="text-cyan">미래 기술</strong></td>
+              <td>8</td>
+              <td>2030</td>
+              <td>$200M~$1B</td>
+              <td>양자컴퓨팅, 뉴로모픽, 광자칩</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="https://github.com/declue/fab-tycoon/issues" target="_blank">Bug Report</a></li>
+        <li><a href="https://github.com/declue/fab-tycoon/discussions" target="_blank">Discussions</a></li>
+        <li><a href="https://github.com/declue/fab-tycoon" target="_blank">GitHub</a></li>
+      </ul>
+      <span class="footer-note">Made with Three.js &middot; Open Source</span>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      navToggle.textContent = navLinks.classList.contains('open') ? '\u2715' : '\u2630';
+    });
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Accordion
+    document.querySelectorAll('.accordion-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const body = item.querySelector('.accordion-body');
+        const isOpen = item.classList.contains('open');
+
+        // Close all
+        document.querySelectorAll('.accordion-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.accordion-body').style.maxHeight = null;
+        });
+
+        // Open clicked (if was closed)
+        if (!isOpen) {
+          item.classList.add('open');
+          body.style.maxHeight = body.scrollHeight + 'px';
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
