@@ -7,6 +7,29 @@
   <meta name="description" content="Fab Tycoon 완벽 공략 가이드. 테크트리, R&D 88종, 장비 27종, 직원 19종, 레시피 59종 전체 데이터.">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🏭</text></svg>">
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#1a3a3a',
+        primaryTextColor: '#eef6f1',
+        primaryBorderColor: '#69d6b5',
+        lineColor: '#4a8a7a',
+        secondaryColor: '#1a2a35',
+        tertiaryColor: '#0e1d23',
+        fontFamily: 'Space Grotesk, sans-serif',
+        fontSize: '13px',
+        nodeBorder: '#69d6b5',
+        mainBkg: '#132a31',
+        clusterBkg: 'rgba(10,24,30,0.6)',
+        clusterBorder: 'rgba(169,213,203,0.2)',
+        edgeLabelBackground: '#0e1d23',
+      },
+      flowchart: { curve: 'basis', padding: 12 },
+    });
+  </script>
   <style>
     /* Guide-specific styles */
     .guide-toc { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 48px; }
@@ -200,69 +223,97 @@
         <p>공정 노드 진화 경로 &mdash; 16개 노드 전체 데이터</p>
       </div>
 
-      <!-- Visual Diagram -->
-      <div class="tech-tree fade-in">
-        <!-- Logic Track -->
-        <div class="tech-track logic">
-          <div class="tech-track-label logic">Logic</div>
-          <div class="tech-nodes">
-            <div class="tech-node"><div class="tech-node-dot">28</div><div class="tech-node-name">28nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">14</div><div class="tech-node-name">14nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">7</div><div class="tech-node-name">7nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">5</div><div class="tech-node-name">5nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">3</div><div class="tech-node-name">3nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">2</div><div class="tech-node-name">2nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">1.4</div><div class="tech-node-name">1.4nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">1</div><div class="tech-node-name">1nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">&lt;1</div><div class="tech-node-name">Sub-1nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">Q</div><div class="tech-node-name">Quantum</div></div>
-          </div>
-        </div>
+      <!-- Mermaid Tech Tree Diagrams -->
+      <div class="mermaid-wrap fade-in">
+        <h4>공정 노드 의존 관계</h4>
+        <pre class="mermaid">
+graph LR
+  node_28nm["28nm<br/>2010 · Free"]
+  node_14nm["14nm FinFET<br/>2014 · $500M"]
+  node_7nm["7nm EUV<br/>2018 · $1.5B"]
+  node_5nm["5nm<br/>2020 · $3B"]
+  node_3nm["3nm GAA<br/>2022 · $5B"]
+  node_2nm["2nm GAA+<br/>2025 · $8B"]
+  node_14a["1.4nm CFET<br/>2028 · $12B"]
+  node_1nm["1nm<br/>2032 · $18B"]
+  node_sub1nm["Sub-1nm CNT<br/>2037 · $25B"]
+  node_photonic["광자칩<br/>2040 · $30B"]
+  node_quantum["양자칩<br/>2045 · $40B"]
+  mem_ddr6["DDR6/HBM4<br/>2026 · $4B"]
+  mem_adv["고급 적층 메모리<br/>2029 · $6.5B"]
+  mem_hyper["하이퍼스택 NAND<br/>2030 · $5.5B"]
+  mem_cap["무캐패시터 DRAM<br/>2034 · $9B"]
+  mem_tera["테라비트 NAND<br/>2036 · $9.5B"]
 
-        <!-- Memory Track -->
-        <div class="tech-track memory">
-          <div class="tech-track-label memory">Memory (DRAM)</div>
-          <div class="tech-nodes">
-            <div class="tech-node"><div class="tech-node-dot">DDR6</div><div class="tech-node-name">DDR6/HBM4</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">ADV</div><div class="tech-node-name">고급적층</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">NC</div><div class="tech-node-name">무캐패시터</div></div>
-          </div>
-        </div>
+  node_28nm --> node_14nm
+  node_14nm --> node_7nm
+  node_7nm --> node_5nm
+  node_5nm --> node_3nm
+  node_3nm --> node_2nm
+  node_2nm --> node_14a
+  node_14a --> node_1nm
+  node_1nm --> node_sub1nm
+  node_1nm --> node_photonic
+  node_sub1nm --> node_quantum
 
-        <!-- NAND Track -->
-        <div class="tech-track nand">
-          <div class="tech-track-label nand">NAND Flash</div>
-          <div class="tech-nodes">
-            <div class="tech-node"><div class="tech-node-dot">HS</div><div class="tech-node-name">하이퍼스택</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">Tb</div><div class="tech-node-name">테라비트</div></div>
-          </div>
-        </div>
+  node_14nm --> mem_ddr6
+  mem_ddr6 --> mem_adv
+  mem_adv --> mem_cap
+  node_14nm --> mem_hyper
+  mem_hyper --> mem_tera
 
-        <!-- Future Track -->
-        <div class="tech-track logic">
-          <div class="tech-track-label logic">Future</div>
-          <div class="tech-nodes">
-            <div class="tech-node"><div class="tech-node-dot">1</div><div class="tech-node-name">1nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">PH</div><div class="tech-node-name">광자칩</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">&lt;1</div><div class="tech-node-name">Sub-1nm</div></div>
-            <div class="tech-connector"></div>
-            <div class="tech-node"><div class="tech-node-dot">Q</div><div class="tech-node-name">양자칩</div></div>
-          </div>
-        </div>
+  classDef logic fill:#1a3a3a,stroke:#69d6b5,color:#eef6f1
+  classDef memory fill:#2a1a35,stroke:#c084fc,color:#eef6f1
+  classDef nand fill:#1a2a1a,stroke:#4ade80,color:#eef6f1
+  classDef future fill:#1a2a3a,stroke:#7ddaf0,color:#eef6f1
+
+  class node_28nm,node_14nm,node_7nm,node_5nm,node_3nm,node_2nm,node_14a,node_1nm logic
+  class node_sub1nm,node_quantum future
+  class node_photonic future
+  class mem_ddr6,mem_adv,mem_cap memory
+  class mem_hyper,mem_tera nand
+        </pre>
+      </div>
+
+      <div class="mermaid-wrap fade-in">
+        <h4>R&D 주요 의존 관계</h4>
+        <pre class="mermaid">
+graph TD
+  dx_mes["MES/ERP<br/>$35M"]
+  dx_apc["APC<br/>$45M"]
+  dx_scada["SCADA<br/>$8M"]
+  dx_fdc["FDC<br/>$30M"]
+  yield_eng["수율 엔지니어링<br/>$80M"]
+  marketing_team["마케팅팀<br/>$10M"]
+  marketing_global["글로벌 마케팅<br/>$40M"]
+  ax_defect["AI 결함 검출<br/>$75M"]
+  smart_factory["스마트팩토리<br/>$200M"]
+  ai_yield["AI 수율 최적화<br/>$80M"]
+  autonomous_fab["자율 팹 운영<br/>$500M"]
+  gen_ai["생성형 AI 설계<br/>$120M"]
+  digital_twin["디지털 트윈<br/>$150M"]
+  quantum_sim["양자 시뮬레이션<br/>$800M"]
+
+  dx_mes --> dx_apc
+  dx_mes --> dx_fdc
+  dx_mes --> ax_defect
+  dx_mes --> smart_factory
+  dx_mes --> digital_twin
+  dx_apc --> yield_eng
+  dx_apc --> ai_yield
+  ax_defect --> smart_factory
+  ai_yield --> gen_ai
+  smart_factory --> autonomous_fab
+  marketing_team --> marketing_global
+
+  classDef dx fill:#1a3a3a,stroke:#69d6b5,color:#eef6f1
+  classDef ai fill:#2a1a35,stroke:#c084fc,color:#eef6f1
+  classDef other fill:#1a2a35,stroke:#f7b85d,color:#eef6f1
+
+  class dx_mes,dx_apc,dx_scada,dx_fdc,smart_factory,autonomous_fab,digital_twin dx
+  class ax_defect,ai_yield,gen_ai ai
+  class yield_eng,marketing_team,marketing_global,quantum_sim other
+        </pre>
       </div>
 
       <!-- Full Tech Node Table -->
@@ -1785,6 +1836,20 @@
     </div>
   </section>
 
+  <!-- Sidebar TOC (desktop only) -->
+  <nav class="sidebar-toc" id="sidebarToc">
+    <a href="#quick-tips">빠른 공략</a>
+    <a href="#tech-tree">테크트리</a>
+    <a href="#rd-list">R&D 전체 목록</a>
+    <a href="#timeline">연도별 타임라인</a>
+    <a href="#equipment">장비 카탈로그</a>
+    <a href="#staff">인력 가이드</a>
+    <a href="#recipes">레시피 목록</a>
+  </nav>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="맨 위로">&#9650;</button>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
@@ -1839,8 +1904,8 @@
       });
     });
 
-    // Smooth scroll for TOC
-    document.querySelectorAll('.guide-toc a').forEach(a => {
+    // Smooth scroll for TOC links
+    document.querySelectorAll('.guide-toc a, .sidebar-toc a').forEach(a => {
       a.addEventListener('click', (e) => {
         e.preventDefault();
         const target = document.querySelector(a.getAttribute('href'));
@@ -1848,6 +1913,47 @@
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
+    });
+
+    // Scroll progress bar
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+
+    // Scroll to top button
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Sidebar TOC active state via IntersectionObserver
+    const tocLinks = document.querySelectorAll('.sidebar-toc a');
+    const sectionIds = Array.from(tocLinks).map(a => a.getAttribute('href').slice(1));
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+    const tocObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector('.sidebar-toc a[href="#' + entry.target.id + '"]');
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+
+    sections.forEach(sec => tocObserver.observe(sec));
+
+    // Scroll events: progress bar + scroll-to-top visibility
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrollTop / scrollHeight * 100) + '%';
+
+      if (scrollTop > 300) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
     });
   </script>
 

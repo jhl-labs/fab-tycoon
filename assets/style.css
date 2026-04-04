@@ -631,109 +631,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.88rem;
 }
 
-/* ---------- Tech Tree ---------- */
-.tech-tree {
-  margin: 48px 0;
-}
-
-.tech-track {
-  margin-bottom: 36px;
-}
-
-.tech-track-label {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 14px;
-  padding-left: 4px;
-}
-
-.tech-track-label.logic { color: var(--mint); }
-.tech-track-label.memory { color: var(--cyan); }
-.tech-track-label.nand { color: var(--amber); }
-
-.tech-nodes {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  overflow-x: auto;
-  padding: 12px 0 16px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-
-.tech-nodes::-webkit-scrollbar { height: 4px; }
-.tech-nodes::-webkit-scrollbar-track { background: transparent; }
-.tech-nodes::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-.tech-node {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  position: relative;
-}
-
-.tech-node-dot {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.6rem;
-  font-weight: 700;
-  border: 2px solid;
-  position: relative;
-  z-index: 1;
-  transition: all var(--transition);
-}
-
-.tech-node:hover .tech-node-dot {
-  transform: scale(1.15);
-  box-shadow: 0 0 20px currentColor;
-}
-
-.logic .tech-node-dot {
-  border-color: var(--mint);
-  color: var(--mint);
-  background: rgba(105,214,181,0.1);
-}
-
-.memory .tech-node-dot {
-  border-color: var(--cyan);
-  color: var(--cyan);
-  background: rgba(125,218,240,0.1);
-}
-
-.nand .tech-node-dot {
-  border-color: var(--amber);
-  color: var(--amber);
-  background: rgba(247,184,93,0.1);
-}
-
-.tech-node-name {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-  text-align: center;
-}
-
-.tech-connector {
-  flex-shrink: 0;
-  width: 36px;
-  height: 2px;
-  position: relative;
-  top: -12px;
-}
-
-.logic .tech-connector { background: linear-gradient(90deg, var(--mint), rgba(105,214,181,0.3)); }
-.memory .tech-connector { background: linear-gradient(90deg, var(--cyan), rgba(125,218,240,0.3)); }
-.nand .tech-connector { background: linear-gradient(90deg, var(--amber), rgba(247,184,93,0.3)); }
+/* (Tech tree CSS removed — replaced by Mermaid.js diagrams) */
 
 /* ---------- Accordion ---------- */
 .accordion {
@@ -828,34 +726,45 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   border-collapse: collapse;
   margin: 24px 0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .data-table thead {
-  background: rgba(105,214,181,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .data-table th {
+  background: rgba(105,214,181,0.08);
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   color: var(--mint);
   text-align: left;
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  border-bottom: 2px solid var(--border);
   font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .data-table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(169, 213, 203, 0.06);
   color: var(--text-muted);
 }
 
-.data-table tr:hover td {
-  background: rgba(105,214,181,0.03);
+.data-table tbody tr:hover {
+  background: rgba(105,214,181,0.04);
+}
+
+.data-table tbody tr:hover td {
   color: var(--text-bright);
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.01);
 }
 
 /* Table wrapper for overflow */
@@ -1077,6 +986,38 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--mint);
 }
 
+@media (max-width: 1300px) {
+  .sidebar-toc { display: none; }
+}
+
+/* ---------- Enhanced card hover glow ---------- */
+.card:hover .card-icon.mint ~ h3,
+.card:hover .card-icon.mint ~ p {
+  text-shadow: 0 0 20px rgba(105,214,181,0.1);
+}
+
+.card:hover .card-icon.cyan ~ h3,
+.card:hover .card-icon.cyan ~ p {
+  text-shadow: 0 0 20px rgba(125,218,240,0.1);
+}
+
+.card:hover .card-icon.amber ~ h3,
+.card:hover .card-icon.amber ~ p {
+  text-shadow: 0 0 20px rgba(247,184,93,0.1);
+}
+
+.card:hover .card-icon.mint {
+  box-shadow: 0 0 24px rgba(105,214,181,0.3);
+}
+
+.card:hover .card-icon.cyan {
+  box-shadow: 0 0 24px rgba(125,218,240,0.3);
+}
+
+.card:hover .card-icon.amber {
+  box-shadow: 0 0 24px rgba(247,184,93,0.3);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .hero .container {
@@ -1151,23 +1092,137 @@ h1, h2, h3, h4, h5, h6 {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(8px);
-  display: none;
+  background: rgba(0,0,0,0.9);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 32px;
   cursor: zoom-out;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.lightbox.active { display: flex; }
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
 
 .lightbox img {
   max-width: 95vw;
   max-height: 90vh;
   object-fit: contain;
   border-radius: var(--radius);
-  box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.5), 0 0 60px rgba(105,214,181,0.08);
+  transform: scale(0.92);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lightbox.active img {
+  transform: scale(1);
+}
+
+/* ---------- Mermaid Diagrams ---------- */
+.mermaid-wrap {
+  margin: 32px 0;
+  padding: 24px;
+  border-radius: var(--radius);
+  background: rgba(10, 24, 30, 0.6);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+.mermaid-wrap h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  color: var(--mint);
+  margin-bottom: 16px;
+  text-align: center;
+}
+.mermaid {
+  display: flex;
+  justify-content: center;
+}
+
+/* ---------- Sidebar TOC for guide/manual ---------- */
+.sidebar-toc {
+  position: fixed;
+  left: 0;
+  top: calc(var(--nav-h) + 24px);
+  width: 200px;
+  max-height: calc(100vh - var(--nav-h) - 48px);
+  overflow-y: auto;
+  padding: 16px 0;
+  z-index: 100;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.sidebar-toc a {
+  display: block;
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  border-left: 2px solid transparent;
+  transition: all var(--transition);
+}
+
+.sidebar-toc a:hover {
+  color: var(--text-bright);
+  border-left-color: var(--border-hover);
+}
+
+.sidebar-toc a.active {
+  color: var(--mint);
+  border-left-color: var(--mint);
+  background: var(--glow-mint);
+}
+
+/* ---------- Scroll progress bar ---------- */
+.scroll-progress {
+  position: fixed;
+  top: var(--nav-h);
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--mint), var(--cyan));
+  z-index: 999;
+  transition: width 0.1s linear;
+}
+
+/* ---------- Scroll to top button ---------- */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--mint);
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 998;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-top-btn:hover {
+  border-color: var(--border-hover);
+  background: var(--glow-mint);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(105,214,181,0.2);
 }
 
 /* ---------- Utilities ---------- */

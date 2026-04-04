@@ -972,6 +972,30 @@
     </div>
   </section>
 
+  <!-- Sidebar TOC (desktop only) -->
+  <nav class="sidebar-toc" id="sidebarToc">
+    <a href="#overview">게임 개요</a>
+    <a href="#modes">게임 모드</a>
+    <a href="#time">시간 구조</a>
+    <a href="#core-loop">코어 플레이 루프</a>
+    <a href="#fab">팹 시스템</a>
+    <a href="#equipment">설비 시스템</a>
+    <a href="#production">생산 시스템</a>
+    <a href="#workforce">인력 시스템</a>
+    <a href="#quality">품질/인증</a>
+    <a href="#esg">ESG</a>
+    <a href="#supply">공급망</a>
+    <a href="#facility">시설 관리</a>
+    <a href="#competitors">경쟁사</a>
+    <a href="#events">시대 이벤트</a>
+    <a href="#brand">브랜드/마케팅</a>
+    <a href="#save">저장 시스템</a>
+    <a href="#controls">키보드 단축키</a>
+  </nav>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="맨 위로">&#9650;</button>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
@@ -1003,6 +1027,58 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Smooth scroll for sidebar TOC and manual-toc links
+    document.querySelectorAll('.sidebar-toc a, .manual-toc a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Scroll progress bar
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+
+    // Scroll to top button
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Sidebar TOC active state via IntersectionObserver
+    const tocLinks = document.querySelectorAll('.sidebar-toc a');
+    const sectionIds = Array.from(tocLinks).map(a => a.getAttribute('href').slice(1));
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+    const tocObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector('.sidebar-toc a[href="#' + entry.target.id + '"]');
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -60% 0px' });
+
+    sections.forEach(sec => tocObserver.observe(sec));
+
+    // Scroll events: progress bar + scroll-to-top visibility
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrollTop / scrollHeight * 100) + '%';
+
+      if (scrollTop > 300) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    });
   </script>
 
 </body>
