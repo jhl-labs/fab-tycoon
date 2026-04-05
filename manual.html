@@ -158,7 +158,7 @@
     <div class="container fade-in">
       <span class="section-label">Manual</span>
       <h1>게임 매뉴얼</h1>
-      <p>Fab Tycoon의 모든 시스템을 상세하게 알아보세요</p>
+      <p>Fab Tycoon의 모든 시스템을 상세하게 알아보세요. 현재 문서는 <strong>v2.9.1 런타임</strong> 기준으로 검토했습니다.</p>
     </div>
   </div>
 
@@ -182,9 +182,9 @@
         <a href="#events"><span>14</span> 시대 이벤트</a>
         <a href="#brand"><span>15</span> 브랜드/마케팅</a>
         <a href="#sales"><span>16</span> 판매 전략</a>
-        <a href="#save"><span>16</span> 저장 시스템</a>
-        <a href="#controls"><span>17</span> 키보드 단축키</a>
-        <a href="#tooltips"><span>18</span> 게임 내 도움말</a>
+        <a href="#save"><span>17</span> 저장 시스템</a>
+        <a href="#controls"><span>18</span> 키보드 단축키</a>
+        <a href="#tooltips"><span>19</span> 게임 내 도움말</a>
       </div>
     </div>
   </section>
@@ -304,7 +304,7 @@
             <span class="loop-step">1. 레시피 선택</span><span class="loop-arrow">&rarr;</span>
             <span class="loop-step">2. FOUP 투입</span><span class="loop-arrow">&rarr;</span>
             <span class="loop-step">3. 설비가 공정 수행</span><span class="loop-arrow">&rarr;</span>
-            <span class="loop-step">4. 완성 다이 판매/주문 납품</span><span class="loop-arrow">&rarr;</span>
+            <span class="loop-step">4. 주문 납품/재고/판매 전략</span><span class="loop-arrow">&rarr;</span>
             <span class="loop-step">5. 수익으로 설비 증설</span><span class="loop-arrow">&rarr;</span>
             <span class="loop-step">6. R&D 투자</span><span class="loop-arrow">&rarr;</span>
             <span class="loop-step">7. 차세대 노드 해금</span><span class="loop-arrow">&rarr;</span>
@@ -313,6 +313,9 @@
             <span class="loop-step">10. 시장 지배</span><span class="loop-arrow">&#x21BB;</span>
           </div>
           <p class="text-muted mt-2">초반에는 1~5단계 반복에 집중하고, 자금이 안정되면 6~10단계로 확장합니다.</p>
+          <div class="info-box">
+            <strong>운영 UI 기준:</strong> 현재 실전 판단은 <strong class="text-mint">9개 탭 관리 패널</strong>(개요, R&amp;D, 인사, 브랜드, ESG, 품질, 공급망, 시설, 판매)과 <strong class="text-cyan">8개 탭 대시보드</strong>를 오가며 이뤄집니다. 개요 탭은 월 영향 상위 이슈를, 판매 탭은 레시피별 판매 전략과 시장 이벤트를 담당합니다.
+          </div>
         </div>
       </div>
     </div>
@@ -530,7 +533,7 @@
     <div class="container">
       <div class="manual-section fade-in">
         <h2><span class="sec-dot"></span> 8. 인력 시스템</h2>
-        <p class="text-muted mb-2">28종의 직원을 채용하고 관리합니다. 경영 지원 9종(재무/인사/마케팅/구매/법무/IR/보안/SCM/교육)이 추가되었습니다. HR 어드바이저가 인력 운영 권고를 제공합니다.</p>
+        <p class="text-muted mb-2">28종의 직원을 채용하고 관리합니다. 팹 현장 19종과 본사 스태프 9종으로 나뉘며, HR 어드바이저가 현재 병목과 추천 채용/복지/교육 액션을 제안합니다.</p>
 
         <details>
           <summary>전체 직종 목록 (28종)</summary>
@@ -556,20 +559,20 @@
                   <tr><td><strong>SW Developer</strong></td><td>SW R&D 속도 <span class="text-mint">+20%/명</span></td><td>2010</td></tr>
                   <tr><td><strong>AI Engineer</strong></td><td>AI/ML R&D 속도 <span class="text-mint">+20%/명</span></td><td><span class="badge-cyan">2018</span></td></tr>
                   <tr><td><strong>Safety Manager</strong></td><td>사고/고장률 <span class="text-cyan">-5%/레벨</span></td><td>2010</td></tr>
-                  <tr><td><strong>Sustainability Manager</strong></td><td>ESG 등급 향상</td><td>2010</td></tr>
+                  <tr><td><strong>Sustainability Manager</strong></td><td>ESG 등급 개선, 커뮤니티 투자 보강</td><td><span class="badge-cyan">2018</span></td></tr>
                   <tr><td><strong>Automation Engineer</strong></td><td>로봇 효율 <span class="text-mint">+15%/명</span></td><td><span class="badge-cyan">2015</span></td></tr>
                   <tr><td><strong>Data Scientist</strong></td><td>수율 <span class="text-mint">+2%/명</span></td><td><span class="badge-cyan">2015</span></td></tr>
-                  <tr><td><strong>Quantum Engineer</strong></td><td>양자 R&D 속도 <span class="text-mint">+20%/명</span></td><td><span class="badge-amber">2035</span></td></tr>
+                  <tr><td><strong>Quantum Engineer</strong></td><td>양자 R&D 속도 <span class="text-mint">+20%/명</span></td><td><span class="badge-amber">2038</span></td></tr>
                   <tr><td colspan="3" style="text-align:center;color:var(--text-muted);font-size:0.85rem;padding:8px 0;">경영 지원 직종 (v2.7.0 추가)</td></tr>
                   <tr><td><strong>Finance Manager</strong></td><td>대출 이자율 <span class="text-cyan">-0.3%p/명</span></td><td>2010</td></tr>
-                  <tr><td><strong>HR Manager</strong></td><td>채용 비용 <span class="text-cyan">-10%/명</span>, 이직률 감소</td><td>2010</td></tr>
-                  <tr><td><strong>Marketing Manager</strong></td><td>브랜드 점수 <span class="text-mint">+2/명</span></td><td>2010</td></tr>
-                  <tr><td><strong>Procurement Manager</strong></td><td>자재 비용 <span class="text-cyan">-5%/명</span></td><td>2010</td></tr>
-                  <tr><td><strong>Legal Counsel</strong></td><td>계약 분쟁 방어, 특허 보호</td><td><span class="badge-cyan">2015</span></td></tr>
-                  <tr><td><strong>IR Officer</strong></td><td>투자 유치 신뢰도 향상</td><td><span class="badge-cyan">2015</span></td></tr>
-                  <tr><td><strong>Security Manager</strong></td><td>기술 유출 방지, 사이버 보안</td><td><span class="badge-cyan">2018</span></td></tr>
-                  <tr><td><strong>SCM Planner</strong></td><td>공급망 리스크 <span class="text-cyan">-8%/명</span></td><td>2010</td></tr>
-                  <tr><td><strong>Training Manager</strong></td><td>교육 효과 <span class="text-mint">+15%/명</span></td><td>2010</td></tr>
+                  <tr><td><strong>HR Manager</strong></td><td>만족도 <span class="text-mint">+1.5/명</span>, 채용비 <span class="text-cyan">-5%/명</span></td><td>2010</td></tr>
+                  <tr><td><strong>Marketing Manager</strong></td><td>브랜드 <span class="text-mint">+1/명</span>, 평판 <span class="text-mint">+2/명</span></td><td><span class="badge-cyan">2012</span></td></tr>
+                  <tr><td><strong>Procurement Manager</strong></td><td>원자재 비용 <span class="text-cyan">-3%/명</span></td><td><span class="badge-cyan">2012</span></td></tr>
+                  <tr><td><strong>Legal Officer</strong></td><td>인증 기간 <span class="text-cyan">-10%/명</span>, 벌금 <span class="text-cyan">-8%/명</span></td><td><span class="badge-cyan">2014</span></td></tr>
+                  <tr><td><strong>IR Manager</strong></td><td>보조금 <span class="text-mint">+3%p/명</span></td><td><span class="badge-cyan">2016</span></td></tr>
+                  <tr><td><strong>Security Officer</strong></td><td>고장률 <span class="text-cyan">-2%/명</span>, 보안 강화</td><td><span class="badge-cyan">2015</span></td></tr>
+                  <tr><td><strong>SCM Manager</strong></td><td>생산속도 <span class="text-mint">+2%/명</span> (최대 12%)</td><td><span class="badge-cyan">2014</span></td></tr>
+                  <tr><td><strong>Training Manager</strong></td><td>교육비 <span class="text-cyan">-8%/명</span>, 교육효과 <span class="text-mint">+3%/명</span></td><td><span class="badge-cyan">2012</span></td></tr>
                 </tbody>
               </table>
             </div>
@@ -631,6 +634,17 @@
           </div>
         </div>
 
+        <div class="card mb-2" style="cursor: default; transform: none;">
+          <p class="mb-2">
+            품질은 고정된 점수가 아니라 <strong class="text-mint">연도별 목표치</strong>와 비교되는 동적 시스템입니다.
+            시간이 갈수록 목표 <strong>Cpk / DPPM / Claim Rate</strong>가 강화되며, 이를 못 맞추면 <strong class="text-amber">auditPressure</strong>가 누적되어 수율과 클레임, 월 품질비가 함께 악화됩니다.
+          </p>
+          <div class="info-box">
+            <strong>실전 규칙:</strong> 2022년 이후에는 <strong class="text-mint">ISO 9001 부재</strong>도 품질 감사 압력을 키웁니다.
+            품질팀, Six Sigma, SPC, 품질 관리자, ISO를 같이 맞춰야 안정 구간을 유지할 수 있습니다.
+          </div>
+        </div>
+
         <details>
           <summary>인증 목록 (7종)</summary>
           <div class="details-body">
@@ -640,7 +654,7 @@
                   <tr><th>인증</th><th>효과</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td><strong class="text-mint">ISO 9001</strong></td><td>수율 및 단가 보정 &mdash; 품질경영 기본 인증</td></tr>
+                  <tr><td><strong class="text-mint">ISO 9001</strong></td><td>현재 런타임 기준 수율/단가 보정의 핵심. 오래된 설명 문자열의 신뢰도 보너스 문구는 사실원으로 쓰지 않음</td></tr>
                   <tr><td><strong class="text-mint">ISO 14001</strong></td><td>ESG 보정 &mdash; 환경경영 시스템</td></tr>
                   <tr><td><strong class="text-amber">IATF 16949</strong></td><td>자동차 고객 해금 &mdash; 자동차 품질경영</td></tr>
                   <tr><td><strong class="text-mint">ISO 45001</strong></td><td>안전성 강화 &mdash; 산업안전보건 시스템</td></tr>
@@ -662,7 +676,16 @@
       <div class="manual-section fade-in">
         <h2><span class="sec-dot"></span> 10. ESG 시스템</h2>
         <div class="card" style="cursor: default; transform: none;">
-          <p class="mb-2">ESG 등급은 <strong class="text-mint">A</strong> / <strong class="text-cyan">B</strong> / C / <strong class="text-amber">D</strong> / F 5단계로 평가됩니다. 투자를 통해 등급을 높일 수 있습니다.</p>
+          <p class="mb-2">ESG 등급은 <strong class="text-mint">A</strong> / <strong class="text-cyan">B</strong> / C / <strong class="text-amber">D</strong> / F 5단계로 평가됩니다. 하지만 현재 런타임은 단순 누적 점수가 아니라 <strong class="text-mint">시대 + 팹 규모 기반 요구치</strong>를 계속 올리는 구조입니다.</p>
+
+          <div class="info-box">
+            <strong>현재 핵심 규칙:</strong> 폐수 처리, 에너지 효율, 커뮤니티 투자, 안전 점수에는 각각 <strong>required*</strong> 목표가 있으며,
+            연도와 장비 수가 늘수록 기준이 올라갑니다. 못 맞추면 <strong class="text-amber">compliancePressure</strong>가 쌓여 등급이 내려가고 월 벌금이 커집니다.
+          </div>
+
+          <div class="warn-box">
+            <strong class="text-amber">운영 팁:</strong> 커뮤니티 투자는 매월 5% 감가됩니다. 한 번 크게 넣고 끝내는 항목이 아니라, 후반으로 갈수록 유지 예산으로 봐야 합니다.
+          </div>
 
           <h4 class="text-mint mt-2 mb-1">투자 항목 (9종)</h4>
           <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px;">
@@ -703,6 +726,11 @@
               <p class="text-muted" style="font-size: 0.82rem;">생물다양성 보전</p>
             </div>
           </div>
+
+          <p class="text-muted mt-2" style="font-size: 0.88rem;">
+            A/B 등급은 월 보조금 확보에 유리하고, D/F는 탄소세/폐수 벌금/시대별 ESG 미달 벌금이 겹치며
+            <strong class="text-amber">ESG 브랜딩</strong> 같은 마케팅도 역효과를 낼 수 있습니다.
+          </p>
         </div>
       </div>
     </div>
@@ -883,12 +911,19 @@
             총 <strong>17종</strong>의 마케팅 활동을 통해 브랜드를 높일 수 있으며, 각각 비용, 쿨다운, 연도 제한, 브랜드 상승량이 다릅니다.
           </p>
 
+          <div class="info-box">
+            <strong>현재 런타임 기준:</strong> 브랜드는 매월 <strong class="text-mint">-0.5</strong> 기본 감쇠가 있으며,
+            마케팅을 3개월 이상 쉬면 추가 감쇠가 붙습니다. 6개월, 9개월 구간에서 더 가팔라지고,
+            납기 실패나 품질 사고는 <strong class="text-amber">incidentPressure</strong>를 올려 다음 몇 개월의 하락폭을 키웁니다.
+          </div>
+
           <div class="warn-box">
             <strong class="text-amber">주의:</strong> ESG 상태가 나쁜 상태에서 친환경 메시지를 사용하면 <strong>역효과</strong>가 발생합니다. ESG 투자와 마케팅을 연계하여 진행하세요.
           </div>
 
           <div class="info-box mt-2">
-            <strong>브랜드 영향:</strong> 높은 브랜드 이미지는 고객 주문 확보, 인재 채용, 시장 점유율에 긍정적 영향을 줍니다. 경쟁사 점유율 결정 시 브랜드 점수가 중요한 가중치를 차지합니다.
+            <strong>브랜드 영향:</strong> 높은 브랜드 이미지는 고객 주문 확보, 시장 점유율, 장기 수익성에 긍정적입니다.
+            주문 성공은 브랜드를 <strong class="text-mint">+1</strong>, 납기 실패는 대체로 <strong class="text-amber">-4~-6</strong>, 품질 사고는 <strong class="text-amber">-1~-6</strong> 수준으로 깎습니다.
           </div>
         </div>
       </div>
@@ -901,7 +936,11 @@
       <div class="manual-section fade-in">
         <h2><span class="sec-dot"></span> 16. 판매 전략 (v2.8.0)</h2>
         <div class="card" style="cursor: default; transform: none;">
-          <p class="mb-2">경영 패널 <strong class="text-mint">'판매'</strong> 탭에서 레시피별 판매 전략을 설정합니다.</p>
+          <p class="mb-2">경영 패널 <strong class="text-mint">'판매'</strong> 탭에서 레시피별 판매 전략을 설정합니다. 현재 관리 패널은 <strong>9개 탭</strong> 구조이며, <strong class="text-cyan">개요</strong> 탭에서 이번 달 핵심 이슈와 시장 이벤트를 먼저 보고 판매 탭으로 내려오는 흐름이 자연스럽습니다.</p>
+          <div class="info-box">
+            <strong>기본 동작:</strong> 메인 인벤토리의 <strong class="text-mint">autoSell</strong> 기본값은 현재 <strong>ON</strong>입니다.
+            초반에는 현금 회수 중심으로 돌고, 중후반부터 레시피별 수동/조건부/위임 전략으로 재고를 더 공격적으로 운용하는 구도입니다.
+          </div>
           <h4 class="text-cyan mb-1">판매 모드 3종</h4>
           <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px;">
             <div style="padding: 12px; background: var(--glow-mint); border-radius: 8px; text-align: center;">
@@ -948,12 +987,12 @@
     </div>
   </section>
 
-  <!-- 17. Keyboard Shortcuts -->
+  <!-- 18. Keyboard Shortcuts -->
   <section class="section" id="controls" style="padding-top: 0;">
     <div class="container">
       <div class="section-header fade-in">
         <span class="section-label">Controls</span>
-        <h2>17. 키보드 단축키</h2>
+        <h2>18. 키보드 단축키</h2>
         <p>효율적인 플레이를 위한 조작법</p>
       </div>
 
@@ -979,20 +1018,24 @@
           <span>줌 인/아웃</span>
         </div>
         <div class="shortcut-item">
-          <kbd>Tab</kbd>
-          <span>대시보드 열기/닫기</span>
+          <kbd>1~7</kbd>
+          <span>관리 패널 빠른 탭 (개요~공급망)</span>
         </div>
         <div class="shortcut-item">
           <kbd>R</kbd>
-          <span>R&D 패널</span>
+          <span>관리 패널 개요 탭 열기</span>
         </div>
         <div class="shortcut-item">
           <kbd>M</kbd>
-          <span>경영 관리 패널</span>
+          <span>통계 패널 토글</span>
+        </div>
+        <div class="shortcut-item">
+          <kbd>P</kbd>
+          <span>생산 대시보드 토글</span>
         </div>
         <div class="shortcut-item">
           <kbd>H</kbd>
-          <span>도움말</span>
+          <span>설정 / 도움말</span>
         </div>
         <div class="shortcut-item">
           <kbd>Esc</kbd>
@@ -1010,11 +1053,11 @@
     </div>
   </section>
 
-  <!-- 18. In-game Tooltips -->
+  <!-- 19. In-game Tooltips -->
   <section class="section" id="tooltips" style="padding-top: 0;">
     <div class="container">
       <div class="manual-section fade-in">
-        <h2><span class="sec-dot"></span> 18. 게임 내 도움말</h2>
+        <h2><span class="sec-dot"></span> 19. 게임 내 도움말</h2>
         <p class="text-muted mb-2">게임 UI 각 요소에 마우스를 올리면 표시되는 툴팁 메시지를 모아두었습니다.</p>
 
         <h4 class="text-cyan mt-3 mb-1">상단 바 (Status Bar)</h4>

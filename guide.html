@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>공략 가이드 — Fab Tycoon</title>
-  <meta name="description" content="Fab Tycoon 완벽 공략 가이드. ���크트리, R&D 88종, 장비 27종, ���원 28종, 레시피 59종 ���체 데이터.">
+  <meta name="description" content="Fab Tycoon 완벽 공략 가이드. 테크트리, R&D 88종, 장비 27종, 직원 28종, 레시피 59종과 최신 운영 메모를 정리했습니다.">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🏭</text></svg>">
   <script type="module">
@@ -111,7 +111,7 @@
     <div class="container fade-in">
       <span class="section-label">Strategy Guide</span>
       <h1>공략 가이드</h1>
-      <p>초보부터 고수까지, Fab Tycoon 완벽 공략 &mdash; 전체 데이터 수록</p>
+      <p>초보부터 고수까지, Fab Tycoon 완벽 공략 &mdash; 전체 데이터 수록 (v2.9.1 런타임 기준 보정)</p>
     </div>
   </div>
 
@@ -159,6 +159,12 @@
           <div class="stat-value">3</div>
           <div class="stat-label">판매 전략</div>
         </div>
+      </div>
+
+      <div class="cat-objective fade-in" style="margin-top: 18px;">
+        현재 런타임 메모: 관리 패널은 <strong class="text-mint">9개 탭</strong>(개요/판매 포함) 구조입니다.
+        `autoSell` 기본값은 <strong class="text-mint">ON</strong>이고, 품질은 연도별 목표치와 <strong>auditPressure</strong>,
+        ESG는 설비 규모 기반 요구치와 <strong>compliancePressure</strong>, 브랜드는 마케팅 공백과 사고 압력에 따라 계속 흔들립니다.
       </div>
 
       <!-- Table of Contents -->
@@ -1649,6 +1655,20 @@ graph LR
             <div class="staff-effect">양자 R&D +20%/명</div>
           </div>
         </div>
+      </div>
+
+      <h3 class="fade-in" style="margin-top:32px;">본사 스태프 <span class="category-badge badge-cyan">9개</span></h3>
+      <div class="cat-objective">본사 스태프는 생산 현장보다 회사 체질을 바꾸는 역할입니다. 이자, 채용, 브랜드, 인증, 보조금, 공급망, 교육 효율에 직접 연결됩니다.</div>
+      <div class="staff-grid fade-in">
+        <div class="staff-item"><div class="staff-rank">20</div><div><h5>Finance Manager</h5><div class="staff-id">finance_mgr</div><div class="staff-effect">대출 이자 -0.3%p/명</div></div></div>
+        <div class="staff-item"><div class="staff-rank">21</div><div><h5>HR Manager</h5><div class="staff-id">hr_manager</div><div class="staff-effect">만족도 +1.5/명, 채용비 -5%/명</div></div></div>
+        <div class="staff-item"><div class="staff-rank">22</div><div><h5>Marketing Manager</h5><div class="staff-id">marketing_mgr</div><div class="staff-effect">브랜드 +1/명, 평판 +2/명</div></div></div>
+        <div class="staff-item"><div class="staff-rank">23</div><div><h5>Procurement Manager</h5><div class="staff-id">procurement_mgr</div><div class="staff-effect">원자재 비용 -3%/명</div></div></div>
+        <div class="staff-item"><div class="staff-rank">24</div><div><h5>Legal Officer</h5><div class="staff-id">legal_officer</div><div class="staff-effect">인증 기간 -10%/명, 벌금 -8%/명</div></div></div>
+        <div class="staff-item"><div class="staff-rank">25</div><div><h5>IR Manager</h5><div class="staff-id">ir_manager</div><div class="staff-effect">보조금 +3%p/명</div></div></div>
+        <div class="staff-item"><div class="staff-rank">26</div><div><h5>Security Officer</h5><div class="staff-id">security_officer</div><div class="staff-effect">고장률 -2%/명</div></div></div>
+        <div class="staff-item"><div class="staff-rank">27</div><div><h5>SCM Manager</h5><div class="staff-id">scm_manager</div><div class="staff-effect">생산속도 +2%/명 (최대 12%)</div></div></div>
+        <div class="staff-item"><div class="staff-rank">28</div><div><h5>Training Manager</h5><div class="staff-id">training_manager</div><div class="staff-effect">교육비 -8%/명, 교육효과 +3%/명</div></div></div>
       </div>
     </div>
   </section>
